@@ -1,4 +1,4 @@
-# Interpretador c/c++ python
+# Interpretador c/c++
 Projeto de desenvolvimento de software para a disciplina Compiladores 1
 Universidade de Brasília   | -
 |--|--|
@@ -17,3 +17,7 @@ Danielly Mendes | 242015817
 Nicole | 241012347
 Paulo Alencar | 242004920
 Rafael Laube | 211062428
+
+### Metodologia
+
+A metodologia adotada será a metodologia `SCRUM/XP`, baseada em sprints de uma semana.
