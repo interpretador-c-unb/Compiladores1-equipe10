@@ -1,8 +1,8 @@
 # Interpretador c/c++
 Projeto de desenvolvimento de software para a disciplina Compiladores 1
-Universidade de Brasília   | -
+
+Universidade de Brasília  | FCTE
 |--|--|
-Campus | FCTE
 Disciplina | Compiladores 1
 Professor | Dr. Sergio Freitas
 Semestre | 2º 2026
