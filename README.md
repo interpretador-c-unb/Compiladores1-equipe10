@@ -12,9 +12,9 @@ Grupo | 10
 
 Nome | Matrícula
 |--|--|
-Bernardo | 
+Bernardo | 232024966
 Danielly Mendes | 242015817
-Nicole | 241012347
+Nicole Jovita | 241012347
 Paulo Alencar | 242004920
 Rafael Laube | 211062428
 
