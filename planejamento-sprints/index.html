@@ -1,0 +1,4261 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../decisoes-tecnicas/">
+      
+      
+        <link rel="next" href="../problemas-e-solucoes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Planejamento das Sprints - Interpretador C - Equipe 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#planejamento-das-sprints" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-header__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Interpretador C - Equipe 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Planejamento das Sprints
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-nav__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Interpretador C - Equipe 10
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estrutura do Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisoes-tecnicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões Técnicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sumario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sumário
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visão geral
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calendario-de-aulas-e-eventos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calendário de aulas e eventos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marcos-de-avaliacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marcos de avaliação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detalhamento-das-sprints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detalhamento das sprints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detalhamento das sprints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1-definicao-do-escopo-setup-e-analise-lexica-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 1 — Definição do escopo, setup e análise léxica inicial
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 1 — Definição do escopo, setup e análise léxica inicial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2-lexico-completo-e-gramatica-inicial-no-bison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 2 — Léxico completo e gramática inicial no Bison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 2 — Léxico completo e gramática inicial no Bison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3-analise-sintatica-basica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 3 — Análise sintática básica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 3 — Análise sintática básica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-4-parser-completo-e-erros-sintaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 4 — Parser completo e erros sintáticos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 4 — Parser completo e erros sintáticos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-5-ast-e-tabela-de-simbolos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 5 — AST e tabela de símbolos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 5 — AST e tabela de símbolos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-6-visualizacao-da-ast-e-preparacao-do-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 6 — Visualização da AST e preparação do P1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 6 — Visualização da AST e preparação do P1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-7-apresentacao-p1-e-ajustes-de-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 7 — Apresentação P1 e ajustes de feedback
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 7 — Apresentação P1 e ajustes de feedback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-8-analise-semantica-integrada-a-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 8 — Análise semântica integrada à AST
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 8 — Análise semântica integrada à AST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-9-interpretador-execucao-direta-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 9 — Interpretador (execução direta da AST)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 9 — Interpretador (execução direta da AST)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-10-otimizacao-na-interpretacao-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 10 — Otimização na interpretação da AST
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 10 — Otimização na interpretação da AST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-11-fluxo-de-controle-e-programas-completos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 11 — Fluxo de controle e programas completos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 11 — Fluxo de controle e programas completos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-12-consolidacao-do-interpretador-e-preparacao-do-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 12 — Consolidação do interpretador e preparação do P2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 12 — Consolidação do interpretador e preparação do P2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-13-apresentacao-p2-e-refinamento-do-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 13 — Apresentação P2 e refinamento do backlog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 13 — Apresentação P2 e refinamento do backlog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-14-polimento-escopos-avancados-e-recursos-extras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 14 — Polimento, escopos avançados e recursos extras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 14 — Polimento, escopos avançados e recursos extras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-15-code-freeze-e-documentacao-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 15 — Code freeze e documentação final
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 15 — Code freeze e documentação final">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-16-entrevistas-finais-e-encerramento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 16 — Entrevistas finais e encerramento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 16 — Entrevistas finais e encerramento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../problemas-e-solucoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problemas e Soluções
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sumario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sumário
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visão geral
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calendario-de-aulas-e-eventos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calendário de aulas e eventos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marcos-de-avaliacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marcos de avaliação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detalhamento-das-sprints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detalhamento das sprints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detalhamento das sprints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1-definicao-do-escopo-setup-e-analise-lexica-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 1 — Definição do escopo, setup e análise léxica inicial
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 1 — Definição do escopo, setup e análise léxica inicial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2-lexico-completo-e-gramatica-inicial-no-bison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 2 — Léxico completo e gramática inicial no Bison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 2 — Léxico completo e gramática inicial no Bison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3-analise-sintatica-basica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 3 — Análise sintática básica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 3 — Análise sintática básica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-4-parser-completo-e-erros-sintaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 4 — Parser completo e erros sintáticos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 4 — Parser completo e erros sintáticos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-5-ast-e-tabela-de-simbolos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 5 — AST e tabela de símbolos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 5 — AST e tabela de símbolos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-6-visualizacao-da-ast-e-preparacao-do-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 6 — Visualização da AST e preparação do P1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 6 — Visualização da AST e preparação do P1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-7-apresentacao-p1-e-ajustes-de-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 7 — Apresentação P1 e ajustes de feedback
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 7 — Apresentação P1 e ajustes de feedback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-8-analise-semantica-integrada-a-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 8 — Análise semântica integrada à AST
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 8 — Análise semântica integrada à AST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-9-interpretador-execucao-direta-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 9 — Interpretador (execução direta da AST)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 9 — Interpretador (execução direta da AST)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-10-otimizacao-na-interpretacao-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 10 — Otimização na interpretação da AST
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 10 — Otimização na interpretação da AST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-11-fluxo-de-controle-e-programas-completos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 11 — Fluxo de controle e programas completos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 11 — Fluxo de controle e programas completos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-12-consolidacao-do-interpretador-e-preparacao-do-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 12 — Consolidação do interpretador e preparação do P2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 12 — Consolidação do interpretador e preparação do P2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-13-apresentacao-p2-e-refinamento-do-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 13 — Apresentação P2 e refinamento do backlog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 13 — Apresentação P2 e refinamento do backlog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-14-polimento-escopos-avancados-e-recursos-extras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 14 — Polimento, escopos avançados e recursos extras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 14 — Polimento, escopos avançados e recursos extras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-15-code-freeze-e-documentacao-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 15 — Code freeze e documentação final
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 15 — Code freeze e documentação final">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-16-entrevistas-finais-e-encerramento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 16 — Entrevistas finais e encerramento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sprint 16 — Entrevistas finais e encerramento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entregas_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entregas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tarefas_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tarefas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="planejamento-das-sprints">Planejamento das Sprints</h1>
+<p>Interpretador de um subconjunto de C — Compiladores 1 · Grupo 10 · 2026.2</p>
+<p>Metodologia: Scrum/XP, sprints de uma semana (12/08/2026 a 02/12/2026).</p>
+<blockquote>
+<p><strong>Situação atual (03/09/2026):</strong> Sprint 4 em andamento (02/09 a 09/09) — refinamento do parser e tratamento de erros sintáticos.</p>
+</blockquote>
+<p>Legenda de status nas tarefas: <code>[ ]</code> pendente · <code>[x]</code> concluído.</p>
+<hr />
+<h2 id="sumario">Sumário</h2>
+<ul>
+<li><a href="#visão-geral">Visão geral</a></li>
+<li><a href="#calendário-de-aulas-e-eventos">Calendário de aulas e eventos</a></li>
+<li><a href="#marcos-de-avaliação">Marcos de avaliação</a></li>
+<li><a href="#detalhamento-das-sprints">Detalhamento das sprints</a></li>
+</ul>
+<hr />
+<h2 id="visao-geral">Visão geral</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Sprint</th>
+<th>Período</th>
+<th>Foco</th>
+<th>Aulas / eventos</th>
+<th>Entregas-chave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>12/08 – 19/08</td>
+<td>Escopo da linguagem, setup e análise léxica inicial</td>
+<td>12/08 avaliação diagnóstica · 17/08 linguagens formais · 19/08 prática de scanners</td>
+<td>Repo GitHub · <code>lexer.l</code> inicial · README</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>19/08 – 26/08</td>
+<td>Léxico completo e gramática inicial no Bison</td>
+<td>24/08 estrutura de compiladores · 26/08 prática da fase léxica</td>
+<td><code>lexer.l</code> completo · <code>parser.y</code> inicial · Makefile/CMake</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>26/08 – 02/09</td>
+<td>Análise sintática básica</td>
+<td>31/08 GLC · 02/09 prática do parser</td>
+<td>Gramática de declarações/expressões · testes <code>.c</code> · <code>main.c</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>02/09 – 09/09</td>
+<td>Parser completo e erros sintáticos</td>
+<td>07/09 feriado · 09/09 prática de erros sintáticos</td>
+<td><code>if</code>/<code>else</code>/<code>while</code>/blocos · <code>yyerror()</code> com linha e coluna</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>09/09 – 16/09</td>
+<td>AST e tabela de símbolos</td>
+<td>14/09 AST e TS · 16/09 prática de AST/TS</td>
+<td><code>ast.c</code>/<code>ast.h</code> · <code>symbol_table.c</code>/<code>symbol_table.h</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>16/09 – 23/09</td>
+<td>Impressão da AST e preparação do P1</td>
+<td>21/09 e 23/09 Semana Universitária (sem aulas expositivas)</td>
+<td><code>print_ast()</code> · formulário P1 (até 23/09) · slides</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>23/09 – 30/09</td>
+<td>Apresentação P1 e ajustes</td>
+<td>28/09 P1 1ª parte · 30/09 P1 2ª parte</td>
+<td>Apresentação P1 · relatório de débitos técnicos</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>30/09 – 07/10</td>
+<td>Análise semântica na AST</td>
+<td>05/10 análise semântica · 07/10 prática de semântica</td>
+<td><code>semantic.c</code>/<code>semantic.h</code> · checagem de tipos e escopos</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td>07/10 – 14/10</td>
+<td>Interpretador (execução direta da AST)</td>
+<td>12/10 feriado · 14/10 prática (adaptada ao interpretador)</td>
+<td><code>interpreter.c</code>/<code>interpreter.h</code> · ambiente de runtime</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>14/10 – 21/10</td>
+<td>Otimização na interpretação da AST</td>
+<td>19/10 otimização · 21/10 prática de otimização</td>
+<td><code>optimizer.c</code>/<code>optimizer.h</code> · testes comparativos</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td>21/10 – 28/10</td>
+<td>Fluxo de controle e programas completos</td>
+<td>26/10 geração de código · 28/10 prática (execução direta)</td>
+<td><code>if</code>/<code>while</code> no interpretador · 10+ testes <code>.c</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td>28/10 – 04/11</td>
+<td>Consolidação e preparação do P2</td>
+<td>02/11 feriado · 04/11 Compiladores e LLM</td>
+<td>Interpretador estável · formulário P2 (até 04/11) · slides</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td>04/11 – 11/11</td>
+<td>Apresentação P2 e backlog final</td>
+<td>09/11 P2 1ª parte · 11/11 P2 2ª parte</td>
+<td>Apresentação P2 · lista de melhorias finais</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td>11/11 – 18/11</td>
+<td>Polimento, escopos e extras</td>
+<td>16/11 e 18/11 implementação final</td>
+<td>Runtime errors · escopo de blocos · código limpo</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td>18/11 – 25/11</td>
+<td>Code freeze e documentação final</td>
+<td>23/11 e 25/11 implementação final / entrega no GitHub</td>
+<td>Repo congelado · README completo · <code>.zip</code> se solicitado</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td>25/11 – 02/12</td>
+<td>Entrevistas finais</td>
+<td>30/11 e 02/12 entrevistas presenciais</td>
+<td>Defesa do projeto por todos os membros</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="calendario-de-aulas-e-eventos">Calendário de aulas e eventos</h2>
+<p>Aulas da disciplina caem em <strong>segunda</strong> e <strong>quarta</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Dia</th>
+<th>Tipo</th>
+<th>Evento</th>
+<th style="text-align: center;">Sprint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12/08</td>
+<td>Qua</td>
+<td>Aula</td>
+<td>Avaliação diagnóstica</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td>17/08</td>
+<td>Seg</td>
+<td>Aula</td>
+<td>Fundamentos de linguagens formais</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td>19/08</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Construção de analisadores léxicos simples</td>
+<td style="text-align: center;">1 → 2</td>
+</tr>
+<tr>
+<td>24/08</td>
+<td>Seg</td>
+<td>Aula</td>
+<td>Estrutura de compiladores e interpretadores</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td>26/08</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Projeto inicial do compilador — fase léxica</td>
+<td style="text-align: center;">2 → 3</td>
+</tr>
+<tr>
+<td>31/08</td>
+<td>Seg</td>
+<td>Aula</td>
+<td>Análise sintática: gramáticas livres de contexto</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td>02/09</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Implementação inicial do parser</td>
+<td style="text-align: center;">3 → 4</td>
+</tr>
+<tr>
+<td>07/09</td>
+<td>Seg</td>
+<td>Feriado</td>
+<td>Independência do Brasil — sem aula</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td>09/09</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Continuação do parser e tratamento de erros sintáticos</td>
+<td style="text-align: center;">4 → 5</td>
+</tr>
+<tr>
+<td>14/09</td>
+<td>Seg</td>
+<td>Aula</td>
+<td>AST e tabela de símbolos</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td>16/09</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Construção da AST e da tabela de símbolos</td>
+<td style="text-align: center;">5 → 6</td>
+</tr>
+<tr>
+<td>21/09</td>
+<td>Seg</td>
+<td>Recesso</td>
+<td>Semana Universitária — sem aulas expositivas</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td>23/09</td>
+<td>Qua</td>
+<td>Recesso / prazo</td>
+<td>Semana Universitária · <strong>prazo do formulário P1</strong></td>
+<td style="text-align: center;">6 → 7</td>
+</tr>
+<tr>
+<td>28/09</td>
+<td>Seg</td>
+<td>Avaliação</td>
+<td><strong>P1 — 1ª parte</strong> (apresentação, 5 min)</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td>30/09</td>
+<td>Qua</td>
+<td>Avaliação</td>
+<td><strong>P1 — 2ª parte</strong></td>
+<td style="text-align: center;">7 → 8</td>
+</tr>
+<tr>
+<td>05/10</td>
+<td>Seg</td>
+<td>Aula</td>
+<td>Análise semântica</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr>
+<td>07/10</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Integração da análise semântica ao compilador</td>
+<td style="text-align: center;">8 → 9</td>
+</tr>
+<tr>
+<td>12/10</td>
+<td>Seg</td>
+<td>Feriado</td>
+<td>Nossa Senhora Aparecida — sem aula</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr>
+<td>14/10</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Protótipo de geração de código intermediário (adaptado: interpretador da AST)</td>
+<td style="text-align: center;">9 → 10</td>
+</tr>
+<tr>
+<td>19/10</td>
+<td>Seg</td>
+<td>Aula</td>
+<td>Otimização de código</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr>
+<td>21/10</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Otimização de código</td>
+<td style="text-align: center;">10 → 11</td>
+</tr>
+<tr>
+<td>26/10</td>
+<td>Seg</td>
+<td>Aula</td>
+<td>Geração de código final</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr>
+<td>28/10</td>
+<td>Qua</td>
+<td>Prática</td>
+<td>Protótipo de geração de código final (adaptado: execução direta do programa)</td>
+<td style="text-align: center;">11 → 12</td>
+</tr>
+<tr>
+<td>02/11</td>
+<td>Seg</td>
+<td>Feriado</td>
+<td>Finados — sem aula</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr>
+<td>04/11</td>
+<td>Qua</td>
+<td>Aula / prazo</td>
+<td>Compiladores e LLM · <strong>prazo do formulário P2</strong></td>
+<td style="text-align: center;">12 → 13</td>
+</tr>
+<tr>
+<td>09/11</td>
+<td>Seg</td>
+<td>Avaliação</td>
+<td><strong>P2 — 1ª parte</strong></td>
+<td style="text-align: center;">13</td>
+</tr>
+<tr>
+<td>11/11</td>
+<td>Qua</td>
+<td>Avaliação</td>
+<td><strong>P2 — 2ª parte</strong></td>
+<td style="text-align: center;">13 → 14</td>
+</tr>
+<tr>
+<td>16/11</td>
+<td>Seg</td>
+<td>Atividade</td>
+<td>Implementação final do compilador/interpretador</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr>
+<td>18/11</td>
+<td>Qua</td>
+<td>Atividade</td>
+<td>Implementação final do compilador/interpretador</td>
+<td style="text-align: center;">14 → 15</td>
+</tr>
+<tr>
+<td>23/11</td>
+<td>Seg</td>
+<td>Atividade</td>
+<td>Implementação final — entrega no GitHub</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr>
+<td>25/11</td>
+<td>Qua</td>
+<td>Atividade / prazo</td>
+<td>Implementação final — <strong>code freeze e entrega no GitHub</strong></td>
+<td style="text-align: center;">15 → 16</td>
+</tr>
+<tr>
+<td>30/11</td>
+<td>Seg</td>
+<td>Entrevista</td>
+<td>Entrevistas de entrega do trabalho final (presencial)</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr>
+<td>02/12</td>
+<td>Qua</td>
+<td>Entrevista</td>
+<td>Entrevistas de entrega do trabalho final (presencial)</td>
+<td style="text-align: center;">16</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="marcos-de-avaliacao">Marcos de avaliação</h2>
+<table>
+<thead>
+<tr>
+<th>Marco</th>
+<th>Data</th>
+<th style="text-align: center;">Sprint</th>
+<th>O que entregar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Formulário P1</td>
+<td>até 23/09</td>
+<td style="text-align: center;">6</td>
+<td><a href="https://forms.office.com/r/MyKh4HiAAu">Formulário P1</a> preenchido pelo líder</td>
+</tr>
+<tr>
+<td>Apresentação P1</td>
+<td>28/09 ou 30/09</td>
+<td style="text-align: center;">7</td>
+<td>Slides (5 min) + demo do pipeline até a AST</td>
+</tr>
+<tr>
+<td>Formulário P2</td>
+<td>até 04/11</td>
+<td style="text-align: center;">12</td>
+<td>Formulário P2: avanços desde o P1, execução da AST, otimizações</td>
+</tr>
+<tr>
+<td>Apresentação P2</td>
+<td>09/11 ou 11/11</td>
+<td style="text-align: center;">13</td>
+<td>Demo ao vivo do interpretador executando programas C</td>
+</tr>
+<tr>
+<td>Entrega no GitHub / code freeze</td>
+<td>25/11</td>
+<td style="text-align: center;">15</td>
+<td>Repositório finalizado 15 dias antes das entrevistas</td>
+</tr>
+<tr>
+<td>Entrevistas finais</td>
+<td>30/11 e 02/12</td>
+<td style="text-align: center;">16</td>
+<td>Defesa presencial — todos os membros</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="detalhamento-das-sprints">Detalhamento das sprints</h2>
+<h3 id="sprint-1-definicao-do-escopo-setup-e-analise-lexica-inicial">Sprint 1 — Definição do escopo, setup e análise léxica inicial</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>12/08 a 19/08</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Definição do escopo da linguagem, setup do ambiente e análise léxica inicial</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>12/08 avaliação diagnóstica · 17/08 fundamentos de linguagens formais · 19/08 prática: analisadores léxicos simples</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Organizar a equipe, criar o repositório e configurar o ambiente de compilação</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Definir o subconjunto da linguagem C aceito pelo interpretador</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Implementar o primeiro protótipo do scanner no Flex</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Repositório GitHub estruturado, com acesso concedido ao professor</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arquivo <code>lexer.l</code> inicial reconhecendo os primeiros tokens</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Estrutura inicial do arquivo de documentação <code>README.md</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Especificação da linguagem</td>
+<td>Definir o subconjunto de C suportado: tipos <code>int</code> e <code>float</code>; operadores <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>=</code>, <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>; controle <code>if</code>, <code>else</code>, <code>while</code>; E/S básica com <code>printf</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Repositório</td>
+<td>Criar o repositório no GitHub, configurar <code>.gitignore</code> para C/Flex/Bison e convidar o professor (<code>sergioaafreitas</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Ambiente</td>
+<td>Garantir que todos instalem e testem GCC/Clang, Make/CMake, Flex e Bison</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico (<code>lexer.l</code>)</td>
+<td>ERs para palavras-chave: <code>int</code>, <code>float</code>, <code>if</code>, <code>else</code>, <code>while</code>, <code>return</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico (<code>lexer.l</code>)</td>
+<td>ERs para identificadores (<code>[a-zA-Z_][a-zA-Z0-9_]*</code>) e inteiros (<code>[0-9]+</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico (<code>lexer.l</code>)</td>
+<td>Contador de linhas e colunas para tratamento posterior de erros</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Estrutura do projeto: pastas <code>/src</code>, <code>/include</code>, <code>/tests</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Planejamento das sprints: escopo e tarefas da Sprint 1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-2-lexico-completo-e-gramatica-inicial-no-bison">Sprint 2 — Léxico completo e gramática inicial no Bison</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>19/08 a 26/08</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Finalização da análise léxica e início da gramática no Bison</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>24/08 estrutura de compiladores e interpretadores · 26/08 prática: projeto inicial do compilador (fase léxica)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_1">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Concluir a especificação dos tokens no Flex (caracteres especiais e comentários)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Criar o arquivo do Bison com a estrutura inicial de tipos e regras</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_1">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>lexer.l</code> completo e imune a erros de caracteres desconhecidos</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>parser.y</code> inicial compilando via <code>bison -d</code> e gerando <code>parser.tab.h</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>Makefile</code> ou <code>CMakeLists.txt</code> automatizando o build</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_1">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico avançado</td>
+<td>Regras para literais de ponto flutuante (<code>[0-9]+\.[0-9]+</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico avançado</td>
+<td>Ignorar espaços (<code>[ \t\r\n]+</code>) e comentários de linha (<code>//...</code>) e de bloco (<code>/*...*/</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico avançado</td>
+<td>Tokens compostos: <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code>, <code>&amp;&amp;</code>, <code>\|\|</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico avançado</td>
+<td>Regra genérica de erro léxico para caracteres inválidos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Integração Flex–Bison</td>
+<td>Criar <code>parser.y</code> com <code>%token</code> para cada token do Flex</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Integração Flex–Bison</td>
+<td>Definir <code>%union</code> (ou integração C++) para repassar valores em <code>yylval</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Build</td>
+<td>Script Makefile para Flex + Bison + GCC com um único <code>make</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Decisões técnicas: padrão de arquivos, organização dos tokens e ferramentas</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Problemas e soluções: tratamento de comentários em bloco no Flex</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-3-analise-sintatica-basica">Sprint 3 — Análise sintática básica</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>26/08 a 02/09</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Construção da análise sintática básica</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>31/08 análise sintática (GLC) · 02/09 prática: implementação inicial do parser</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_2">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Desenvolver as regras gramaticais básicas da linguagem C no Bison</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Resolver ambiguidades de precedência de operadores</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_2">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Gramática em <code>parser.y</code> reconhecendo declaração de variáveis, expressões aritméticas e atribuições</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Conjunto de arquivos de teste <code>.c</code> de validação sintática</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_2">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Regra raiz <code>program → declaration_list</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Declaração de variáveis: <code>type id;</code> e <code>type id = expr;</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Expressões aritméticas (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) e agrupamento por parênteses</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Precedência</td>
+<td><code>%left</code> e <code>%right</code> no Bison (multiplicação priorizada sobre adição)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Precedência</td>
+<td>Resolver conflitos shift/reduce das regras de expressões</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Driver</td>
+<td><code>main.c</code> com <code>main()</code> que recebe um arquivo e invoca <code>yyparse()</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Decisões técnicas: estrutura da BNF e regras de precedência no Bison</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-4-parser-completo-e-erros-sintaticos">Sprint 4 — Parser completo e erros sintáticos</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>02/09 a 09/09</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Refinamento do parser e tratamento de erros sintáticos</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>07/09 feriado · 09/09 prática: continuação do parser e tratamento de erros sintáticos</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_3">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Expandir a gramática para estruturas de controle (<code>if</code>/<code>else</code>, <code>while</code>) e blocos <code>{}</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Implementar relatório amigável de erros sintáticos com <code>yyerror()</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_3">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Gramática completa com blocos <code>{}</code> e estruturas condicionais e de repetição</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Relatório de erros sintáticos indicando linha e coluna</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_3">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Comandos compostos / blocos (<code>{ statement_list }</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td><code>if (expr) statement</code> e <code>if (expr) statement else statement</code> (dangling else com <code>%nonassoc</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Laços <code>while (expr) statement</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Erros</td>
+<td>Customizar <code>yyerror(const char *s)</code> para: <code>Erro Sintático na linha X, coluna Y: [descrição]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Erros</td>
+<td><code>%define parse.error verbose</code> no Bison para mensagens mais detalhadas</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Problemas e soluções: resolução do dangling else no Bison</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-5-ast-e-tabela-de-simbolos">Sprint 5 — AST e tabela de símbolos</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>09/09 a 16/09</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Construção da Árvore Sintática Abstrata (AST) e tabela de símbolos</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>14/09 AST e tabela de símbolos · 16/09 prática: construção da AST e da tabela de símbolos</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_4">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Criar as estruturas de dados dos nós da AST</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Modificar o arquivo <code>.y</code> para construir a AST durante a análise sintática</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Implementar a tabela de símbolos básica</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_4">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Módulo <code>ast.h</code> / <code>ast.c</code> com nós de expressão, comando, atribuição e declaração</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Módulo <code>symbol_table.h</code> / <code>symbol_table.c</code> com inserção e busca</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Parser gerando a raiz da AST ao final de <code>yyparse()</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_4">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Modelagem da AST</td>
+<td>Enumeração <code>NodeType</code>: <code>NODE_VAR_DECL</code>, <code>NODE_ASSIGN</code>, <code>NODE_BIN_OP</code>, <code>NODE_IF</code>, <code>NODE_WHILE</code>, <code>NODE_LITERAL</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Modelagem da AST</td>
+<td>Estrutura de nós com ponteiros para filhos (esquerdo/direito ou lista) e dados específicos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Construção da AST</td>
+<td>Ações semânticas no Bison (ex.: <code>$$ = create_bin_op_node('+', $1, $3);</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Tabela de símbolos</td>
+<td>Hash ou lista encadeada armazenando nome, tipo, endereço/escopo</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Tabela de símbolos</td>
+<td>Funções <code>insert_symbol()</code> e <code>lookup_symbol()</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Estrutura do projeto: novos módulos de AST e tabela de símbolos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Decisões técnicas: arquitetura dos nós da AST</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-6-visualizacao-da-ast-e-preparacao-do-p1">Sprint 6 — Visualização da AST e preparação do P1</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>16/09 a 23/09</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Impressão da AST, consolidação léxica/sintática e preparação do P1</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>21/09 e 23/09 Semana Universitária — sem aulas expositivas</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_5">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Visualizar a AST gerada (depuração)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Consolidar os entregáveis e preencher o formulário do ponto de controle P1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_5">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Módulo de exibição textual/gráfica da AST (<code>print_ast(ASTNode* root)</code>)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Formulário de P1 preenchido pelo líder <strong>antes de 23/09</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Apresentação em slides (5 minutos) pronta para 28/09 ou 30/09</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_5">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Visualizador</td>
+<td>Impressão indentada da AST no terminal para depuração</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Testes</td>
+<td>Suíte da fase front-end: 5+ programas em C cobrindo erros e geração de AST</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Formulário P1</td>
+<td>Preencher <a href="https://forms.office.com/r/MyKh4HiAAu">o formulário P1</a>: definição do projeto, linguagem e ferramentas, planejamento das sprints e funcionalidades já implementadas</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação</td>
+<td>Material conciso do P1 demonstrando o pipeline até a AST funcionando</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Planejamento das sprints: planejado vs. executado até o marco P1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-7-apresentacao-p1-e-ajustes-de-feedback">Sprint 7 — Apresentação P1 e ajustes de feedback</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>23/09 a 30/09</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Apresentação do ponto de controle P1 e ajustes de feedback</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>28/09 P1 1ª parte · 30/09 P1 2ª parte</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_6">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Apresentar o progresso da equipe no ponto de controle P1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Absorver os feedbacks do professor e ajustar o backlog das sprints futuras</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_6">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Apresentação presencial do P1 realizada</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Relatório de correções e débitos técnicos pós-P1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_6">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação P1</td>
+<td>Apresentar equipe, motivação, arquitetura atual (Flex + Bison + AST) e executar um código demonstrativo ao vivo</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Refatoração</td>
+<td>Atender às solicitações pontuais feitas pelo professor na arguição</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Front-end</td>
+<td>Congelar léxico, sintático e criação da AST 100% estáveis antes da semântica</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Problemas e soluções: observações do professor no P1 e plano de ação</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-8-analise-semantica-integrada-a-ast">Sprint 8 — Análise semântica integrada à AST</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>30/09 a 07/10</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Análise semântica integrada à AST</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>05/10 análise semântica (teórica) · 07/10 prática: integração da análise semântica</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_7">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Implementar a verificação semântica percorrendo a AST</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Garantir checagem de tipos e validação de escopos</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_7">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Módulo <code>semantic.h</code> / <code>semantic.c</code> com o <em>semantic walk</em> na AST</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Mensagens de erro semântico claras, emitidas antes da execução</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_7">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Declaração / uso</td>
+<td>Detectar uso de variáveis não declaradas (<em>Undeclared Variable Error</em>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Declaração / uso</td>
+<td>Detectar redeclaração no mesmo escopo (<em>Redeclaration Error</em>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Tipos</td>
+<td>Validar atribuições incompatíveis (ex.: string/ponteiro em <code>int</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Tipos</td>
+<td>Coerção implícita simples quando permitida (ex.: <code>int</code> → <code>float</code> em operações mistas)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Controle de fluxo</td>
+<td>Condições de <code>if</code> e <code>while</code> avaliáveis como booleanas/inteiras</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Decisões técnicas: tabela de compatibilidade de tipos e regras semânticas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-9-interpretador-execucao-direta-da-ast">Sprint 9 — Interpretador (execução direta da AST)</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>07/10 a 14/10</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Construção do interpretador (execução direta da AST)</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>12/10 feriado · 14/10 prática: protótipo de geração de código intermediário (adaptado para o interpretador da AST)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_8">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Substituir a geração de código intermediário pela execução direta da AST (Guia de Interpretadores)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Avaliar expressões e atribuições na memória de runtime</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_8">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Módulo <code>interpreter.h</code> / <code>interpreter.c</code> executando expressões aritméticas e atribuições em tempo real</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Estrutura de memória de runtime (ambiente/escopo de execução) com os valores atuais das variáveis</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_8">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Runtime</td>
+<td>Estrutura <code>Environment</code> com pares (variável, valor atual)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Avaliação</td>
+<td>Função recursiva <code>LiteralValue evaluate_expr(ASTNode* node)</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Avaliação</td>
+<td>Resolver nós binários (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) calculando o resultado dinamicamente</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Atribuição</td>
+<td><code>NODE_ASSIGN</code>: avaliar o lado direito e atualizar o valor da variável do lado esquerdo</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Estrutura do projeto: módulo interpretador / runtime environment</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-10-otimizacao-na-interpretacao-da-ast">Sprint 10 — Otimização na interpretação da AST</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>14/10 a 21/10</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Otimização na interpretação da AST</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>19/10 otimização de código (teórica) · 21/10 prática: otimização de código</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_9">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Aplicar técnicas simples de otimização na AST antes da execução, para aumentar a eficiência do interpretador</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_9">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Módulo <code>optimizer.h</code> / <code>optimizer.c</code> com transformações na AST</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Testes comparativos mostrando a redução de nós após a otimização</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_9">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Constant folding</td>
+<td>Percorrer a AST e, em operações binárias com dois literais (ex.: <code>3 + 5</code>), substituir o nó pelo literal do resultado (<code>8</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Simplificação</td>
+<td>Eliminar expressões nulas/redundantes: <code>x + 0 → x</code>, <code>x * 1 → x</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Dead code</td>
+<td>Remover blocos <code>if (0) { ... }</code> que nunca executam</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Decisões técnicas: regras de constant folding e simplificação de expressões</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-11-fluxo-de-controle-e-programas-completos">Sprint 11 — Fluxo de controle e programas completos</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>21/10 a 28/10</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Execução de fluxo de controle e teste de programas completos</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>26/10 geração de código final (teórica) · 28/10 prática: protótipo de geração de código final (adaptado para execução direta)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_10">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Implementar a execução de laços (<code>while</code>) e condicionais (<code>if</code>/<code>else</code>) no interpretador</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Rodar programas completos com loops e tomadas de decisão</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_10">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Interpretador capaz de rodar scripts com condicionais e repetição completas</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Suíte com 10+ programas <code>.c</code> de teste (fatorial, primos, Fibonacci, etc.)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_10">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Condicionais</td>
+<td><code>NODE_IF</code>: avaliar a condição; se verdadeira, <code>execute_ast(node-&gt;then_branch)</code>; senão, <code>execute_ast(node-&gt;else_branch)</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Laços</td>
+<td><code>NODE_WHILE</code>: <code>while (evaluate_expr(node-&gt;condition))</code> executando o bloco interno recursivamente</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>E/S</td>
+<td><code>printf()</code> lendo o valor atual das variáveis no ambiente runtime e imprimindo no stdout</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Problemas e soluções: controle de pilha/recursão em laços profundos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-12-consolidacao-do-interpretador-e-preparacao-do-p2">Sprint 12 — Consolidação do interpretador e preparação do P2</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>28/10 a 04/11</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Consolidação do interpretador e preparação para o P2</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>02/11 feriado · 04/11 Compiladores e LLM</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_11">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Estabilizar todas as funcionalidades do interpretador</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Preencher o formulário do ponto de controle P2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_11">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Interpretador funcional e testado em diversos cenários</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Formulário de P2 preenchido e enviado <strong>antes de 04/11</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Apresentação do P2 estruturada e treinada</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_11">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Qualidade</td>
+<td>Varredura de vazamentos de memória com Valgrind durante o percurso da AST</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Formulário P2</td>
+<td>Preencher: principais avanços desde o P1, demonstração da execução da AST, otimizações e ajustes no planejamento</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação P2</td>
+<td>Focar na interpretação em tempo de execução e na execução dos códigos de teste</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Planejamento das sprints: fechamento do status até a Sprint 12</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-13-apresentacao-p2-e-refinamento-do-backlog">Sprint 13 — Apresentação P2 e refinamento do backlog</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>04/11 a 11/11</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Apresentação do ponto de controle P2 e refinamento do backlog</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>09/11 P2 1ª parte · 11/11 P2 2ª parte</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_12">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Apresentar o ponto de controle P2 ao professor</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Mapear e implementar os ajustes solicitados na avaliação</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_12">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Apresentação presencial do P2 concluída</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Lista de melhorias finais prioritárias para a entrega do projeto</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_12">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação P2</td>
+<td>Demo ao vivo do interpretador rodando programas C e exibindo os resultados calculados</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Feedback</td>
+<td>Identificar bugs de execução ou casos não previstos na gramática/semântica apontados pelo professor</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Backlog</td>
+<td>Priorizar as tarefas restantes para garantir zero erros na entrega definitiva</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Problemas e soluções: feedbacks do P2 e alterações realizadas no código</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-14-polimento-escopos-avancados-e-recursos-extras">Sprint 14 — Polimento, escopos avançados e recursos extras</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>11/11 a 18/11</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Polimento, escopos avançados e recursos adicionais</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>16/11 e 18/11 atividade: implementação final do compilador/interpretador</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_13">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Incluir recursos extras se o cronograma permitir (funções simples ou arrays)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Garantir mensagens de erro e exceções de runtime amigáveis (ex.: divisão por zero)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_13">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Tratamento de exceções em tempo de execução (divisão por zero, variáveis <em>uninitialized</em>)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Código-fonte refatorado e limpo</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_13">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Runtime errors</td>
+<td>Na divisão, emitir <code>Runtime Error: Division by zero</code> e abortar suavemente</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Escopo de blocos</td>
+<td>Variáveis declaradas em <code>{}</code> de <code>if</code>/<code>while</code> destruídas ao sair do bloco</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Limpeza</td>
+<td>Padronizar nomes, remover <code>printf</code> de depuração e organizar arquivos <code>.h</code> / <code>.c</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Decisões técnicas: arquitetura de escopos de memória de runtime</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-15-code-freeze-e-documentacao-final">Sprint 15 — Code freeze e documentação final</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>18/11 a 25/11</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Congelamento do código (<em>code freeze</em>) e fechamento da documentação final</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>23/11 e 25/11 atividade: implementação final — entrega no GitHub</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_14">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Congelar o código-fonte 15 dias antes das entrevistas (exigência do professor)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Concluir a documentação completa no GitHub</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_14">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Repositório no GitHub finalizado e atualizado</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Manual de uso e guia de compilação no <code>README.md</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arquivo <code>.zip</code> com código e documentação (caso solicitado via Teams)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_14">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Code freeze</td>
+<td>Commit final da versão estável do interpretador</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Repositório</td>
+<td>Verificar permissão de leitura do professor e se a estrutura atende a todos os critérios</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Estrutura do projeto: mapeamento completo de pastas, arquivos e módulos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Decisões técnicas: resumo da Sprint 1 à 15 (Flex, Bison, AST, tabela de símbolos, interpretação direta e otimizações)</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Planejamento das sprints: histórico consolidado do que foi executado</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>README</td>
+<td>Problemas e soluções: tabela/lista de bugs e desafios da equipe e como foram resolvidos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Guia</td>
+<td>Tutorial passo a passo: clonar, compilar (<code>make</code>) e rodar scripts de teste no interpretador</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-16-entrevistas-finais-e-encerramento">Sprint 16 — Entrevistas finais e encerramento</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Período</td>
+<td>25/11 a 02/12</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Preparação para as entrevistas finais e encerramento da disciplina</td>
+</tr>
+<tr>
+<td>Aulas</td>
+<td>30/11 e 02/12 entrevistas de entrega do trabalho final (presencial)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="objetivos_15">Objetivos</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Objetivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Alinhar o conhecimento entre todos os membros da equipe</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Participar da entrevista presencial com o professor</td>
+</tr>
+</tbody>
+</table>
+<h4 id="entregas_15">Entregas</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Entrevista de defesa do projeto final realizada por todos os membros da equipe</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tarefas_15">Tarefas</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Alinhamento</td>
+<td>Reunião interna: cada membro explica a parte que desenvolveu e tira dúvidas. Todos devem dominar do Flex até a execução da AST</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Demonstração</td>
+<td>Notebooks preparados com o interpretador pronto para compilar e executar na frente do professor</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Entrevista</td>
+<td>Apresentar o interpretador funcionando, responder perguntas técnicas sobre as escolhas de projeto e demonstrar a robustez do software</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
