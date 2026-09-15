@@ -1,0 +1,37 @@
+# --- Ambiente Virtual Python ---
+venv/
+.venv/
+ENV/
+env/
+
+# --- MkDocs (Arquivos gerados no build local) ---
+site/
+.cache/
+
+# --- Compilação C / Executáveis ---
+*.o
+*.out
+interpreter
+*.exe
+
+# --- Arquivos Gerados pelo Flex & Bison ---
+*.tab.c
+*.tab.h
+*.lex.c
+lex.yy.c
+parser.tab.c
+parser.tab.h
+
+# --- Sistema Operacional (macOS) ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- IDEs e Editores (VS Code, JetBrains) ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Logs ---
+*.log
