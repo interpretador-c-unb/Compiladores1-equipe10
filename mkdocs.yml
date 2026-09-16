@@ -1,0 +1,29 @@
+site_name: Interpretador C - Equipe 10
+docs_dir: documentos
+
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - tables
+  - pymdownx.superfences
+
+nav:
+  - Estrutura do Projeto: index.md
+  - Decisões Técnicas: decisoes-tecnicas.md
+  - Planejamento das Sprints: planejamento-sprints.md
+  - Problemas e Soluções: problemas-e-solucoes.md
