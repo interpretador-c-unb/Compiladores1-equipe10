@@ -1,20 +1,32 @@
-# Decisões Técnicas (A SER PREENCHIDO)
+# Decisões Técnicas
 
-Esta página registra as justificativas arquiteturais e escolhas de implementação adotadas pela equipe para o desenvolvimento do interpretador.
+Este documento registra as decisões adotadas na implementação inicial do interpretador de um subconjunto da linguagem C.
 
-## 1. Escopo da Linguagem Interpretada
-* **Tipos de dados suportados:** `[Ex: int, float]`
-* **Estruturas de controle:** `[Ex: if/else, while]`
-* **Operadores:** `[Ex: Aritméticos (+, -, *, /), Relacionais (==, !=, <, >)]`
-* **Entrada/Saída:** `[Ex: Suporte básico a printf]`
+## 1. Organização dos arquivos
 
-## 2. Ferramentas e Padrões Adotados
+Os arquivos da fase léxica e sintática ficam na pasta `src/`:
 
-### Análise Léxica e Sintática (Flex & Bison)
-Escolha do **Flex** e **Bison** para automatizar a geração do scanner e parser LR, garantindo integração nativa com a linguagem C.
+- `lexer.l`: especificação do analisador léxico em Flex;
+- `parser.y`: especificação inicial do analisador sintático em Bison;
+- `Makefile`: automação da geração e compilação do projeto.
 
-### Representação Intermediária via AST
-Opção por representar o programa como uma Árvore Sintática Abstrata (AST) dinamicamente alocada na memória, permitindo percursos múltiplos (validação semântica, otimizações e interpretação direta).
+Os arquivos `lex.yy.c`, `parser.tab.c` e `parser.tab.h` são gerados automaticamente pelo Flex e pelo Bison e não devem ser editados manualmente.
 
-### Gerenciamento de Escopo e Tabela de Símbolos
-Implementação da Tabela de Símbolos via `[Ex: Pilha de Tabelas Hash / Lista Encadeada]`, permitindo suporte a escopos estáticos e aninhamento de blocos `{}`.
+## 2. Ferramentas utilizadas
+
+O projeto utiliza:
+
+- **Flex** para gerar o analisador léxico;
+- **Bison** para gerar o analisador sintático;
+- **GCC** para compilar os arquivos C gerados;
+- **Make** para automatizar o processo de build.
+
+O comando `make` executa as etapas de geração do parser, geração do lexer e compilação do executável.
+
+## 3. Organização dos tokens
+
+As palavras reservadas são reconhecidas antes da regra genérica de identificadores. Dessa forma, palavras como `int`, `float`, `if`, `else`, `while`, `return` e `printf` recebem tokens específicos.
+
+Os identificadores seguem o padrão:
+
+``` [A-Za-z_][A-Za-z0-9_]*
