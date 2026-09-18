@@ -1,5 +1,8 @@
 %{
+#define _POSIX_C_SOURCE 200809L
 #include "interpretador_c.tab.h"  /* Inclusão do cabeçalho gerado pelo Bison, que contém as definições de tokens */
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 %}
 

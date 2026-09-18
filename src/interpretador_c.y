@@ -13,22 +13,18 @@ void yyerror(const char *s);
 
 %}
 
-%token NUM
-%token SEMI
-%token STRING
-%token ID
-%token EQ
-%token QUOT
-
 %union {
     int intValue;
     char *idValue;
     char *stringValue;
 }
 
-%type <intValue> NUM
-%type <idValue> ID
-%type <stringValue> STRING
+%token <intValue> NUM
+%token SEMI
+%token <stringValue> STRING
+%token <idValue> ID
+%token EQ
+%token QUOT
 
 %%
 /* A gramática */
