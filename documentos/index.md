@@ -5,6 +5,7 @@ Nesta seção é apresentada a organização de diretórios e arquivos do reposi
 ```text
 Compiladores1-equipe10/
 ├── documentos/
+|   ├── analisador-lexico.md
 │   ├── estrutura-do-projeto.md
 │   ├── decisoes-tecnicas.md
 │   ├── planejamento-sprints.md
