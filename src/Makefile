@@ -1,42 +1,37 @@
-# Nome do executável final
-EXEC = parser
-
-# Arquivos-fonte do Bison e do Flex
-BISON_FILE = interpretador_c.y
-FLEX_FILE  = interpretador_c.l
-
-# Arquivos que o Bison vai gerar
-BISON_C   = interpretador_c.tab.c
-BISON_H   = interpretador_c.tab.h
-
-# Arquivo gerado pelo Flex
-FLEX_C    = lex.yy.c
-
-# Parâmetros opcionais ao Bison e Flex
-BISON_FLAGS = -d   # -d gera o arquivo .h (token definitions)
-FLEX_FLAGS  =      # deixe vazio ou acrescente opções se necessário
-
-# Parâmetros de compilação
+# Ferramentas
 CC = gcc
-CFLAGS = 
-LDFLAGS = -lfl     # biblioteca do Flex
+FLEX = flex
+BISON = bison
 
-# Regra padrão (alvo "all" vai gerar o executável)
-all: $(EXEC)
+# Opções de compilação
+CFLAGS = -Wall -Wextra -std=gnu11
+LDLIBS =
 
-# Regra para gerar o executável: depende dos arquivos C do Bison e do Flex
-$(EXEC): $(BISON_C) $(FLEX_C)
-	$(CC) $(CFLAGS) -o $@ $(BISON_C) $(FLEX_C) $(LDFLAGS)
+# Arquivo executável e fontes do projeto
+TARGET = parser
+LEXER = interpretador_c.l
+PARSER = interpretador_c.y
+LEXER_C = lex.yy.c
+PARSER_C = interpretador_c.tab.c
+PARSER_H = interpretador_c.tab.h
 
-# Regra para rodar o Bison: gera interpretador_c.tab.c e interpretador_c.tab.h
-$(BISON_C) $(BISON_H): $(BISON_FILE)
-	bison $(BISON_FLAGS) $(BISON_FILE)
+.PHONY: all clean rebuild
 
-# Regra para rodar o Flex: gera lex.yy.c
-$(FLEX_C): $(FLEX_FILE)
-	flex $(FLEX_FLAGS) $(FLEX_FILE)
+all: $(TARGET)
 
-# Regra de limpeza: remove arquivos gerados
+# Liga o parser gerado pelo Bison com o scanner gerado pelo Flex.
+$(TARGET): $(PARSER_C) $(LEXER_C)
+	$(CC) $(CFLAGS) -o $@ $(PARSER_C) $(LEXER_C) $(LDLIBS)
+
+# -d gera o cabeçalho compartilhado pelo lexer e pelo parser.
+$(PARSER_C) $(PARSER_H): $(PARSER)
+	$(BISON) -d -o $(PARSER_C) $(PARSER)
+
+# O lexer inclui o cabeçalho gerado pelo Bison.
+$(LEXER_C): $(LEXER) $(PARSER_H)
+	$(FLEX) -o $@ $(LEXER)
+
+rebuild: clean all
+
 clean:
-	rm -f $(EXEC) $(BISON_C) $(BISON_H) $(FLEX_C)
-
+	rm -f $(TARGET) $(LEXER_C) $(PARSER_C) $(PARSER_H)
