@@ -7,8 +7,8 @@ BISON = bison
 CFLAGS = -Wall -Wextra -std=gnu11
 LDLIBS =
 
-# Arquivo executável e fontes do projeto
-TARGET = parser
+# Executável na raiz do repositório, como no README (./interpreter).
+TARGET = ../interpreter
 LEXER = interpretador_c.l
 PARSER = interpretador_c.y
 LEXER_C = lex.yy.c
@@ -34,4 +34,4 @@ $(LEXER_C): $(LEXER) $(PARSER_H)
 rebuild: clean all
 
 clean:
-	rm -f $(TARGET) $(LEXER_C) $(PARSER_C) $(PARSER_H)
+	rm -f $(TARGET) parser $(LEXER_C) $(PARSER_C) $(PARSER_H)
