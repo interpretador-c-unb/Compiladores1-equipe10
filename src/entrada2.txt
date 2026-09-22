@@ -1,4 +1,0 @@
-carro = "maclarem";
-moto = "BMW";
-salario = 100000;
-15321;

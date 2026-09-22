@@ -4,43 +4,62 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* 
-   Declarações explícitas para evitar warnings de 
-   “implicit declaration of function yylex/yyerror”
-*/
 int yylex(void);
 void yyerror(const char *s);
-
+int lex_column(void);
+extern int yylineno;
 %}
 
 %union {
-    int intValue;
+    double numValue;
+    int charValue;
     char *idValue;
     char *stringValue;
 }
 
-%token <intValue> NUM
-%token SEMI
+%token <numValue> NUM
 %token <stringValue> STRING
 %token <idValue> ID
-%token EQ
-%token QUOT
+%token <charValue> CHARLIT
+
+%token IF ELSE WHILE FOR RETURN
+%token INT CHAR FLOAT VOID
+
+%token ASSIGN
+%token PLUS MINUS STAR SLASH PERCENT
+%token EQ NE LT GT LE GE
+%token ANDAND OROR NOT
+%token PLUSPLUS MINUSMINUS
+
+%token LPAREN RPAREN
+%token LBRACE RBRACE
+%token LBRACK RBRACK
+%token SEMI COMMA
+
+%destructor { free($$); } ID STRING
 
 %%
-/* A gramática */
+
 programa:
-    atribuicao programa 
+    atribuicao programa
     | atribuicao
     ;
 
-
 atribuicao:
-    ID EQ NUM SEMI {printf("%s = %d\n", $1, $3 );} 
-    | ID EQ QUOT STRING QUOT SEMI {printf("%s = \"%s\"\n", $1, $4 );}
+    ID ASSIGN NUM SEMI {
+        printf("%s = %.15g\n", $1, $3);
+        free($1);
+    }
+    | ID ASSIGN STRING SEMI {
+        printf("%s = \"%s\"\n", $1, $3);
+        free($1);
+        free($3);
+    }
+    ;
 
 %%
 
-/* Definição de yyerror */
 void yyerror(const char *s) {
-    fprintf(stderr, "Erro sintático: %s\n", s);
+    fprintf(stderr, "Erro sintático: %s na linha %d, coluna %d\n",
+            s, yylineno, lex_column());
 }
