@@ -25,5 +25,6 @@ markdown_extensions:
 nav:
   - Estrutura do Projeto: index.md
   - Decisões Técnicas: decisoes-tecnicas.md
+  - Gramática & BNF: gramatica-bnf.md
   - Planejamento das Sprints: planejamento-sprints.md
   - Problemas e Soluções: problemas-e-solucoes.md

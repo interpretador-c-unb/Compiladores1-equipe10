@@ -36,6 +36,18 @@ extern int yylineno;
 %token LBRACK RBRACK
 %token SEMI COMMA
 
+%nonassoc LOWER_THAN_ELSE
+%nonassoc ELSE
+
+%right ASSIGN
+%left OROR
+%left ANDAND
+%left EQ NE
+%left LT LE GT GE
+%left PLUS MINUS
+%left STAR SLASH PERCENT
+%right NOT UMINUS PLUSPLUS MINUSMINUS
+
 %destructor { free($$); } ID STRING
 
 %%
