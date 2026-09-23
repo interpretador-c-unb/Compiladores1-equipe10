@@ -1,0 +1,2093 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../gramatica-bnf/">
+      
+      
+        <link rel="next" href="../problemas-e-solucoes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Planejamento das Sprints - Interpretador C - Equipe 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#planejamento-das-sprints" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-header__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Interpretador C - Equipe 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Planejamento das Sprints
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-nav__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Interpretador C - Equipe 10
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estrutura do Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisoes-tecnicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões Técnicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gramatica-bnf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gramática & BNF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#estrategia-de-rodizio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estratégia de Rodízio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapeamento-do-rodizio-da-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapeamento do Rodízio da Equipe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral-das-sprints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visão Geral das Sprints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marcos-de-avaliacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marcos de Avaliação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detalhamento-das-sprints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detalhamento das Sprints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detalhamento das Sprints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1-definicao-do-escopo-setup-e-analise-lexica-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 1 — Definição do escopo, setup e análise léxica inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2-lexico-completo-e-gramatica-inicial-no-bison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 2 — Léxico completo e gramática inicial no Bison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3-analise-sintatica-basica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 3 — Análise sintática básica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-4-parser-completo-e-erros-sintaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 4 — Parser completo e erros sintáticos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-5-ast-e-tabela-de-simbolos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 5 — AST e tabela de símbolos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-6-visualizacao-da-ast-e-preparacao-do-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 6 — Visualização da AST e preparação do P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-7-apresentacao-p1-e-ajustes-de-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 7 — Apresentação P1 e ajustes de feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-8-analise-semantica-integrada-a-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 8 — Análise semântica integrada à AST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-9-interpretador-execucao-direta-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 9 — Interpretador (execução direta da AST)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-10-otimizacao-na-interpretacao-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 10 — Otimização na interpretação da AST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-11-fluxo-de-controle-e-programas-completos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 11 — Fluxo de controle e programas completos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-12-consolidacao-e-preparacao-do-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 12 — Consolidação e preparação do P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-13-apresentacao-p2-e-refinamento-do-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 13 — Apresentação P2 e refinamento do backlog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-14-polimento-escopos-avancados-e-excecoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 14 — Polimento, escopos avançados e exceções
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-15-code-freeze-e-documentacao-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 15 — Code freeze e documentação final
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-16-entrevistas-presenciais-e-defesa-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 16 — Entrevistas presenciais e defesa final
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../problemas-e-solucoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problemas e Soluções
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#estrategia-de-rodizio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estratégia de Rodízio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapeamento-do-rodizio-da-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapeamento do Rodízio da Equipe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral-das-sprints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visão Geral das Sprints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marcos-de-avaliacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marcos de Avaliação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detalhamento-das-sprints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detalhamento das Sprints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detalhamento das Sprints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1-definicao-do-escopo-setup-e-analise-lexica-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 1 — Definição do escopo, setup e análise léxica inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2-lexico-completo-e-gramatica-inicial-no-bison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 2 — Léxico completo e gramática inicial no Bison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3-analise-sintatica-basica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 3 — Análise sintática básica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-4-parser-completo-e-erros-sintaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 4 — Parser completo e erros sintáticos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-5-ast-e-tabela-de-simbolos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 5 — AST e tabela de símbolos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-6-visualizacao-da-ast-e-preparacao-do-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 6 — Visualização da AST e preparação do P1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-7-apresentacao-p1-e-ajustes-de-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 7 — Apresentação P1 e ajustes de feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-8-analise-semantica-integrada-a-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 8 — Análise semântica integrada à AST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-9-interpretador-execucao-direta-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 9 — Interpretador (execução direta da AST)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-10-otimizacao-na-interpretacao-da-ast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 10 — Otimização na interpretação da AST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-11-fluxo-de-controle-e-programas-completos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 11 — Fluxo de controle e programas completos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-12-consolidacao-e-preparacao-do-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 12 — Consolidação e preparação do P2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-13-apresentacao-p2-e-refinamento-do-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 13 — Apresentação P2 e refinamento do backlog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-14-polimento-escopos-avancados-e-excecoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 14 — Polimento, escopos avançados e exceções
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-15-code-freeze-e-documentacao-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 15 — Code freeze e documentação final
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-16-entrevistas-presenciais-e-defesa-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 16 — Entrevistas presenciais e defesa final
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="planejamento-das-sprints">Planejamento das Sprints</h1>
+<p>Interpretador de um subconjunto de C — Compiladores 1 · Grupo 10 · 2026.2</p>
+<p>Metodologia: Scrum/XP, sprints de uma semana (12/08/2026 a 02/12/2026).</p>
+<blockquote>
+<p><strong>Situação atual (16/09/2026):</strong> Sprint 6 em andamento (16/09 a 23/09) — Impressão da AST e preparação do P1.</p>
+</blockquote>
+<p>Legenda de status nas tarefas: <code>[ ]</code> pendente · <code>[x]</code> concluído.</p>
+<hr />
+<h2 id="estrategia-de-rodizio">Estratégia de Rodízio</h2>
+<p>Para garantir rastreabilidade, aprendizado contínuo e transferência de conhecimento sem perda de contexto, a equipe opera sob um modelo de <strong>Rodízio Cruzado por Pares</strong>:</p>
+<ul>
+<li><strong>Distribuição por Sprint:</strong> Em cada sprint, <strong>2 membros</strong> atuam na frente de <strong>Documentação/Gestão (DOC)</strong> e <strong>3 membros</strong> na frente de <strong>Desenvolvimento (DEV)</strong>.</li>
+<li><strong>Passagem de Bastão (Pares Sobrepostos):</strong> A cada transição de sprint, apenas <strong>1 integrante</strong> da Documentação troca de lugar com <strong>1 integrante</strong> do Código. Dessa forma, a Documentação sempre mantém 1 membro veterano (da sprint anterior) e 1 membro novo, garantindo que o conhecimento do código recente seja documentado com precisão e sem ruídos.</li>
+<li><strong>Atualização Contínua do Pages:</strong> Em <strong>todas as sprints</strong>, a dupla responsável pela Documentação tem a obrigação de atualizar a situação atual e o status das tarefas na documentação oficial publicada no <strong>GitHub Pages</strong>.</li>
+</ul>
+<hr />
+<h2 id="mapeamento-do-rodizio-da-equipe">Mapeamento do Rodízio da Equipe</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Sprint</th>
+<th style="text-align: left;">Dupla de Documentação (DOC)</th>
+<th style="text-align: left;">Trio de Desenvolvimento (DEV)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>Sprint 1</strong></td>
+<td style="text-align: left;">Nicole Jovita &amp; Bernardo Campos</td>
+<td style="text-align: left;">Danielly Mendes, Rafael Laube, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 2</strong></td>
+<td style="text-align: left;">Nicole Jovita &amp; Danielly Mendes</td>
+<td style="text-align: left;">Bernardo Campos, Rafael Laube, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 3</strong></td>
+<td style="text-align: left;">Danielly Mendes &amp; Rafael Laube</td>
+<td style="text-align: left;">Nicole Jovita, Bernardo Campos, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 4</strong></td>
+<td style="text-align: left;">Rafael Laube &amp; Paulo Nina</td>
+<td style="text-align: left;">Nicole Jovita, Danielly Mendes, Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 5</strong></td>
+<td style="text-align: left;">Paulo Nina &amp; Bernardo Campos</td>
+<td style="text-align: left;">Nicole Jovita, Danielly Mendes, Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 6</strong></td>
+<td style="text-align: left;">Bernardo Campos &amp; Nicole Jovita</td>
+<td style="text-align: left;">Danielly Mendes, Rafael Laube, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 7</strong></td>
+<td style="text-align: left;">Nicole Jovita &amp; Danielly Mendes</td>
+<td style="text-align: left;">Bernardo Campos, Rafael Laube, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 8</strong></td>
+<td style="text-align: left;">Danielly Mendes &amp; Rafael Laube</td>
+<td style="text-align: left;">Nicole Jovita, Bernardo Campos, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 9</strong></td>
+<td style="text-align: left;">Rafael Laube &amp; Paulo Nina</td>
+<td style="text-align: left;">Nicole Jovita, Danielly Mendes, Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 10</strong></td>
+<td style="text-align: left;">Paulo Nina &amp; Bernardo Campos</td>
+<td style="text-align: left;">Nicole Jovita, Danielly Mendes, Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 11</strong></td>
+<td style="text-align: left;">Bernardo Campos &amp; Nicole Jovita</td>
+<td style="text-align: left;">Danielly Mendes, Rafael Laube, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 12</strong></td>
+<td style="text-align: left;">Nicole Jovita &amp; Danielly Mendes</td>
+<td style="text-align: left;">Bernardo Campos, Rafael Laube, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 13</strong></td>
+<td style="text-align: left;">Danielly Mendes &amp; Rafael Laube</td>
+<td style="text-align: left;">Nicole Jovita, Bernardo Campos, Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 14</strong></td>
+<td style="text-align: left;">Rafael Laube &amp; Paulo Nina</td>
+<td style="text-align: left;">Nicole Jovita, Danielly Mendes, Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 15</strong></td>
+<td style="text-align: left;">Paulo Nina &amp; Bernardo Campos</td>
+<td style="text-align: left;">Nicole Jovita, Danielly Mendes, Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Sprint 16</strong></td>
+<td style="text-align: left;"><strong>Toda a Equipe</strong> (Defesa e Apresentação)</td>
+<td style="text-align: left;"><strong>Toda a Equipe</strong> (Defesa e Apresentação)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="visao-geral-das-sprints">Visão Geral das Sprints</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Sprint</th>
+<th>Período</th>
+<th>Foco</th>
+<th>Entregas-chave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>12/08 – 19/08</td>
+<td>Escopo da linguagem, setup e análise léxica inicial</td>
+<td>Repo GitHub · <code>lexer.l</code> inicial · README</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>19/08 – 26/08</td>
+<td>Léxico completo e gramática inicial no Bison</td>
+<td><code>lexer.l</code> completo · <code>parser.y</code> inicial · Makefile</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>26/08 – 02/09</td>
+<td>Análise sintática básica</td>
+<td>Gramática de declarações/expressões · <code>main.c</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>02/09 – 09/09</td>
+<td>Parser completo e erros sintáticos</td>
+<td><code>if</code>/<code>else</code>/<code>while</code>/blocos · <code>yyerror()</code> com linha e coluna</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>09/09 – 16/09</td>
+<td>AST e tabela de símbolos</td>
+<td><code>ast.c</code>/<code>ast.h</code> · <code>symbol_table.c</code>/<code>symbol_table.h</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>16/09 – 23/09</td>
+<td>Impressão da AST e preparação do P1</td>
+<td><code>print_ast()</code> · Formulário P1 · Slides</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>23/09 – 30/09</td>
+<td>Apresentação P1 e ajustes de feedback</td>
+<td>Apresentação P1 · Relatório de débitos técnicos</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>30/09 – 07/10</td>
+<td>Análise semântica integrada à AST</td>
+<td><code>semantic.c</code>/<code>semantic.h</code> · Checagem de tipos/escopos</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td>07/10 – 14/10</td>
+<td>Interpretador (execução direta da AST)</td>
+<td><code>interpreter.c</code>/<code>interpreter.h</code> · Runtime environment</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>14/10 – 21/10</td>
+<td>Otimização na interpretação da AST</td>
+<td><code>optimizer.c</code>/<code>optimizer.h</code> · Constant folding</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td>21/10 – 28/10</td>
+<td>Fluxo de controle e programas completos</td>
+<td><code>if</code>/<code>while</code> no interpretador · 10+ testes em C</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td>28/10 – 04/11</td>
+<td>Consolidação e preparação do P2</td>
+<td>Interpretador estável · Formulário P2 · Slides</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td>04/11 – 11/11</td>
+<td>Apresentação P2 e refinamento do backlog</td>
+<td>Apresentação P2 · Lista de melhorias finais</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td>11/11 – 18/11</td>
+<td>Polimento, escopos avançados e exceções</td>
+<td>Exceções de runtime · Destruição de escopos</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td>18/11 – 25/11</td>
+<td>Code freeze e documentação final</td>
+<td>Repositório congelado · Documentação completa</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td>25/11 – 02/12</td>
+<td>Entrevistas presenciais e defesa final</td>
+<td>Defesa presencial com o professor</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="marcos-de-avaliacao">Marcos de Avaliação</h2>
+<table>
+<thead>
+<tr>
+<th>Marco</th>
+<th>Data</th>
+<th style="text-align: center;">Sprint</th>
+<th>O que entregar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Formulário P1</strong></td>
+<td>até 23/09</td>
+<td style="text-align: center;">6</td>
+<td>Formulário P1 preenchido pelo líder</td>
+</tr>
+<tr>
+<td><strong>Apresentação P1</strong></td>
+<td>28/09 ou 30/09</td>
+<td style="text-align: center;">7</td>
+<td>Slides (5 min) + demo do pipeline até a AST</td>
+</tr>
+<tr>
+<td><strong>Formulário P2</strong></td>
+<td>até 04/11</td>
+<td style="text-align: center;">12</td>
+<td>Formulário P2 preenchido (avanços, execução da AST, otimizações)</td>
+</tr>
+<tr>
+<td><strong>Apresentação P2</strong></td>
+<td>09/11 ou 11/11</td>
+<td style="text-align: center;">13</td>
+<td>Demo ao vivo do interpretador executando programas C</td>
+</tr>
+<tr>
+<td><strong>Code Freeze</strong></td>
+<td>25/11</td>
+<td style="text-align: center;">15</td>
+<td>Repositório finalizado e congelado no GitHub</td>
+</tr>
+<tr>
+<td><strong>Entrevistas Finais</strong></td>
+<td>30/11 e 02/12</td>
+<td style="text-align: center;">16</td>
+<td>Defesa presencial — todos os integrantes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="detalhamento-das-sprints">Detalhamento das Sprints</h2>
+<h3 id="sprint-1-definicao-do-escopo-setup-e-analise-lexica-inicial">Sprint 1 — Definição do escopo, setup e análise léxica inicial</h3>
+<ul>
+<li><strong>Período:</strong> 12/08 a 19/08</li>
+<li><strong>Documentação (DOC):</strong> Nicole Jovita &amp; Bernardo Campos</li>
+<li><strong>Desenvolvimento (DEV):</strong> Danielly Mendes, Rafael Laube, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Estruturar primeira versão do <code>README.md</code> e página inicial do Planejamento no MkDocs</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar status do planejamento e publicar no GitHub Pages</td>
+<td>Nicole Jovita &amp; Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Escopo/Gestão</td>
+<td>Definir subconjunto de C aceito (<code>int</code>, <code>float</code>, operadores, <code>if/else</code>, <code>while</code>, <code>printf</code>)</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Repositório</td>
+<td>Criar repositório GitHub, configurar <code>.gitignore</code> e convidar o professor</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico (<code>lexer.l</code>)</td>
+<td>Implementar ERs para palavras-chave, identificadores e números inteiros</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Ambiente/Léxico</td>
+<td>Testar ferramentas (GCC, Flex, Bison, Make) e criar contador de linhas/colunas em <code>lexer.l</code></td>
+<td>Paulo Nina</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-2-lexico-completo-e-gramatica-inicial-no-bison">Sprint 2 — Léxico completo e gramática inicial no Bison</h3>
+<ul>
+<li><strong>Período:</strong> 19/08 a 26/08</li>
+<li><strong>Documentação (DOC):</strong> Nicole Jovita (Veterana) &amp; Danielly Mendes (Nova)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Bernardo Campos, Rafael Laube, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Escrever a documentação base das Decisões Técnicas e padrão de arquivos</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Registrar o tratamento de comentários em bloco e exceções do Flex no MkDocs</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar status das tarefas e sincronizar publicação no GitHub Pages</td>
+<td>Nicole Jovita &amp; Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Build/Gestão</td>
+<td>Criar o <code>Makefile</code> de automação e apoiar integração de <code>%union</code> e <code>%token</code></td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Léxico avançado</td>
+<td>Finalizar <code>lexer.l</code> com suporte a floats, comentários e operadores compostos</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Parser inicial</td>
+<td>Criar <code>parser.y</code> inicial no Bison garantindo compilação limpa via <code>bison -d</code></td>
+<td>Paulo Nina</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-3-analise-sintatica-basica">Sprint 3 — Análise sintática básica</h3>
+<ul>
+<li><strong>Período:</strong> 26/08 a 02/09</li>
+<li><strong>Documentação (DOC):</strong> Danielly Mendes (Veterana) &amp; Rafael Laube (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Bernardo Campos, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Documentar em Decisões Técnicas a estrutura da BNF e regras de precedência</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Escrever manual de execução do driver <code>main.c</code> e primeiros testes <code>.c</code></td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Sincronizar o avanço da Sprint 3 no GitHub Pages</td>
+<td>Danielly Mendes &amp; Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Implementar regras para declaração de variáveis (<code>type id;</code> e <code>type id = expr;</code>)</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Desenvolver regras para expressões aritméticas e parênteses</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Driver/Gestão</td>
+<td>Implementar <code>main.c</code> integrando <code>yyparse()</code> e resolver conflitos de precedência</td>
+<td>Bernardo Campos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-4-parser-completo-e-erros-sintaticos">Sprint 4 — Parser completo e erros sintáticos</h3>
+<ul>
+<li><strong>Período:</strong> 02/09 a 09/09</li>
+<li><strong>Documentação (DOC):</strong> Rafael Laube (Veterano) &amp; Paulo Nina (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Danielly Mendes, Bernardo Campos</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Documentar no MkDocs a resolução do conflito <em>Dangling Else</em> com <code>%nonassoc</code></td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Registrar a arquitetura de relatório de erros sintáticos (linha/coluna)</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Sincronizar o status atual no GitHub Pages</td>
+<td>Rafael Laube &amp; Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática</td>
+<td>Expandir gramática para comandos compostos <code>{}</code> e estruturas <code>if</code>/<code>else</code></td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Gramática/Erros</td>
+<td>Implementar laços <code>while</code> e customizar <code>yyerror()</code> com linha e coluna</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Erros/Gestão</td>
+<td>Habilitar <code>%define parse.error verbose</code> e testar mensagens detalhadas de erro</td>
+<td>Bernardo Campos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-5-ast-e-tabela-de-simbolos">Sprint 5 — AST e tabela de símbolos</h3>
+<ul>
+<li><strong>Período:</strong> 09/09 a 16/09</li>
+<li><strong>Documentação (DOC):</strong> Paulo Nina (Veterano) &amp; Bernardo Campos (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Danielly Mendes, Rafael Laube</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Escrever documentação técnica da estrutura da AST (<code>ast.h</code>/<code>ast.c</code>)</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Registrar a arquitetura da Tabela de Símbolos (<code>symbol_table.h</code>/<code>symbol_table.c</code>)</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar o progresso da Sprint 5 no GitHub Pages</td>
+<td>Paulo Nina &amp; Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>AST</td>
+<td>Criar módulo <code>ast.h</code>/<code>ast.c</code> e conectar ações semânticas no Bison</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Tabela de Símbolos</td>
+<td>Implementar <code>symbol_table.c</code> com <code>insert_symbol()</code> e <code>lookup_symbol()</code></td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Integração</td>
+<td>Fazer o parser retornar a raiz da AST ao final de <code>yyparse()</code></td>
+<td>Rafael Laube</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-6-visualizacao-da-ast-e-preparacao-do-p1">Sprint 6 — Visualização da AST e preparação do P1</h3>
+<ul>
+<li><strong>Período:</strong> 16/09 a 23/09</li>
+<li><strong>Documentação (DOC):</strong> Bernardo Campos (Veterano) &amp; Nicole Jovita (Nova)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Danielly Mendes, Rafael Laube, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Formulário P1</td>
+<td>Preencher o formulário do P1 com a consolidação da equipe e entregas</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação</td>
+<td>Criar slides (5 min) e organizar a suíte de testes do front-end</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar o status consolidado pré-P1 no GitHub Pages</td>
+<td>Bernardo Campos &amp; Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Visualizador</td>
+<td>Implementar a função de exibição indentada da AST (<code>print_ast()</code>)</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Testes</td>
+<td>Elaborar bateria de 5+ testes em C validando erros e geração da AST</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Tabela/Ajustes</td>
+<td>Adequar a tabela de símbolos para suporte à checagem de escopo inicial</td>
+<td>Paulo Nina</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-7-apresentacao-p1-e-ajustes-de-feedback">Sprint 7 — Apresentação P1 e ajustes de feedback</h3>
+<ul>
+<li><strong>Período:</strong> 23/09 a 30/09</li>
+<li><strong>Documentação (DOC):</strong> Nicole Jovita (Veterana) &amp; Danielly Mendes (Nova)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Bernardo Campos, Rafael Laube, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Registrar relatório de débitos técnicos e feedbacks do professor pós-P1</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar a página de Problemas e Soluções com o plano de ação</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar o status atual no GitHub Pages</td>
+<td>Nicole Jovita &amp; Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação</td>
+<td>Realizar a apresentação do P1 e liderar atendimento aos feedbacks</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Refatoração</td>
+<td>Ajustar gramática e regras do scanner com base nos apontamentos</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Estabilização</td>
+<td>Congelar Front-End (Flex + Bison + AST) garantindo ausência de memory leaks</td>
+<td>Paulo Nina</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-8-analise-semantica-integrada-a-ast">Sprint 8 — Análise semântica integrada à AST</h3>
+<ul>
+<li><strong>Período:</strong> 30/09 a 07/10</li>
+<li><strong>Documentação (DOC):</strong> Danielly Mendes (Veterana) &amp; Rafael Laube (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Bernardo Campos, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Documentar tabela de compatibilidade de tipos e regras semânticas</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Escrever guia de mensagens de erros semânticos no MkDocs</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Publicar avanço da Sprint 8 no GitHub Pages</td>
+<td>Danielly Mendes &amp; Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Semântica</td>
+<td>Implementar travessia na AST (<code>semantic.c</code>) para detectar variáveis não declaradas</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Tipagem</td>
+<td>Implementar checagem de tipos e coerção implícita simples (<code>int</code> → <code>float</code>)</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Fluxo/Gestão</td>
+<td>Validar condições booleanas de <code>if</code>/<code>while</code> e apoiar regras de escopo</td>
+<td>Bernardo Campos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-9-interpretador-execucao-direta-da-ast">Sprint 9 — Interpretador (execução direta da AST)</h3>
+<ul>
+<li><strong>Período:</strong> 07/10 a 14/10</li>
+<li><strong>Documentação (DOC):</strong> Rafael Laube (Veterano) &amp; Paulo Nina (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Danielly Mendes, Bernardo Campos</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Documentar a arquitetura da memória de runtime (<code>Environment</code>) em Decisões Técnicas</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar o diagrama arquitetural do interpretador no MkDocs</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Sincronizar atualizações no GitHub Pages</td>
+<td>Rafael Laube &amp; Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Runtime</td>
+<td>Desenvolver o módulo <code>interpreter.c</code> e a função recursiva <code>evaluate_expr()</code></td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Runtime</td>
+<td>Implementar a estrutura <code>Environment</code> para atualização de variáveis (<code>NODE_ASSIGN</code>)</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Execução/Gestão</td>
+<td>Implementar a avaliação de nós aritméticos binários em tempo de execução</td>
+<td>Bernardo Campos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-10-otimizacao-na-interpretacao-da-ast">Sprint 10 — Otimização na interpretação da AST</h3>
+<ul>
+<li><strong>Período:</strong> 14/10 a 21/10</li>
+<li><strong>Documentação (DOC):</strong> Paulo Nina (Veterano) &amp; Bernardo Campos (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Danielly Mendes, Rafael Laube</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Documentar regras de <em>Constant Folding</em> e simplificação de expressões</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Elaborar gráficos e relatórios comparativos da redução de nós na AST</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar o progresso da Sprint 10 no GitHub Pages</td>
+<td>Paulo Nina &amp; Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Otimização</td>
+<td>Implementar travessia de <em>Constant Folding</em> no módulo <code>optimizer.c</code> (ex.: <code>3 + 5</code> → <code>8</code>)</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Otimização</td>
+<td>Implementar eliminação de expressões redundantes (<code>x + 0</code>, <code>x * 1</code>)</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Otimização</td>
+<td>Implementar remoção de código morto em blocos <code>if (0)</code></td>
+<td>Rafael Laube</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-11-fluxo-de-controle-e-programas-completos">Sprint 11 — Fluxo de controle e programas completos</h3>
+<ul>
+<li><strong>Período:</strong> 21/10 a 28/10</li>
+<li><strong>Documentação (DOC):</strong> Bernardo Campos (Veterano) &amp; Nicole Jovita (Nova)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Danielly Mendes, Rafael Laube, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Documentar em Problemas e Soluções a gestão de pilha em laços profundos</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Escrever a documentação dos 10+ programas de teste em C no MkDocs</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Publicar status atualizado no GitHub Pages</td>
+<td>Bernardo Campos &amp; Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Execução</td>
+<td>Implementar interpretação de <code>NODE_IF</code> executando ramos <code>then</code>/<code>else</code></td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Execução</td>
+<td>Implementar execução de laços <code>NODE_WHILE</code> recursivamente</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>E/S</td>
+<td>Integrar comando <code>printf()</code> lendo os valores da memória de runtime</td>
+<td>Paulo Nina</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-12-consolidacao-e-preparacao-do-p2">Sprint 12 — Consolidação e preparação do P2</h3>
+<ul>
+<li><strong>Período:</strong> 28/10 a 04/11</li>
+<li><strong>Documentação (DOC):</strong> Nicole Jovita (Veterana) &amp; Danielly Mendes (Nova)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Bernardo Campos, Rafael Laube, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Formulário P2</td>
+<td>Preencher o formulário do P2 com os avanços da interpretação e otimizações</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação</td>
+<td>Criar slides e roteiro da demonstração ao vivo para o P2</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar o status consolidado pré-P2 no GitHub Pages</td>
+<td>Nicole Jovita &amp; Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Qualidade/Gestão</td>
+<td>Executar testes de vazamento de memória com <em>Valgrind</em> na execução da AST</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Estabilidade</td>
+<td>Resolver inconsistências de estado no ambiente de runtime</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Testes</td>
+<td>Garantir execução estável dos 10+ programas de teste da suíte oficial</td>
+<td>Paulo Nina</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-13-apresentacao-p2-e-refinamento-do-backlog">Sprint 13 — Apresentação P2 e refinamento do backlog</h3>
+<ul>
+<li><strong>Período:</strong> 04/11 a 11/11</li>
+<li><strong>Documentação (DOC):</strong> Danielly Mendes (Veterana) &amp; Rafael Laube (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Bernardo Campos, Paulo Nina</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Registrar em Problemas e Soluções os feedbacks da avaliação do P2</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Priorizar e listar melhorias finais para a entrega do projeto no MkDocs</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Atualizar a situação atual no GitHub Pages</td>
+<td>Danielly Mendes &amp; Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Correções</td>
+<td>Resolver bugs de execução apontados durante a demonstração do P2</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Apresentação</td>
+<td>Realizar a apresentação do P2 ao vivo e coordenar backlog de ajustes</td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Semântica/Ajustes</td>
+<td>Ajustar detalhes finos da análise semântica e escopos</td>
+<td>Paulo Nina</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-14-polimento-escopos-avancados-e-excecoes">Sprint 14 — Polimento, escopos avançados e exceções</h3>
+<ul>
+<li><strong>Período:</strong> 11/11 a 18/11</li>
+<li><strong>Documentação (DOC):</strong> Rafael Laube (Veterano) &amp; Paulo Nina (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Danielly Mendes, Bernardo Campos</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Documentar o funcionamento de escopos locais e destruição de variáveis</td>
+<td>Rafael Laube</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Registrar guia de exceções de runtime no MkDocs</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Sincronizar as alterações da Sprint 14 no GitHub Pages</td>
+<td>Rafael Laube &amp; Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Exceções</td>
+<td>Implementar emissão de mensagens amigáveis de runtime (ex.: divisão por zero)</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Escopo</td>
+<td>Garantir destruição correta de variáveis locais ao sair de blocos <code>{}</code></td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Refatoração/Gestão</td>
+<td>Padronizar código-fonte, remover prints de depuração e organizar arquivos</td>
+<td>Bernardo Campos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-15-code-freeze-e-documentacao-final">Sprint 15 — Code freeze e documentação final</h3>
+<ul>
+<li><strong>Período:</strong> 18/11 a 25/11</li>
+<li><strong>Documentação (DOC):</strong> Paulo Nina (Veterano) &amp; Bernardo Campos (Novo)</li>
+<li><strong>Desenvolvimento (DEV):</strong> Nicole Jovita, Danielly Mendes, Rafael Laube</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Revisar e consolidar as 4 seções principais da documentação</td>
+<td>Paulo Nina</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Escrever tutorial passo a passo de compilação e execução no <code>README.md</code></td>
+<td>Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Documentação</td>
+<td>Realizar o deploy final e congelar a versão do GitHub Pages</td>
+<td>Paulo Nina &amp; Bernardo Campos</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Code Freeze</td>
+<td>Executar bateria final de testes de regressão e congelar o código-fonte</td>
+<td>Nicole Jovita</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Entrega</td>
+<td>Verificar permissões do repositório e gerar arquivo <code>.zip</code> se necessário</td>
+<td>Danielly Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Build</td>
+<td>Validar compilação limpa do <code>Makefile</code> em ambiente zerado</td>
+<td>Rafael Laube</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="sprint-16-entrevistas-presenciais-e-defesa-final">Sprint 16 — Entrevistas presenciais e defesa final</h3>
+<ul>
+<li><strong>Período:</strong> 25/11 a 02/12</li>
+<li><strong>Alocação:</strong> <strong>Toda a Equipe</strong> (Bernardo Campos, Danielly Mendes, Nicole Jovita, Paulo Nina, Rafael Laube)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th>Frente</th>
+<th>Atividade</th>
+<th>Responsáveis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Alinhamento</td>
+<td>Reunião geral: garantir domínio por todos os membros desde o Flex até a execução da AST</td>
+<td>Toda a Equipe</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Preparação</td>
+<td>Configurar notebooks com o ambiente pronto para execução ao vivo na entrevista</td>
+<td>Toda a Equipe</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Defesa</td>
+<td>Participar presencialmente da entrevista de defesa do projeto com o professor</td>
+<td>Toda a Equipe</td>
+</tr>
+<tr>
+<td style="text-align: center;">[ ]</td>
+<td>Finalização</td>
+<td>Marcar o encerramento do projeto e versão final no GitHub Pages</td>
+<td>Nicole Jovita &amp; Bernardo Campos</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
