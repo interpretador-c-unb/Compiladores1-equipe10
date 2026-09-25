@@ -7,8 +7,9 @@ BISON = bison
 CFLAGS = -Wall -Wextra -std=gnu11
 LDLIBS =
 
-# Executável na raiz do repositório, como no README (./interpreter).
+# Executável na raiz do repositório (./interpreter)
 TARGET = ../interpreter
+MAIN_C = main.c
 LEXER = interpretador_c.l
 PARSER = interpretador_c.y
 LEXER_C = lex.yy.c
@@ -19,15 +20,15 @@ PARSER_H = interpretador_c.tab.h
 
 all: $(TARGET)
 
-# Liga o parser gerado pelo Bison com o scanner gerado pelo Flex.
-$(TARGET): $(PARSER_C) $(LEXER_C)
-	$(CC) $(CFLAGS) -o $@ $(PARSER_C) $(LEXER_C) $(LDLIBS)
+# Compila e liga o main.c, o parser e o lexer
+$(TARGET): $(PARSER_C) $(LEXER_C) $(MAIN_C)
+	$(CC) $(CFLAGS) -o $@ $(MAIN_C) $(PARSER_C) $(LEXER_C) $(LDLIBS)
 
-# -d gera o cabeçalho compartilhado pelo lexer e pelo parser.
+# -d gera o cabeçalho compartilhado pelo lexer e pelo parser
 $(PARSER_C) $(PARSER_H): $(PARSER)
 	$(BISON) -d -o $(PARSER_C) $(PARSER)
 
-# O lexer inclui o cabeçalho gerado pelo Bison.
+# O lexer inclui o cabeçalho gerado pelo Bison
 $(LEXER_C): $(LEXER) $(PARSER_H)
 	$(FLEX) -o $@ $(LEXER)
 
