@@ -4,7 +4,7 @@ Interpretador de um subconjunto de C — Compiladores 1 · Grupo 10 · 2026.2
 
 Metodologia: Scrum/XP, sprints de uma semana (12/08/2026 a 02/12/2026).
 
-> **Situação atual (16/09/2026):** Sprint 6 em andamento (16/09 a 23/09) — Impressão da AST e preparação do P1.
+> **Situação atual (23/09/2026):** Sprint 7 em andamento (23/09 a 30/09) — Apresentação P1 e ajustes de feedback.
 
 Legenda de status nas tarefas: `[ ]` pendente · `[x]` concluído.
 
