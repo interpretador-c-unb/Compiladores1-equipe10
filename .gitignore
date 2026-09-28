@@ -67,3 +67,6 @@ y.tab.h
 # Sistema operacional
 .DS_Store
 Thumbs.db
+
+*.tab.c
+*.tab.h

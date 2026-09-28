@@ -4,47 +4,128 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* 
-   Declarações explícitas para evitar warnings de 
-   “implicit declaration of function yylex/yyerror”
-*/
 int yylex(void);
 void yyerror(const char *s);
-
+int lex_column(void);
+extern int yylineno;
 %}
 
-%token NUM
-%token SEMI
-%token STRING
-%token ID
-%token EQ
-%token QUOT
-
 %union {
-    int intValue;
+    double numValue;
+    int charValue;
     char *idValue;
     char *stringValue;
 }
 
-%type <intValue> NUM
-%type <idValue> ID
-%type <stringValue> STRING
+%token <numValue> NUM
+%token <stringValue> STRING
+%token <idValue> ID
+%token <charValue> CHARLIT
+
+%token IF ELSE WHILE FOR RETURN
+%token INT CHAR FLOAT VOID
+
+%token ASSIGN
+%token PLUS MINUS STAR SLASH PERCENT
+%token EQ NE LT GT LE GE
+%token ANDAND OROR NOT
+%token PLUSPLUS MINUSMINUS
+
+%token LPAREN RPAREN
+%token LBRACE RBRACE
+%token LBRACK RBRACK
+%token SEMI COMMA
+
+%nonassoc LOWER_THAN_ELSE
+%nonassoc ELSE
+
+%right ASSIGN
+%left OROR
+%left ANDAND
+%left EQ NE
+%left LT LE GT GE
+%left PLUS MINUS
+%left STAR SLASH PERCENT
+%right NOT UMINUS PLUSPLUS MINUSMINUS
+
+%destructor { free($$); } ID STRING
 
 %%
-/* A gramática */
+
 programa:
-    atribuicao programa 
-    | atribuicao
+    lista_declaracoes
     ;
 
+lista_declaracoes:
+    lista_declaracoes elemento
+    | elemento
+    ;
+
+elemento:
+    declaracao_variavel
+    | comando
+    ;
+
+tipo:
+    INT
+    | FLOAT
+    | CHAR
+    | VOID
+    ;
+
+declaracao_variavel:
+    tipo ID SEMI {
+        printf("[DECLARAÇÃO] Variavel '%s'\n", $2);
+        free($2);
+    }
+    | tipo ID ASSIGN expressao SEMI {
+        printf("[DECLARAÇÃO COM INICIALIZAÇÃO] Variavel '%s'\n", $2);
+        free($2);
+    }
+    ;
+
+comando:
+    atribuicao
+    | expressao SEMI
+    ;
 
 atribuicao:
-    ID EQ NUM SEMI {printf("%s = %d\n", $1, $3 );} 
-    | ID EQ QUOT STRING QUOT SEMI {printf("%s = \"%s\"\n", $1, $4 );}
+    ID ASSIGN expressao SEMI {
+        printf("[ATRIBUIÇÃO] Variavel '%s'\n", $1);
+        free($1);
+    }
+    ;
+
+expressao:
+    ID {
+        free($1);
+    }
+    | NUM
+    | STRING {
+        free($1);
+    }
+    | CHARLIT
+    | expressao PLUS expressao
+    | expressao MINUS expressao
+    | expressao STAR expressao
+    | expressao SLASH expressao
+    | expressao PERCENT expressao
+    | expressao EQ expressao
+    | expressao NE expressao
+    | expressao LT expressao
+    | expressao LE expressao
+    | expressao GT expressao
+    | expressao GE expressao
+    | expressao ANDAND expressao
+    | expressao OROR expressao
+    | NOT expressao
+    | MINUS expressao %prec UMINUS
+    | LPAREN expressao RPAREN
+    ;
 
 %%
 
-/* Definição de yyerror */
 void yyerror(const char *s) {
-    fprintf(stderr, "Erro sintático: %s\n", s);
+    fprintf(stderr, "Erro sintático: %s na linha %d, coluna %d\n",
+            s, yylineno, lex_column());
 }
