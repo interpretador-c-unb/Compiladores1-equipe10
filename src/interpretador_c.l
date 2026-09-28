@@ -1,8 +1,8 @@
 %{
-#include "interpretador_c.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "interpretador_c.tab.h"
 
 /* Posição do lexema que acabou de casar. O parser usa a coluna no yyerror. */
 static int yycolumn = 1;
@@ -19,12 +19,9 @@ static void *xmalloc(size_t n);
 static char *dup_text(void);
 static int escaped_char(char c);
 static char *unescape(const char *s, int n);
-static const char *token_name(int tok);
-static void print_escaped(const char *s);
-static void print_charlit(int c);
-static void print_token(int tok);
 
 int lex_column(void);
+int yyparse(void);
 %}
 
 %option noyywrap
@@ -36,9 +33,6 @@ int lex_column(void);
 
 DIGIT   [0-9]
 LETTER  [A-Za-z_]
-
-/* Palavras reservadas ficam antes da regra de ID.
-   No mesmo tamanho de lexema, o Flex escolhe a primeira regra. */
 
 %%
 
@@ -209,138 +203,4 @@ static char *unescape(const char *s, int n) {
     }
     out[j] = '\0';
     return out;
-}
-
-static const char *token_name(int tok) {
-    switch (tok) {
-    case IF: return "IF";
-    case ELSE: return "ELSE";
-    case WHILE: return "WHILE";
-    case FOR: return "FOR";
-    case RETURN: return "RETURN";
-    case INT: return "INT";
-    case CHAR: return "CHAR";
-    case FLOAT: return "FLOAT";
-    case VOID: return "VOID";
-    case ASSIGN: return "ASSIGN";
-    case PLUS: return "PLUS";
-    case MINUS: return "MINUS";
-    case STAR: return "STAR";
-    case SLASH: return "SLASH";
-    case PERCENT: return "PERCENT";
-    case EQ: return "EQ";
-    case NE: return "NE";
-    case LT: return "LT";
-    case GT: return "GT";
-    case LE: return "LE";
-    case GE: return "GE";
-    case ANDAND: return "ANDAND";
-    case OROR: return "OROR";
-    case NOT: return "NOT";
-    case PLUSPLUS: return "PLUSPLUS";
-    case MINUSMINUS: return "MINUSMINUS";
-    case LPAREN: return "LPAREN";
-    case RPAREN: return "RPAREN";
-    case LBRACE: return "LBRACE";
-    case RBRACE: return "RBRACE";
-    case LBRACK: return "LBRACK";
-    case RBRACK: return "RBRACK";
-    case SEMI: return "SEMI";
-    case COMMA: return "COMMA";
-    default: return NULL;
-    }
-}
-
-static void print_escaped(const char *s) {
-    fputc('"', stdout);
-    for (const unsigned char *p = (const unsigned char *)s; *p; p++) {
-        switch (*p) {
-        case '\n': fputs("\\n", stdout); break;
-        case '\t': fputs("\\t", stdout); break;
-        case '\r': fputs("\\r", stdout); break;
-        case '\\': fputs("\\\\", stdout); break;
-        case '"': fputs("\\\"", stdout); break;
-        default:
-            if (*p >= 32 && *p < 127)
-                fputc(*p, stdout);
-            else
-                printf("\\x%02x", *p);
-        }
-    }
-    fputc('"', stdout);
-}
-
-static void print_charlit(int c) {
-    if (c == '\n') fputs("CHARLIT('\\n')", stdout);
-    else if (c == '\t') fputs("CHARLIT('\\t')", stdout);
-    else if (c == '\r') fputs("CHARLIT('\\r')", stdout);
-    else if (c == '\\') fputs("CHARLIT('\\\\')", stdout);
-    else if (c == '\'') fputs("CHARLIT('\\'')", stdout);
-    else if (c >= 32 && c < 127) printf("CHARLIT('%c')", c);
-    else printf("CHARLIT(%d)", c);
-}
-
-static void print_token(int tok) {
-    printf("%d:%d ", yylineno, yystartcol);
-    if (tok == ID) {
-        printf("ID(%s)\n", yylval.idValue);
-        free(yylval.idValue);
-    } else if (tok == STRING) {
-        fputs("STRING(", stdout);
-        print_escaped(yylval.stringValue);
-        fputs(")\n", stdout);
-        free(yylval.stringValue);
-    } else if (tok == NUM) {
-        printf("NUM(%.15g)\n", yylval.numValue);
-    } else if (tok == CHARLIT) {
-        print_charlit(yylval.charValue);
-        fputc('\n', stdout);
-    } else {
-        const char *name = token_name(tok);
-        if (name) {
-            puts(name);
-        } else if (tok > 0 && tok < 256 && tok >= 32) {
-            printf("INVALID('%c')\n", tok);
-        } else {
-            printf("INVALID(%d)\n", tok);
-        }
-    }
-}
-
-/* ./parser arquivo          reconhece e analisa o programa
-   ./parser --tokens arquivo lista linha, coluna e token */
-int main(int argc, char **argv) {
-    int dump = 0;
-    int argi = 1;
-    FILE *opened = NULL;
-
-    if (argc > 1 && strcmp(argv[1], "--tokens") == 0) {
-        dump = 1;
-        argi = 2;
-    }
-
-    if (argc > argi) {
-        opened = fopen(argv[argi], "r");
-        if (!opened) {
-            fprintf(stderr, "Não foi possível abrir '%s'\n", argv[argi]);
-            return 1;
-        }
-        yyin = opened;
-    }
-
-    if (dump) {
-        int tok;
-        while ((tok = yylex()) != 0)
-            print_token(tok);
-        if (opened)
-            fclose(opened);
-        return lex_errors ? 1 : 0;
-    }
-
-    int status = yyparse();
-    if (opened)
-        fclose(opened);
-    if (lex_errors)
-        return 1;
-    return status;
 }
