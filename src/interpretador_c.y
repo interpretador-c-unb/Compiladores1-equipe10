@@ -53,20 +53,74 @@ extern int yylineno;
 %%
 
 programa:
-    atribuicao programa
-    | atribuicao
+    lista_declaracoes
+    ;
+
+lista_declaracoes:
+    lista_declaracoes elemento
+    | elemento
+    ;
+
+elemento:
+    declaracao_variavel
+    | comando
+    ;
+
+tipo:
+    INT
+    | FLOAT
+    | CHAR
+    | VOID
+    ;
+
+declaracao_variavel:
+    tipo ID SEMI {
+        printf("[DECLARAÇÃO] Variavel '%s'\n", $2);
+        free($2);
+    }
+    | tipo ID ASSIGN expressao SEMI {
+        printf("[DECLARAÇÃO COM INICIALIZAÇÃO] Variavel '%s'\n", $2);
+        free($2);
+    }
+    ;
+
+comando:
+    atribuicao
+    | expressao SEMI
     ;
 
 atribuicao:
-    ID ASSIGN NUM SEMI {
-        printf("%s = %.15g\n", $1, $3);
+    ID ASSIGN expressao SEMI {
+        printf("[ATRIBUIÇÃO] Variavel '%s'\n", $1);
         free($1);
     }
-    | ID ASSIGN STRING SEMI {
-        printf("%s = \"%s\"\n", $1, $3);
+    ;
+
+expressao:
+    ID {
         free($1);
-        free($3);
     }
+    | NUM
+    | STRING {
+        free($1);
+    }
+    | CHARLIT
+    | expressao PLUS expressao
+    | expressao MINUS expressao
+    | expressao STAR expressao
+    | expressao SLASH expressao
+    | expressao PERCENT expressao
+    | expressao EQ expressao
+    | expressao NE expressao
+    | expressao LT expressao
+    | expressao LE expressao
+    | expressao GT expressao
+    | expressao GE expressao
+    | expressao ANDAND expressao
+    | expressao OROR expressao
+    | NOT expressao
+    | MINUS expressao %prec UMINUS
+    | LPAREN expressao RPAREN
     ;
 
 %%

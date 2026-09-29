@@ -19,14 +19,9 @@ static void *xmalloc(size_t n);
 static char *dup_text(void);
 static int escaped_char(char c);
 static char *unescape(const char *s, int n);
-static const char *token_name(int tok);
-static void print_escaped(const char *s);
-static void print_charlit(int c);
-static void print_token(int tok);
 
 int lex_column(void);
 int yyparse(void);
-int lexer_dump_tokens(void);
 %}
 
 %option noyywrap
@@ -208,109 +203,4 @@ static char *unescape(const char *s, int n) {
     }
     out[j] = '\0';
     return out;
-}
-
-static const char *token_name(int tok) {
-    switch (tok) {
-    case IF: return "IF";
-    case ELSE: return "ELSE";
-    case WHILE: return "WHILE";
-    case FOR: return "FOR";
-    case RETURN: return "RETURN";
-    case INT: return "INT";
-    case CHAR: return "CHAR";
-    case FLOAT: return "FLOAT";
-    case VOID: return "VOID";
-    case ASSIGN: return "ASSIGN";
-    case PLUS: return "PLUS";
-    case MINUS: return "MINUS";
-    case STAR: return "STAR";
-    case SLASH: return "SLASH";
-    case PERCENT: return "PERCENT";
-    case EQ: return "EQ";
-    case NE: return "NE";
-    case LT: return "LT";
-    case GT: return "GT";
-    case LE: return "LE";
-    case GE: return "GE";
-    case ANDAND: return "ANDAND";
-    case OROR: return "OROR";
-    case NOT: return "NOT";
-    case PLUSPLUS: return "PLUSPLUS";
-    case MINUSMINUS: return "MINUSMINUS";
-    case LPAREN: return "LPAREN";
-    case RPAREN: return "RPAREN";
-    case LBRACE: return "LBRACE";
-    case RBRACE: return "RBRACE";
-    case LBRACK: return "LBRACK";
-    case RBRACK: return "RBRACK";
-    case SEMI: return "SEMI";
-    case COMMA: return "COMMA";
-    default: return NULL;
-    }
-}
-
-static void print_escaped(const char *s) {
-    fputc('"', stdout);
-    for (const unsigned char *p = (const unsigned char *)s; *p; p++) {
-        switch (*p) {
-        case '\n': fputs("\\n", stdout); break;
-        case '\t': fputs("\\t", stdout); break;
-        case '\r': fputs("\\r", stdout); break;
-        case '\\': fputs("\\\\", stdout); break;
-        case '"': fputs("\\\"", stdout); break;
-        default:
-            if (*p >= 32 && *p < 127)
-                fputc(*p, stdout);
-            else
-                printf("\\x%02x", *p);
-        }
-    }
-    fputc('"', stdout);
-}
-
-static void print_charlit(int c) {
-    if (c == '\n') fputs("CHARLIT('\\n')", stdout);
-    else if (c == '\t') fputs("CHARLIT('\\t')", stdout);
-    else if (c == '\r') fputs("CHARLIT('\\r')", stdout);
-    else if (c == '\\') fputs("CHARLIT('\\\\')", stdout);
-    else if (c == '\'') fputs("CHARLIT('\\'')", stdout);
-    else if (c >= 32 && c < 127) printf("CHARLIT('%c')", c);
-    else printf("CHARLIT(%d)", c);
-}
-
-static void print_token(int tok) {
-    printf("%d:%d ", yylineno, yystartcol);
-    if (tok == ID) {
-        printf("ID(%s)\n", yylval.idValue);
-        free(yylval.idValue);
-    } else if (tok == STRING) {
-        fputs("STRING(", stdout);
-        print_escaped(yylval.stringValue);
-        fputs(")\n", stdout);
-        free(yylval.stringValue);
-    } else if (tok == NUM) {
-        printf("NUM(%.15g)\n", yylval.numValue);
-    } else if (tok == CHARLIT) {
-        print_charlit(yylval.charValue);
-        fputc('\n', stdout);
-    } else {
-        const char *name = token_name(tok);
-        if (name) {
-            puts(name);
-        } else if (tok > 0 && tok < 256 && tok >= 32) {
-            printf("INVALID('%c')\n", tok);
-        } else {
-            printf("INVALID(%d)\n", tok);
-        }
-    }
-}
-
-int lexer_dump_tokens(void) {
-    int tok;
-
-    while ((tok = yylex()) != 0)
-        print_token(tok);
-
-    return lex_errors ? 1 : 0;
 }
