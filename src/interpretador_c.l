@@ -1,8 +1,8 @@
 %{
-#include "interpretador_c.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "interpretador_c.tab.h"
 
 /* Posição do lexema que acabou de casar. O parser usa a coluna no yyerror. */
 static int yycolumn = 1;
@@ -25,6 +25,7 @@ static void print_charlit(int c);
 static void print_token(int tok);
 
 int lex_column(void);
+int yyparse(void);
 int lexer_dump_tokens(void);
 %}
 
@@ -37,9 +38,6 @@ int lexer_dump_tokens(void);
 
 DIGIT   [0-9]
 LETTER  [A-Za-z_]
-
-/* Palavras reservadas ficam antes da regra de ID.
-   No mesmo tamanho de lexema, o Flex escolhe a primeira regra. */
 
 %%
 
@@ -308,7 +306,6 @@ static void print_token(int tok) {
     }
 }
 
-/* Imprime tokens para a suíte lexical e retorna falha se houver erro léxico. */
 int lexer_dump_tokens(void) {
     int tok;
 
