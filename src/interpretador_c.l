@@ -25,6 +25,7 @@ static void print_charlit(int c);
 static void print_token(int tok);
 
 int lex_column(void);
+int lexer_dump_tokens(void);
 %}
 
 %option noyywrap
@@ -307,40 +308,12 @@ static void print_token(int tok) {
     }
 }
 
-/* ./parser arquivo          reconhece e analisa o programa
-   ./parser --tokens arquivo lista linha, coluna e token */
-int main(int argc, char **argv) {
-    int dump = 0;
-    int argi = 1;
-    FILE *opened = NULL;
+/* Imprime tokens para a suíte lexical e retorna falha se houver erro léxico. */
+int lexer_dump_tokens(void) {
+    int tok;
 
-    if (argc > 1 && strcmp(argv[1], "--tokens") == 0) {
-        dump = 1;
-        argi = 2;
-    }
+    while ((tok = yylex()) != 0)
+        print_token(tok);
 
-    if (argc > argi) {
-        opened = fopen(argv[argi], "r");
-        if (!opened) {
-            fprintf(stderr, "Não foi possível abrir '%s'\n", argv[argi]);
-            return 1;
-        }
-        yyin = opened;
-    }
-
-    if (dump) {
-        int tok;
-        while ((tok = yylex()) != 0)
-            print_token(tok);
-        if (opened)
-            fclose(opened);
-        return lex_errors ? 1 : 0;
-    }
-
-    int status = yyparse();
-    if (opened)
-        fclose(opened);
-    if (lex_errors)
-        return 1;
-    return status;
+    return lex_errors ? 1 : 0;
 }
