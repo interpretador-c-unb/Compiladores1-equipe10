@@ -88,12 +88,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Estruturar primeira versão do `README.md` e página inicial do Planejamento no MkDocs | Nicole Jovita |
-| [ ] | Documentação | Atualizar status do planejamento e publicar no GitHub Pages | Nicole Jovita & Bernardo Campos |
-| [ ] | Escopo/Gestão | Definir subconjunto de C aceito (`int`, `float`, operadores, `if/else`, `while`, `printf`) | Bernardo Campos |
-| [ ] | Repositório | Criar repositório GitHub, configurar `.gitignore` e convidar o professor | Danielly Mendes |
-| [ ] | Léxico (`lexer.l`) | Implementar ERs para palavras-chave, identificadores e números inteiros | Rafael Laube |
-| [ ] | Ambiente/Léxico | Testar ferramentas (GCC, Flex, Bison, Make) e criar contador de linhas/colunas em `lexer.l` | Paulo Nina |
+| [x] | Documentação | Estruturar primeira versão do `README.md` e página inicial do Planejamento no MkDocs | Nicole Jovita |
+| [x] | Documentação | Atualizar status do planejamento e publicar no GitHub Pages | Nicole Jovita & Bernardo Campos |
+| [x] | Escopo/Gestão | Definir subconjunto de C aceito (`int`, `float`, operadores, `if/else`, `while`, `printf`) | Bernardo Campos |
+| [x] | Repositório | Criar repositório GitHub, configurar `.gitignore` e convidar o professor | Danielly Mendes |
+| [x] | Léxico (`lexer.l`) | Implementar ERs para palavras-chave, identificadores e números inteiros | Rafael Laube |
+| [x] | Ambiente/Léxico | Testar ferramentas (GCC, Flex, Bison, Make) e criar contador de linhas/colunas em `lexer.l` | Paulo Nina |
 
 ---
 
@@ -104,12 +104,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Escrever a documentação base das Decisões Técnicas e padrão de arquivos | Nicole Jovita |
-| [ ] | Documentação | Registrar o tratamento de comentários em bloco e exceções do Flex no MkDocs | Danielly Mendes |
-| [ ] | Documentação | Atualizar status das tarefas e sincronizar publicação no GitHub Pages | Nicole Jovita & Danielly Mendes |
+| [x] | Documentação | Escrever a documentação base das Decisões Técnicas e padrão de arquivos | Nicole Jovita |
+| [x] | Documentação | Registrar o tratamento de comentários em bloco e exceções do Flex no MkDocs | Danielly Mendes |
+| [x] | Documentação | Atualizar status das tarefas e sincronizar publicação no GitHub Pages | Nicole Jovita & Danielly Mendes |
 | [ ] | Build/Gestão | Criar o `Makefile` de automação e apoiar integração de `%union` e `%token` | Bernardo Campos |
 | [ ] | Léxico avançado | Finalizar `lexer.l` com suporte a floats, comentários e operadores compostos | Rafael Laube |
-| [ ] | Parser inicial | Criar `parser.y` inicial no Bison garantindo compilação limpa via `bison -d` | Paulo Nina |
+| [x] | Parser inicial | Criar `parser.y` inicial no Bison garantindo compilação limpa via `bison -d` | Paulo Nina |
 
 ---
 

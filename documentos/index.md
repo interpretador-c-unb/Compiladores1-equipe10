@@ -10,6 +10,8 @@ COMPILADORES1-EQUIPE10/
 │   └── workflows/
 │       └── deploy-docs.yml
 ├── documentos/
+|   ├── analisador-lexico.md
+│   ├── estrutura-do-projeto.md
 │   ├── scripts/
 │   │   ├── header.tex
 │   │   └── mdtopdf.sh
