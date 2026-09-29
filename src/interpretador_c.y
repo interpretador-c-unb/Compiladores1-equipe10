@@ -10,6 +10,8 @@ int lex_column(void);
 extern int yylineno;
 %}
 
+%define parse.error verbose
+
 %union {
     double numValue;
     int charValue;
