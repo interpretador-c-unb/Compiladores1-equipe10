@@ -8,6 +8,7 @@ int yylex(void);
 void yyerror(const char *s);
 int lex_column(void);
 extern int yylineno;
+extern char *yytext;
 %}
 
 %union {
@@ -86,7 +87,11 @@ declaracao_variavel:
 
 comando:
     atribuicao
+    | comando_if
+    | comando_while
+    | bloco
     | expressao SEMI
+    | SEMI
     ;
 
 atribuicao:
@@ -96,14 +101,35 @@ atribuicao:
     }
     ;
 
+comando_if:
+    IF LPAREN expressao RPAREN comando %prec LOWER_THAN_ELSE {
+        printf("[CONTROLE DE FLUXO] Estrutura IF reconhecida\n");
+    }
+    | IF LPAREN expressao RPAREN comando ELSE comando {
+        printf("[CONTROLE DE FLUXO] Estrutura IF-ELSE reconhecida\n");
+    }
+    ;
+
+comando_while:
+    WHILE LPAREN expressao RPAREN comando {
+        printf("[CONTROLE DE FLUXO] Laço WHILE reconhecido\n");
+    }
+    ;
+
+bloco:
+    LBRACE RBRACE
+    | LBRACE lista_comandos RBRACE
+    ;
+
+lista_comandos:
+    lista_comandos elemento
+    | elemento
+    ;
+
 expressao:
-    ID {
-        free($1);
-    }
+    ID { free($1); }
     | NUM
-    | STRING {
-        free($1);
-    }
+    | STRING { free($1); }
     | CHARLIT
     | expressao PLUS expressao
     | expressao MINUS expressao
@@ -126,6 +152,6 @@ expressao:
 %%
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Erro sintático: %s na linha %d, coluna %d\n",
-            s, yylineno, lex_column());
+    fprintf(stderr, "Erro sintático: '%s' próximo ao token '%s' na linha %d, coluna %d\n",
+            s, yytext ? yytext : "", yylineno, lex_column());
 }
