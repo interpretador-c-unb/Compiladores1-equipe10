@@ -118,3 +118,33 @@ Abaixo está a gramática que mapeia a sintaxe do nosso subconjunto da linguagem
 
 <lista_argumentos> ::= <expressao> "," <lista_argumentos> 
                      | <expressao>
+
+## Precedência e Associatividade de Operadores
+
+Para resolver ambiguidades inerentes à gramática livre de contexto e garantir a correta avaliação das expressões matemáticas e lógicas, o interpretador utiliza as diretivas de precedência do Bison (`%left`, `%right`, `%nonassoc`).
+
+A hierarquia está definida da **menor prioridade (topo) para a maior prioridade (fundo)**. A associatividade indica como os operadores com a mesma prioridade são agrupados (por exemplo, a associatividade à esquerda transforma `a - b - c` em `(a - b) - c`).
+
+| Categoria | Operadores | Associatividade | Diretiva Bison |
+| :--- | :--- | :---: | :--- |
+| **Atribuição** | `=` | Direita | `%right` |
+| **Lógico OU** | `||` | Esquerda | `%left` |
+| **Lógico E** | `&&` | Esquerda | `%left` |
+| **Igualdade** | `==`, `!=` | Esquerda | `%left` |
+| **Relacionais** | `<`, `<=`, `>`, `>=` | Esquerda | `%left` |
+| **Aditivos** | `+`, `-` | Esquerda | `%left` |
+| **Multiplicativos** | `*`, `/`, `%` | Esquerda | `%left` |
+| **Unários** | `-` (sinal), `!` (negação) | Direita | `%right` |
+
+### Exemplo de Implementação no Bison
+A implementação segue a estrutura abaixo no cabeçalho das declarações:
+
+```bison
+%right ATRIBUI
+%left LOGICO_OU
+%left LOGICO_E
+%left IGUAL DIFERENTE
+%left MENOR MENOR_IGUAL MAIOR MAIOR_IGUAL
+%left MAIS MENOS
+%left MULT DIV MOD
+%right MENOS_UNARIO NAO
