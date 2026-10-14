@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "ast.h"
 #include "interpretador_c.tab.h"
 
 /* Posição do lexema que acabou de casar. O parser usa a coluna no yyerror. */
