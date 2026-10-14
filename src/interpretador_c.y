@@ -16,6 +16,8 @@ ASTNode *ast_root = NULL;
 SymbolTable *sym_table = NULL;
 %}
 
+%define parse.error verbose
+
 %union {
     double numValue;
     int charValue;
@@ -196,6 +198,6 @@ expressao:
 %%
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Erro sintático: '%s' próximo ao token '%s' na linha %d, coluna %d\n",
-            s, yytext ? yytext : "", yylineno, lex_column());
+    fprintf(stderr, "Erro sintático: %s na linha %d, coluna %d\n",
+            s, yylineno, lex_column());
 }
