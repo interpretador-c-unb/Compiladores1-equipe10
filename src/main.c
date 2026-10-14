@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "ast.h"
+#include "symbol_table.h"
 
 extern FILE *yyin;
 extern int yyparse(void);
+extern ASTNode *ast_root;
+extern SymbolTable *sym_table;
 
 int main(int argc, char **argv) {
     if (argc > 1) {
@@ -17,6 +21,8 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    sym_table = create_symbol_table();
+
     int result = yyparse();
 
     if (argc > 1 && yyin) {
@@ -24,10 +30,13 @@ int main(int argc, char **argv) {
     }
 
     if (result == 0) {
-        printf("\n[SUCESSO] Análise sintática concluída sem erros!\n");
+        printf("\n[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!\n");
     } else {
-        printf("\n[FALHA] Foram encontrados erros sintáticos no código.\n");
+        printf("\n[FALHA] Foram encontrados erros no código.\n");
     }
+
+    free_ast(ast_root);
+    free_symbol_table(sym_table);
 
     return result;
 }
