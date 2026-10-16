@@ -36,5 +36,6 @@ ASTNode *create_if_node(ASTNode *cond, ASTNode *then_block, ASTNode *else_block)
 ASTNode *create_while_node(ASTNode *cond, ASTNode *body);
 ASTNode *append_node(ASTNode *list, ASTNode *node);
 void free_ast(ASTNode *node);
+void print_ast(const ASTNode *root);
 
 #endif
