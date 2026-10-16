@@ -22,6 +22,7 @@ typedef struct ASTNode {
     struct ASTNode *left;     /* Filho esquerdo / Condição */
     struct ASTNode *right;    /* Filho direito / Corpo */
     struct ASTNode *next;     /* Próximo nó na lista de comandos */
+    struct ASTNode *else_branch;  /* Bloco else (somente NODE_IF) */
 } ASTNode;
 
 ASTNode *create_node(NodeType type);

@@ -57,7 +57,7 @@ ASTNode *create_if_node(ASTNode *cond, ASTNode *then_block, ASTNode *else_block)
     ASTNode *node = create_node(NODE_IF);
     node->left = cond;
     node->right = then_block;
-    node->next = else_block;
+    node->else_branch = else_block;
     return node;
 }
 
@@ -84,6 +84,7 @@ void free_ast(ASTNode *node) {
     if (node->string_value) free(node->string_value);
     if (node->left) free_ast(node->left);
     if (node->right) free_ast(node->right);
+    if (node->else_branch) free_ast(node->else_branch);
     if (node->next) free_ast(node->next);
     free(node);
 }
