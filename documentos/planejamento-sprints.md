@@ -4,7 +4,7 @@ Interpretador de um subconjunto de C — Compiladores 1 · Grupo 10 · 2026.2
 
 Metodologia: Scrum/XP, sprints de uma semana (12/08/2026 a 02/12/2026).
 
-> **Situação atual (23/09/2026):** Sprint 7 em andamento (23/09 a 30/09) — Apresentação P1 e ajustes de feedback.
+> **Situação atual (23/09/2026):** Sprint 6 concluída. Consolidação e publicação da documentação da Fase 1 (Pré-P1) finalizadas para avaliação.
 
 Legenda de status nas tarefas: `[ ]` pendente · `[x]` concluído.
 
@@ -107,8 +107,8 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [x] | Documentação | Escrever a documentação base das Decisões Técnicas e padrão de arquivos | Nicole Jovita |
 | [x] | Documentação | Registrar o tratamento de comentários em bloco e exceções do Flex no MkDocs | Danielly Mendes |
 | [x] | Documentação | Atualizar status das tarefas e sincronizar publicação no GitHub Pages | Nicole Jovita & Danielly Mendes |
-| [ ] | Build/Gestão | Criar o `Makefile` de automação e apoiar integração de `%union` e `%token` | Bernardo Campos |
-| [ ] | Léxico avançado | Finalizar `lexer.l` com suporte a floats, comentários e operadores compostos | Rafael Laube |
+| [x] | Build/Gestão | Criar o `Makefile` de automação e apoiar integração de `%union` e `%token` | Bernardo Campos |
+| [x] | Léxico avançado | Finalizar `lexer.l` com suporte a floats, comentários e operadores compostos | Rafael Laube |
 | [x] | Parser inicial | Criar `parser.y` inicial no Bison garantindo compilação limpa via `bison -d` | Paulo Nina |
 
 ---
@@ -120,12 +120,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar em Decisões Técnicas a estrutura da BNF e regras de precedência | Danielly Mendes |
-| [ ] | Documentação | Escrever manual de execução do driver `main.c` e primeiros testes `.c` | Rafael Laube |
-| [ ] | Documentação | Sincronizar o avanço da Sprint 3 no GitHub Pages | Danielly Mendes & Rafael Laube |
-| [ ] | Gramática | Implementar regras para declaração de variáveis (`type id;` e `type id = expr;`) | Nicole Jovita |
-| [ ] | Gramática | Desenvolver regras para expressões aritméticas e parênteses | Paulo Nina |
-| [ ] | Driver/Gestão | Implementar `main.c` integrando `yyparse()` e resolver conflitos de precedência | Bernardo Campos |
+| [x] | Documentação | Documentar em Decisões Técnicas a estrutura da BNF e regras de precedência | Danielly Mendes |
+| [x] | Documentação | Escrever manual de execução do driver `main.c` e primeiros testes `.c` | Rafael Laube |
+| [x] | Documentação | Sincronizar o avanço da Sprint 3 no GitHub Pages | Danielly Mendes & Rafael Laube |
+| [x] | Gramática | Implementar regras para declaração de variáveis (`type id;` e `type id = expr;`) | Nicole Jovita |
+| [x] | Gramática | Desenvolver regras para expressões aritméticas e parênteses | Paulo Nina |
+| [x] | Driver/Gestão | Implementar `main.c` integrando `yyparse()` e resolver conflitos de precedência | Bernardo Campos |
 
 ---
 
@@ -136,12 +136,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar no MkDocs a resolução do conflito *Dangling Else* com `%nonassoc` | Rafael Laube |
-| [ ] | Documentação | Registrar a arquitetura de relatório de erros sintáticos (linha/coluna) | Paulo Nina |
-| [ ] | Documentação | Sincronizar o status atual no GitHub Pages | Rafael Laube & Paulo Nina |
-| [ ] | Gramática | Expandir gramática para comandos compostos `{}` e estruturas `if`/`else` | Nicole Jovita |
-| [ ] | Gramática/Erros | Implementar laços `while` e customizar `yyerror()` com linha e coluna | Danielly Mendes |
-| [ ] | Erros/Gestão | Habilitar `%define parse.error verbose` e testar mensagens detalhadas de erro | Bernardo Campos |
+| [x] | Documentação | Documentar no MkDocs a resolução do conflito *Dangling Else* com `%nonassoc` | Rafael Laube |
+| [x] | Documentação | Registrar a arquitetura de relatório de erros sintáticos (linha/coluna) | Paulo Nina |
+| [x] | Documentação | Sincronizar o status atual no GitHub Pages | Rafael Laube & Paulo Nina |
+| [x] | Gramática | Expandir gramática para comandos compostos `{}` e estruturas `if`/`else` | Nicole Jovita |
+| [x] | Gramática/Erros | Implementar laços `while` e customizar `yyerror()` com linha e coluna | Danielly Mendes |
+| [x] | Erros/Gestão | Habilitar `%define parse.error verbose` e testar mensagens detalhadas de erro | Bernardo Campos |
 
 ---
 
@@ -152,12 +152,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Escrever documentação técnica da estrutura da AST (`ast.h`/`ast.c`) | Paulo Nina |
-| [ ] | Documentação | Registrar a arquitetura da Tabela de Símbolos (`symbol_table.h`/`symbol_table.c`) | Bernardo Campos |
-| [ ] | Documentação | Atualizar o progresso da Sprint 5 no GitHub Pages | Paulo Nina & Bernardo Campos |
-| [ ] | AST | Criar módulo `ast.h`/`ast.c` e conectar ações semânticas no Bison | Nicole Jovita |
-| [ ] | Tabela de Símbolos | Implementar `symbol_table.c` com `insert_symbol()` e `lookup_symbol()` | Danielly Mendes |
-| [ ] | Integração | Fazer o parser retornar a raiz da AST ao final de `yyparse()` | Rafael Laube |
+| [x] | Documentação | Escrever documentação técnica da estrutura da AST (`ast.h`/`ast.c`) | Paulo Nina |
+| [x] | Documentação | Registrar a arquitetura da Tabela de Símbolos (`symbol_table.h`/`symbol_table.c`) | Bernardo Campos |
+| [x] | Documentação | Atualizar o progresso da Sprint 5 no GitHub Pages | Paulo Nina & Bernardo Campos |
+| [x] | AST | Criar módulo `ast.h`/`ast.c` e conectar ações semânticas no Bison | Nicole Jovita |
+| [x] | Tabela de Símbolos | Implementar `symbol_table.c` com `insert_symbol()` e `lookup_symbol()` | Danielly Mendes |
+| [x] | Integração | Fazer o parser retornar a raiz da AST ao final de `yyparse()` | Rafael Laube |
 
 ---
 
@@ -168,12 +168,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Formulário P1 | Preencher o formulário do P1 com a consolidação da equipe e entregas | Bernardo Campos |
-| [ ] | Apresentação | Criar slides (5 min) e organizar a suíte de testes do front-end | Nicole Jovita |
-| [ ] | Documentação | Atualizar o status consolidado pré-P1 no GitHub Pages | Bernardo Campos & Nicole Jovita |
-| [ ] | Visualizador | Implementar a função de exibição indentada da AST (`print_ast()`) | Danielly Mendes |
-| [ ] | Testes | Elaborar bateria de 5+ testes em C validando erros e geração da AST | Rafael Laube |
-| [ ] | Tabela/Ajustes | Adequar a tabela de símbolos para suporte à checagem de escopo inicial | Paulo Nina |
+| [x] | Formulário P1 | Preencher o formulário do P1 com a consolidação da equipe e entregas | Bernardo Campos |
+| [x] | Apresentação | Criar slides (5 min) e organizar a suíte de testes do front-end | Nicole Jovita |
+| [x] | Documentação | Atualizar o status consolidado pré-P1 no GitHub Pages | Bernardo Campos & Nicole Jovita |
+| [x] | Visualizador | Implementar a função de exibição indentada da AST (`print_ast()`) | Danielly Mendes |
+| [x] | Testes | Elaborar bateria de 5+ testes em C validando erros e geração da AST | Rafael Laube |
+| [x] | Tabela/Ajustes | Adequar a tabela de símbolos para suporte à checagem de escopo inicial | Paulo Nina |
 
 ---
 
@@ -266,7 +266,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 |:------:|--------|-----------|-------------|
 | [ ] | Formulário P2 | Preencher o formulário do P2 com os avanços da interpretação e otimizações | Nicole Jovita |
 | [ ] | Apresentação | Criar slides e roteiro da demonstração ao vivo para o P2 | Danielly Mendes |
-| [ ] | Documentação | Atualizar o status consolidado pré-P2 no GitHub Pages | Nicole Jovita & Danielly Mendes |
+| [ ] | Documentação | Atualizar o status consolidado pré-P1 no GitHub Pages | Nicole Jovita & Danielly Mendes |
 | [ ] | Qualidade/Gestão | Executar testes de vazamento de memória com *Valgrind* na execução da AST | Bernardo Campos |
 | [ ] | Estabilidade | Resolver inconsistências de estado no ambiente de runtime | Rafael Laube |
 | [ ] | Testes | Garantir execução estável dos 10+ programas de teste da suíte oficial | Paulo Nina |
