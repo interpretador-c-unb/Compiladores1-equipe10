@@ -3,6 +3,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ast.h"
 #include "symbol_table.h"
 
@@ -14,9 +15,35 @@ extern char *yytext;
 
 ASTNode *ast_root = NULL;
 SymbolTable *sym_table = NULL;
+int semantic_errors = 0;
+
+static int is_boolean_expression(const ASTNode *node) {
+    if (!node || node->type != NODE_BINARY_EXPR || !node->name)
+        return 0;
+
+    return strcmp(node->name, "==") == 0 ||
+           strcmp(node->name, "!=") == 0 ||
+           strcmp(node->name, "<") == 0 ||
+           strcmp(node->name, "<=") == 0 ||
+           strcmp(node->name, ">") == 0 ||
+           strcmp(node->name, ">=") == 0 ||
+           strcmp(node->name, "&&") == 0 ||
+           strcmp(node->name, "||") == 0 ||
+           strcmp(node->name, "!") == 0;
+}
+
+static void validate_condition(const ASTNode *condition, const char *construct, int line) {
+    if (!is_boolean_expression(condition)) {
+        fprintf(stderr,
+                "[ERRO SEMÂNTICO] Condição de %s deve ser booleana na linha %d\n",
+                construct, line);
+        semantic_errors++;
+    }
+}
 %}
 
 %define parse.error verbose
+%locations
 
 %union {
     double numValue;
@@ -93,12 +120,14 @@ tipo:
 
 declaracao_variavel:
     tipo ID SEMI {
-        insert_symbol(sym_table, $2, $1);
+        if (!insert_symbol(sym_table, $2, $1))
+            semantic_errors++;
         $$ = create_decl_node($2, NULL);
         free($2);
     }
     | tipo ID ASSIGN expressao SEMI {
-        insert_symbol(sym_table, $2, $1);
+        if (!insert_symbol(sym_table, $2, $1))
+            semantic_errors++;
         $$ = create_decl_node($2, $4);
         free($2);
     }
@@ -125,15 +154,18 @@ atribuicao:
 
 comando_if:
     IF LPAREN expressao RPAREN comando %prec LOWER_THAN_ELSE {
+        validate_condition($3, "if", @1.first_line);
         $$ = create_if_node($3, $5, NULL);
     }
     | IF LPAREN expressao RPAREN comando ELSE comando {
+        validate_condition($3, "if", @1.first_line);
         $$ = create_if_node($3, $5, $7);
     }
     ;
 
 comando_while:
     WHILE LPAREN expressao RPAREN comando {
+        validate_condition($3, "while", @1.first_line);
         $$ = create_while_node($3, $5);
     }
     ;

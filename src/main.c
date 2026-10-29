@@ -7,6 +7,7 @@ extern FILE *yyin;
 extern int yyparse(void);
 extern ASTNode *ast_root;
 extern SymbolTable *sym_table;
+extern int semantic_errors;
 
 int main(int argc, char **argv) {
     if (argc > 1) {
@@ -24,6 +25,8 @@ int main(int argc, char **argv) {
     sym_table = create_symbol_table();
 
     int result = yyparse();
+    if (semantic_errors > 0)
+        result = 1;
 
     if (argc > 1 && yyin) {
         fclose(yyin);

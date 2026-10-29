@@ -12,7 +12,15 @@ static int comment_line = 1;
 static int comment_col = 1;
 static int lex_errors = 0;
 
-#define YY_USER_ACTION update_location();
+extern YYLTYPE yylloc;
+
+#define YY_USER_ACTION do { \
+    update_location(); \
+    yylloc.first_line = yylineno; \
+    yylloc.last_line = yylineno; \
+    yylloc.first_column = yystartcol; \
+    yylloc.last_column = yystartcol + yyleng - 1; \
+} while (0);
 
 static void update_location(void);
 static void lex_error(const char *msg);
