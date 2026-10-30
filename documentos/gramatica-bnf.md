@@ -15,15 +15,15 @@ Os seguintes símbolos terminais foram definidos no Flex e servem de base para a
 
 ## 2. Estrutura da Gramática (BNF)
 
-Abaixo está a gramática que mapeia a sintaxe do nosso subconjunto da linguagem C.
+A BNF abaixo foi preservada nesta revisão documental. Ela inclui construções planejadas que ainda não possuem regras em `src/interpretador_c.y`, como funções, chamadas, `for`, `return` e incrementos. O parser atual é a referência para a sintaxe efetivamente aceita.
 
 ```bnf
 <programa> ::= <lista_declaracoes>
 
-<lista_declaracoes> ::= <declaracao> <lista_declaracoes> 
+<lista_declaracoes> ::= <declaracao> <lista_declaracoes>
                       | <declaracao>
 
-<declaracao> ::= <decl_variavel> 
+<declaracao> ::= <decl_variavel>
                | <decl_funcao>
 
 <tipo> ::= "int" | "float" | "char" | "void"
@@ -33,18 +33,18 @@ Abaixo está a gramática que mapeia a sintaxe do nosso subconjunto da linguagem
 
 <decl_funcao> ::= <tipo> ID "(" <parametros> ")" <bloco>
 
-<parametros> ::= <lista_parametros> 
-               | "void" 
+<parametros> ::= <lista_parametros>
+               | "void"
                | <vazio>
 
-<lista_parametros> ::= <parametro> "," <lista_parametros> 
+<lista_parametros> ::= <parametro> "," <lista_parametros>
                      | <parametro>
 
 <parametro> ::= <tipo> ID
 
 <bloco> ::= "{" <lista_comandos> "}"
 
-<lista_comandos> ::= <comando> <lista_comandos> 
+<lista_comandos> ::= <comando> <lista_comandos>
                    | <vazio>
 
 <comando> ::= <comando_expr>
@@ -55,7 +55,7 @@ Abaixo está a gramática que mapeia a sintaxe do nosso subconjunto da linguagem
             | <bloco>
             | <decl_variavel>
 
-<comando_expr> ::= <expressao> ";" 
+<comando_expr> ::= <expressao> ";"
                  | ";"
 
 <comando_if> ::= "if" "(" <expressao> ")" <comando>
@@ -67,7 +67,7 @@ Abaixo está a gramática que mapeia a sintaxe do nosso subconjunto da linguagem
 
 <comando_return> ::= "return" <expressao_opc> ";"
 
-<expressao_opc> ::= <expressao> 
+<expressao_opc> ::= <expressao>
                   | <vazio>
 
 <expressao> ::= ID "=" <expressao>
@@ -113,38 +113,61 @@ Abaixo está a gramática que mapeia a sintaxe do nosso subconjunto da linguagem
           | STRING
           | CHARLIT
 
-<argumentos> ::= <lista_argumentos> 
+<argumentos> ::= <lista_argumentos>
                | <vazio>
 
-<lista_argumentos> ::= <expressao> "," <lista_argumentos> 
+<lista_argumentos> ::= <expressao> "," <lista_argumentos>
                      | <expressao>
+
+```
 
 ## Precedência e Associatividade de Operadores
 
-Para resolver ambiguidades inerentes à gramática livre de contexto e garantir a correta avaliação das expressões matemáticas e lógicas, o interpretador utiliza as diretivas de precedência do Bison (`%left`, `%right`, `%nonassoc`).
+As declarações abaixo reproduzem os nomes dos tokens de `src/interpretador_c.y`. A prioridade aumenta de cima para baixo: multiplicação e divisão têm prioridade maior que adição e subtração.
 
-A hierarquia está definida da **menor prioridade (topo) para a maior prioridade (fundo)**. A associatividade indica como os operadores com a mesma prioridade são agrupados (por exemplo, a associatividade à esquerda transforma `a - b - c` em `(a - b) - c`).
+| Categoria | Operadores | Associatividade | Declaração no Bison |
+| --- | --- | --- | --- |
+| Atribuição | `=` | Direita | `%right ASSIGN` |
+| Lógico OU | `\|\|` | Esquerda | `%left OROR` |
+| Lógico E | `&&` | Esquerda | `%left ANDAND` |
+| Igualdade | `==`, `!=` | Esquerda | `%left EQ NE` |
+| Relacionais | `<`, `<=`, `>`, `>=` | Esquerda | `%left LT LE GT GE` |
+| Aditivos | `+`, `-` | Esquerda | `%left PLUS MINUS` |
+| Multiplicativos | `*`, `/`, `%` | Esquerda | `%left STAR SLASH PERCENT` |
+| Unários | `!`, `-` unário; tokens `++`, `--` | Direita | `%right NOT UMINUS PLUSPLUS MINUSMINUS` |
 
-| Categoria | Operadores | Associatividade | Diretiva Bison |
-| :--- | :--- | :---: | :--- |
-| **Atribuição** | `=` | Direita | `%right` |
-| **Lógico OU** | `||` | Esquerda | `%left` |
-| **Lógico E** | `&&` | Esquerda | `%left` |
-| **Igualdade** | `==`, `!=` | Esquerda | `%left` |
-| **Relacionais** | `<`, `<=`, `>`, `>=` | Esquerda | `%left` |
-| **Aditivos** | `+`, `-` | Esquerda | `%left` |
-| **Multiplicativos** | `*`, `/`, `%` | Esquerda | `%left` |
-| **Unários** | `-` (sinal), `!` (negação) | Direita | `%right` |
+- `%left` agrupa operadores de mesma prioridade da esquerda para a direita: `10 - 3 - 2` equivale a `(10 - 3) - 2`.
+- `%right` agrupa da direita para a esquerda.
+- `%nonassoc` impede encadeamentos sem parênteses entre operadores de mesma precedência.
+- `%prec` atribui a uma produção uma precedência explícita. O menos unário usa `%prec UMINUS`.
 
-### Exemplo de Implementação no Bison
-A implementação segue a estrutura abaixo no cabeçalho das declarações:
+A declaração de precedência, sozinha, não cria uma regra sintática: embora `ASSIGN` seja declarado com `%right`, o parser atual aceita atribuição como comando (`a = 5;`), mas não aceita `a = b = 5;`. Os tokens `PLUSPLUS` e `MINUSMINUS` também não têm produções de expressão implementadas.
+
+### Declarações no Bison
 
 ```bison
-%right ATRIBUI
-%left LOGICO_OU
-%left LOGICO_E
-%left IGUAL DIFERENTE
-%left MENOR MENOR_IGUAL MAIOR MAIOR_IGUAL
-%left MAIS MENOS
-%left MULT DIV MOD
-%right MENOS_UNARIO NAO
+%nonassoc LOWER_THAN_ELSE
+%nonassoc ELSE
+
+%right ASSIGN
+%left OROR
+%left ANDAND
+%left EQ NE
+%left LT LE GT GE
+%left PLUS MINUS
+%left STAR SLASH PERCENT
+%right NOT UMINUS PLUSPLUS MINUSMINUS
+```
+
+`LOWER_THAN_ELSE` e `ELSE` são níveis usados para resolver a ambiguidade do `else`. A produção de `if` sem `else` recebe `%prec LOWER_THAN_ELSE`; como `ELSE` tem prioridade maior, o `else` se associa ao `if` mais próximo ainda sem `else`.
+
+### Exemplos de agrupamento
+
+| Expressão | Agrupamento |
+| --- | --- |
+| `2 + 3 * 4` | `2 + (3 * 4)` |
+| `10 - 3 - 2` | `(10 - 3) - 2` |
+| `-2 * 3` | `(-2) * 3` |
+| `(2 + 3) * 4` | Os parênteses fazem a soma ser agrupada primeiro. |
+
+Consulte o [guia de uso](guia-uso.md) para compilar o driver e visualizar a AST dos exemplos.
