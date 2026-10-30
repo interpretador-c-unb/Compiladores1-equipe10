@@ -224,12 +224,15 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar a arquitetura da memória de runtime (`Environment`) em Decisões Técnicas | Rafael Laube |
-| [ ] | Documentação | Atualizar o diagrama arquitetural do interpretador no MkDocs | Paulo Nina |
+| [ ] | Documentação | Validar e finalizar a arquitetura do `Environment`; base atual e proposta documentadas | Rafael Laube |
+| [ ] | Documentação | Validar o diagrama conceitual incluído na documentação do interpretador | Paulo Nina |
 | [ ] | Documentação | Sincronizar atualizações no GitHub Pages | Rafael Laube & Paulo Nina |
 | [ ] | Runtime | Desenvolver o módulo `interpreter.c` e a função recursiva `evaluate_expr()` | Nicole Jovita |
-| [ ] | Runtime | Implementar a estrutura `Environment` para atualização de variáveis (`NODE_ASSIGN`) | Danielly Mendes |
+| [ ] | Runtime | Implementar a estrutura `Environment` para atualização de variáveis (`NODE_ASSIGNMENT`) | Danielly Mendes |
 | [ ] | Execução/Gestão | Implementar a avaliação de nós aritméticos binários em tempo de execução | Bernardo Campos |
+
+
+**Verificação de 30/10/2026:** a página [Interpretador e Environment](interpretador.md) e a seção correspondente em Decisões Técnicas descrevem a base existente e uma proposta de runtime. `interpreter.c`, `evaluate_expr()` e `Environment` ainda não existem no código verificado. As tarefas de desenvolvimento permanecem pendentes. O conteúdo e os diagramas estão preparados, mas a finalização da arquitetura, a revisão de Paulo Nina e a publicação desta revisão no GitHub Pages ainda estão pendentes; por isso, as entregas completas permanecem desmarcadas.
 
 ---
 

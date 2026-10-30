@@ -28,6 +28,7 @@ nav:
   - Analisador Sintático: analisador-sintatico.md
   - Tabela de Símbolos: tabela-simbolos.md
   - Análise Semântica: analise-semantica.md
+  - Interpretador e Runtime: interpretador.md
   - Planejamento das Sprints: planejamento-sprints.md
   - Problemas e Soluções: problemas-e-solucoes.md
   - Débitos Técnicos: debitos-tecnicos.md
