@@ -57,7 +57,7 @@ ASTNode *create_if_node(ASTNode *cond, ASTNode *then_block, ASTNode *else_block)
     ASTNode *node = create_node(NODE_IF);
     node->left = cond;
     node->right = then_block;
-    node->next = else_block;
+    node->else_branch = else_block;
     return node;
 }
 
@@ -84,6 +84,79 @@ void free_ast(ASTNode *node) {
     if (node->string_value) free(node->string_value);
     if (node->left) free_ast(node->left);
     if (node->right) free_ast(node->right);
+    if (node->else_branch) free_ast(node->else_branch);
     if (node->next) free_ast(node->next);
     free(node);
+}
+
+static void print_indent(int level) {
+    for (int i = 0; i < level; i++) printf("  ");
+}
+
+static void print_list(const ASTNode *node, int level);
+
+static void print_node(const ASTNode *n, int level) {
+    print_indent(level);
+    switch (n->type) {
+        case NODE_PROGRAM:
+            printf("Program\n");
+            print_list(n->left, level + 1);
+            break;
+        case NODE_BLOCK:
+            printf("Block\n");
+            print_list(n->left, level + 1);
+            break;
+        case NODE_DECLARATION:
+            printf("Declaration(%s)\n", n->name ? n->name : "?");
+            if (n->left) print_node(n->left, level + 1);
+            break;
+        case NODE_ASSIGNMENT:
+            printf("Assignment(%s)\n", n->name ? n->name : "?");
+            if (n->left) print_node(n->left, level + 1);
+            break;
+        case NODE_BINARY_EXPR:
+            printf("BinaryExpr(%s)\n", n->name ? n->name : "?");
+            if (n->left)  print_node(n->left, level + 1);
+            if (n->right) print_node(n->right, level + 1);
+            break;
+        case NODE_VAR_REF:
+            printf("Var(%s)\n", n->name ? n->name : "?");
+            break;
+        case NODE_NUM_LITERAL:
+            printf("Num(%g)\n", n->num_value);
+            break;
+        case NODE_STRING_LITERAL:
+            printf("String(\"%s\")\n", n->string_value ? n->string_value : "");
+            break;
+        case NODE_IF:
+            printf("If\n");
+            print_indent(level + 1); printf("Cond:\n");
+            if (n->left) print_node(n->left, level + 2);
+            print_indent(level + 1); printf("Then:\n");
+            print_list(n->right, level + 2);
+            if (n->else_branch) {
+                print_indent(level + 1); printf("Else:\n");
+                print_list(n->else_branch, level + 2);
+            }
+            break;
+        case NODE_WHILE:
+            printf("While\n");
+            print_indent(level + 1); printf("Cond:\n");
+            if (n->left) print_node(n->left, level + 2);
+            print_indent(level + 1); printf("Body:\n");
+            print_list(n->right, level + 2);
+            break;
+        default:
+            printf("Unknown(%d)\n", n->type);
+    }
+}
+
+/* Percorre uma lista de comandos ligada por ->next */
+static void print_list(const ASTNode *node, int level) {
+    for (const ASTNode *cur = node; cur; cur = cur->next)
+        print_node(cur, level);
+}
+
+void print_ast(const ASTNode *root) {
+    print_list(root, 0);
 }

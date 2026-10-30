@@ -1,0 +1,14 @@
+[TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'y' (int) no Escopo 1
+
+[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
+Declaration(x)
+  Num(1)
+Block
+  Declaration(y)
+    Num(2)
+  Assignment(x)
+    BinaryExpr(+)
+      Var(x)
+      Var(y)
+Block

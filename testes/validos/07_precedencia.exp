@@ -1,0 +1,35 @@
+[TABELA DE SÍMBOLOS] Inserida variável 'a' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'b' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'c' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'r' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 's' (int) no Escopo 0
+
+[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
+Declaration(a)
+  Num(3)
+Declaration(b)
+  Num(4)
+Declaration(c)
+  Num(2)
+Declaration(r)
+  BinaryExpr(+)
+    BinaryExpr(+)
+      BinaryExpr(*)
+        Var(a)
+        Var(a)
+      BinaryExpr(*)
+        Var(b)
+        Var(b)
+    BinaryExpr(*)
+      Var(c)
+      Var(c)
+Assignment(r)
+  BinaryExpr(+)
+    BinaryExpr(*)
+      Var(a)
+      Var(b)
+    Var(c)
+Declaration(s)
+  BinaryExpr(*)
+    Var(r)
+    Var(c)

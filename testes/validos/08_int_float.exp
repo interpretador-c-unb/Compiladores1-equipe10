@@ -1,0 +1,17 @@
+[TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'y' (float) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'z' (float) no Escopo 0
+
+[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
+Declaration(x)
+  Num(7)
+Declaration(y)
+  Num(0.5)
+Declaration(z)
+  BinaryExpr(*)
+    Var(x)
+    Var(y)
+Assignment(z)
+  BinaryExpr(+)
+    Var(x)
+    Var(y)

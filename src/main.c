@@ -35,6 +35,8 @@ int main(int argc, char **argv) {
         printf("\n[FALHA] Foram encontrados erros no código.\n");
     }
 
+    print_ast(ast_root);
+
     free_ast(ast_root);
     free_symbol_table(sym_table);
 

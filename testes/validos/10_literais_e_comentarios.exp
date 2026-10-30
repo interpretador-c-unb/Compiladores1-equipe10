@@ -1,0 +1,15 @@
+[TABELA DE SÍMBOLOS] Inserida variável 'c' (char) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'n' (char) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 's' (char) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
+
+[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
+Declaration(c)
+  String("a")
+Declaration(n)
+  String("
+")
+Declaration(s)
+  String("ola mundo")
+Declaration(x)
+  Num(1)

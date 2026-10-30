@@ -1,0 +1,14 @@
+[TABELA DE SÍMBOLOS] Inserida variável 'carro' (char) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'moto' (char) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'salario' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'pi' (float) no Escopo 0
+
+[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
+Declaration(carro)
+  String("maclarem")
+Declaration(moto)
+  String("BMW")
+Declaration(salario)
+  Num(100000)
+Declaration(pi)
+  Num(3.14)
