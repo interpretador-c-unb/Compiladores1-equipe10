@@ -4,7 +4,7 @@ Interpretador de um subconjunto de C — Compiladores 1 · Grupo 10 · 2026.2
 
 Metodologia: Scrum/XP, sprints de uma semana (12/08/2026 a 02/12/2026).
 
-> **Situação atual (23/09/2026):** Sprint 6 concluída. Consolidação e publicação da documentação da Fase 1 (Pré-P1) finalizadas para avaliação.
+> **Situação verificada (30/10/2026):** front-end com geração e impressão da AST e testes da Sprint 6 integrados. A Sprint 8 possui verificações iniciais de declaração/escopo no parser, mas a análise semântica completa permanece pendente. O estado das entregas da Sprint 8 está detalhado abaixo; a publicação desta revisão ainda está pendente.
 
 Legenda de status nas tarefas: `[ ]` pendente · `[x]` concluído.
 
@@ -204,12 +204,16 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar tabela de compatibilidade de tipos e regras semânticas | Danielly Mendes |
-| [ ] | Documentação | Escrever guia de mensagens de erros semânticos no MkDocs | Rafael Laube |
-| [ ] | Documentação | Publicar avanço da Sprint 8 no GitHub Pages | Danielly Mendes & Rafael Laube |
-| [ ] | Semântica | Implementar travessia na AST (`semantic.c`) para detectar variáveis não declaradas | Nicole Jovita |
+| [ ] | Documentação | Finalizar matriz de compatibilidade e regras semânticas; página atual registra o que existe e o que está pendente | Danielly Mendes |
+| [x] | Documentação | Escrever guia das mensagens semânticas já implementadas, com exemplos e limitações | Rafael Laube |
+| [ ] | Documentação | Revisar com o par e publicar avanço da Sprint 8 no GitHub Pages | Danielly Mendes & Rafael Laube |
+| [ ] | Semântica | Implementar travessia na AST (`semantic.c`); atualmente a detecção de variáveis não declaradas ocorre apenas durante o parsing | Nicole Jovita |
 | [ ] | Tipagem | Implementar checagem de tipos e coerção implícita simples (`int` → `float`) | Paulo Nina |
-| [ ] | Fluxo/Gestão | Validar condições booleanas de `if`/`while` e apoiar regras de escopo | Bernardo Campos |
+| [ ] | Fluxo/Gestão | Validar condições de `if`/`while`; controle inicial de escopo já existe na tabela de símbolos | Bernardo Campos |
+
+**Verificação de 30/10/2026:** a [página de Análise Semântica](analise-semantica.md) documenta os avisos de variável não declarada, os erros de redeclaração e o controle de escopo existentes no front-end. Não foram encontrados `semantic.c`/`semantic.h`, travessia semântica da AST, checagem de tipos, coerção ou validação das condições. A implementação da Sprint 8 permanece parcial; os diagnósticos atuais não fazem o driver retornar falha semântica.
+
+**Entrega documental:** guia das mensagens existentes preparado nesta branch. A matriz final de compatibilidade, a revisão por Danielly e a publicação desta revisão continuam pendentes. As issues #36, #37 e #38 estavam abertas na consulta; nenhuma aprovação ou publicação foi presumida. Após integração na `main`, o workflow de documentação realiza o deploy, que deve ser conferido no GitHub Pages.
 
 ---
 
