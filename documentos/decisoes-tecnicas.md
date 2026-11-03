@@ -27,3 +27,11 @@ Os artefatos gerados (`lex.yy.c`, `interpretador_c.tab.c`, `interpretador_c.tab.
 1. **Análise Léxica & Localização:** Rastreamento contínuo de linha (`yylineno`) e coluna (`lex_column()`) para relatórios detalhados em `yyerror()`.
 2. **Árvore Sintática Abstrata (AST):** Estrutura genérica de nós representada por `struct ASTNode`, contendo ponteiros dinâmicos (`left`, `right`, `next`) para expressões, comandos e blocos.
 3. **Tabela de Símbolos por Escopo:** Gerenciamento baseado em lista ligada encadeada com níveis de escopo (`current_scope`). Ao entrar em um bloco `{}` o escopo é incrementado e os símbolos correspondentes são descartados ao sair do bloco.
+
+## 4. Execução da AST e ambiente de runtime — Sprint 9
+
+A execução direta da AST é uma entrega planejada. O código atual constrói e imprime a árvore, mas ainda não contém `interpreter.c`, `evaluate_expr()` ou `Environment`.
+
+A tabela de símbolos existente registra nome, tipo declarado e escopo durante o parsing; ela não armazena valores de execução. O futuro ambiente de runtime precisa manter esses valores e permitir sua atualização durante as atribuições. A representação de valores, a organização dos ambientes e a propriedade da memória ainda precisam ser definidas com a equipe.
+
+A página [Interpretador e Environment](interpretador.md) descreve a estrutura atual dos nós, o ciclo de execução proposto, os diagramas de arquitetura e escopos e as decisões pendentes. O modelo conceitual apresentado nessa página está sujeito à revisão de Paulo Nina e à validação com a implementação; não é uma arquitetura já implementada.
