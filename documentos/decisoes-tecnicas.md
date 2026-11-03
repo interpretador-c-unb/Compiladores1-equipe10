@@ -25,8 +25,25 @@ Os artefatos gerados (`lex.yy.c`, `interpretador_c.tab.c`, `interpretador_c.tab.
 ## 3. Estruturas de Dados e Arquitetura
 
 1. **Análise Léxica & Localização:** Rastreamento contínuo de linha (`yylineno`) e coluna (`lex_column()`) para relatórios detalhados em `yyerror()`.
-2. **Árvore Sintática Abstrata (AST):** Estrutura genérica de nós representada por `struct ASTNode`, contendo ponteiros dinâmicos (`left`, `right`, `next`) para expressões, comandos e blocos.
+2. **Árvore Sintática Abstrata (AST):** `ast_root` aponta para o primeiro nó da lista de comandos. O campo `next` liga os irmãos na mesma lista. Os filhos variam conforme o tipo de nó.
 3. **Tabela de Símbolos por Escopo:** Gerenciamento baseado em lista ligada encadeada com níveis de escopo (`current_scope`). Ao entrar em um bloco `{}` o escopo é incrementado e os símbolos correspondentes são descartados ao sair do bloco.
+
+### Nós da AST
+
+| Tipo | Campos usados |
+| --- | --- |
+| `NODE_PROGRAM` | Reservado no enum. O parser entrega a lista de comandos diretamente em `ast_root`. |
+| `NODE_DECLARATION` | Nome em `name` e inicializador opcional em `left`. |
+| `NODE_ASSIGNMENT` | Nome do destino em `name` e expressão em `left`. |
+| `NODE_BINARY_EXPR` | Operador em `name` e operandos em `left` e `right`. Para `!` e menos unário, `right` fica vazio. |
+| `NODE_VAR_REF` | Nome da variável em `name`. |
+| `NODE_NUM_LITERAL` | Valor numérico em `num_value` (`double`). |
+| `NODE_STRING_LITERAL` | Texto em `string_value`. O parser usa este nó também para literais de caractere. |
+| `NODE_IF` | Condição em `left`, ramo principal em `right` e ramo alternativo opcional em `else_branch`. |
+| `NODE_WHILE` | Condição em `left` e corpo em `right`. |
+| `NODE_BLOCK` | Primeiro comando em `left`, que fica vazio em um bloco sem comandos. |
+
+A [tabela de símbolos](tabela-simbolos.md) guarda os tipos declarados e os escopos durante a análise.
 
 ## 4. Execução da AST e ambiente de runtime — Sprint 9
 
