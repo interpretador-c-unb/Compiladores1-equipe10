@@ -127,6 +127,8 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [x] | Gramática | Desenvolver regras para expressões aritméticas e parênteses | Paulo Nina |
 | [x] | Driver/Gestão | Implementar `main.c` integrando `yyparse()` e resolver conflitos de precedência | Bernardo Campos |
 
+**Revisão documental da Sprint 3 (30/10/2026):** guia de uso atualizado para `./interpreter`, com compilação, fluxo do driver e diagnósticos; tabela de precedência alinhada às declarações do Bison e blocos Markdown corrigidos. As produções da BNF foram preservadas; as diferenças em relação ao parser estão indicadas na página da gramática. A publicação desta revisão no GitHub Pages e a aprovação pelo par ainda precisam ser confirmadas; os marcadores acima registram o status histórico da sprint.
+
 ---
 
 ### Sprint 4 — Parser completo e erros sintáticos
