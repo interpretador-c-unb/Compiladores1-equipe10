@@ -145,7 +145,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [x] | Gramática/Erros | Implementar laços `while` e customizar `yyerror()` com linha e coluna | Danielly Mendes |
 | [x] | Erros/Gestão | Habilitar `%define parse.error verbose` e testar mensagens detalhadas de erro | Bernardo Campos |
 
-**Revisão documental da issue #17 (30/10/2026):** a página [Analisador Sintático](analisador-sintatico.md) detalha a precedência do *Dangling Else*, a construção dos ramos na AST, o formato de `yyerror()` e a ausência de recuperação sintática na implementação atual. Conteúdo preparado na branch `docs/sprint4-tratamento-de-erros-e-dangling-else`. A publicação desta revisão no GitHub Pages e a aprovação por Paulo Nina, par da sprint, ainda estão pendentes; os marcadores acima registram o status histórico. O workflow de documentação publica automaticamente após integração na `main`.
+**Publicação em 03/11/2026.** A página [Analisador Sintático](analisador-sintatico.md), integrada pelo PR #51, está disponível no GitHub Pages desde o deploy do PR #53. Ela cobre o *dangling else* e os diagnósticos sintáticos. A aprovação formal pelo par segue pendente.
 
 ---
 
@@ -232,7 +232,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [ ] | Execução/Gestão | Implementar a avaliação de nós aritméticos binários em tempo de execução | Bernardo Campos |
 
 
-**Verificação de 30/10/2026:** a página [Interpretador e Environment](interpretador.md) e a seção correspondente em Decisões Técnicas descrevem a base existente e uma proposta de runtime. `interpreter.c`, `evaluate_expr()` e `Environment` ainda não existem no código verificado. As tarefas de desenvolvimento permanecem pendentes. O conteúdo e os diagramas estão preparados, mas a finalização da arquitetura, a revisão de Paulo Nina e a publicação desta revisão no GitHub Pages ainda estão pendentes; por isso, as entregas completas permanecem desmarcadas.
+**Publicação em 03/11/2026.** A página [Interpretador e Environment](interpretador.md) foi publicada no GitHub Pages após o merge do PR #53. A página descreve a arquitetura proposta. A implementação de `interpreter.c`, `evaluate_expr()` e `Environment` segue pendente na issue #39, e a revisão formal pelo par ainda está pendente.
 
 ---
 
