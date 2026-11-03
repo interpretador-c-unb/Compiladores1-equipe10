@@ -232,7 +232,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [ ] | Execução/Gestão | Implementar a avaliação de nós aritméticos binários em tempo de execução | Bernardo Campos |
 
 
-**Verificação de 30/10/2026:** a página [Interpretador e Environment](interpretador.md) e a seção correspondente em Decisões Técnicas descrevem a base existente e uma proposta de runtime. `interpreter.c`, `evaluate_expr()` e `Environment` ainda não existem no código verificado. As tarefas de desenvolvimento permanecem pendentes. O conteúdo e os diagramas estão preparados, mas a finalização da arquitetura, a revisão de Paulo Nina e a publicação desta revisão no GitHub Pages ainda estão pendentes; por isso, as entregas completas permanecem desmarcadas.
+**Publicação em 03/11/2026.** A página [Interpretador e Environment](interpretador.md) foi publicada no GitHub Pages após o merge do PR #53. A página descreve a arquitetura proposta. A implementação de `interpreter.c`, `evaluate_expr()` e `Environment` segue pendente na issue #39, e a revisão formal pelo par ainda está pendente.
 
 ---
 
