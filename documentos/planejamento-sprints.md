@@ -145,6 +145,8 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [x] | Gramática/Erros | Implementar laços `while` e customizar `yyerror()` com linha e coluna | Danielly Mendes |
 | [x] | Erros/Gestão | Habilitar `%define parse.error verbose` e testar mensagens detalhadas de erro | Bernardo Campos |
 
+**Revisão documental da issue #17 (30/10/2026):** a página [Analisador Sintático](analisador-sintatico.md) detalha a precedência do *Dangling Else*, a construção dos ramos na AST, o formato de `yyerror()` e a ausência de recuperação sintática na implementação atual. Conteúdo preparado na branch `docs/sprint4-tratamento-de-erros-e-dangling-else`. A publicação desta revisão no GitHub Pages e a aprovação por Paulo Nina, par da sprint, ainda estão pendentes; os marcadores acima registram o status histórico. O workflow de documentação publica automaticamente após integração na `main`.
+
 ---
 
 ### Sprint 5 — AST e tabela de símbolos
