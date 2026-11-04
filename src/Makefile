@@ -5,7 +5,7 @@ BISON = bison
 
 # Opções de compilação
 CFLAGS = -Wall -Wextra -std=gnu11
-LDLIBS =
+LDLIBS = -lm
 
 # Executável na raiz do repositório (./interpreter)
 TARGET = ../interpreter
@@ -13,6 +13,7 @@ MAIN_C = main.c
 AST_C = ast.c
 SYMBOL_C = symbol_table.c
 SEMANTIC_C = semantic.c
+INTERPRETER_C = interpreter.c
 LEXER = interpretador_c.l
 PARSER = interpretador_c.y
 LEXER_C = lex.yy.c
@@ -23,9 +24,9 @@ PARSER_H = interpretador_c.tab.h
 
 all: $(TARGET)
 
-# Compila e liga o main.c, ast.c, symbol_table.c, semantic.c, parser e lexer
-$(TARGET): $(PARSER_C) $(LEXER_C) $(MAIN_C) $(AST_C) $(SYMBOL_C) $(SEMANTIC_C)
-	$(CC) $(CFLAGS) -o $@ $(MAIN_C) $(AST_C) $(SYMBOL_C) $(SEMANTIC_C) $(PARSER_C) $(LEXER_C) $(LDLIBS)
+# Compila e liga todos os módulos
+$(TARGET): $(PARSER_C) $(LEXER_C) $(MAIN_C) $(AST_C) $(SYMBOL_C) $(SEMANTIC_C) $(INTERPRETER_C)
+	$(CC) $(CFLAGS) -o $@ $(MAIN_C) $(AST_C) $(SYMBOL_C) $(SEMANTIC_C) $(INTERPRETER_C) $(PARSER_C) $(LEXER_C) $(LDLIBS)
 
 # -d gera o cabeçalho compartilhado pelo lexer e pelo parser
 $(PARSER_C) $(PARSER_H): $(PARSER)

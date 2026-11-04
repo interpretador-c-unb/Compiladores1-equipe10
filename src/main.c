@@ -3,6 +3,7 @@
 #include "ast.h"
 #include "symbol_table.h"
 #include "semantic.h"
+#include "interpreter.h"
 
 extern FILE *yyin;
 extern int yyparse(void);
@@ -44,14 +45,20 @@ int main(int argc, char **argv) {
     printf("\n--- Iniciando Análise Semântica ---\n");
     int semantic_errors = analyze_semantics(ast_root, sym_table);
 
-    if (semantic_errors == 0) {
-        printf("[SUCESSO] Análise semântica concluída sem erros!\n");
-    } else {
-        printf("[FALHA] Foram encontrados %d erro(s) semântico(s) no código.\n", semantic_errors);
+    if (semantic_errors != 0) {
+        printf("[FALHA] Execução abortada devido a %d erro(s) semântico(s).\n", semantic_errors);
+        free_ast(ast_root);
+        free_symbol_table(sym_table);
+        return 1;
     }
+
+    printf("[SUCESSO] Análise semântica concluída sem erros!\n");
+
+    printf("\n--- Executando o Programa (Runtime) ---\n");
+    execute_program(ast_root);
 
     free_ast(ast_root);
     free_symbol_table(sym_table);
 
-    return semantic_errors == 0 ? 0 : 1;
+    return 0;
 }
