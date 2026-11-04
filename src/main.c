@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "ast.h"
 #include "symbol_table.h"
+#include "semantic.h"
 
 extern FILE *yyin;
 extern int yyparse(void);
@@ -29,16 +30,28 @@ int main(int argc, char **argv) {
         fclose(yyin);
     }
 
-    if (result == 0) {
-        printf("\n[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!\n");
-    } else {
-        printf("\n[FALHA] Foram encontrados erros no código.\n");
+    if (result != 0) {
+        printf("\n[FALHA] Foram encontrados erros sintáticos no código.\n");
+        free_ast(ast_root);
+        free_symbol_table(sym_table);
+        return result;
     }
 
+    printf("\n[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!\n");
+    printf("\n--- Árvore Sintática Abstrata (AST) ---\n");
     print_ast(ast_root);
+
+    printf("\n--- Iniciando Análise Semântica ---\n");
+    int semantic_errors = analyze_semantics(ast_root, sym_table);
+
+    if (semantic_errors == 0) {
+        printf("[SUCESSO] Análise semântica concluída sem erros!\n");
+    } else {
+        printf("[FALHA] Foram encontrados %d erro(s) semântico(s) no código.\n", semantic_errors);
+    }
 
     free_ast(ast_root);
     free_symbol_table(sym_table);
 
-    return result;
+    return semantic_errors == 0 ? 0 : 1;
 }
