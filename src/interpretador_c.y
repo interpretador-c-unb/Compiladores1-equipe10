@@ -16,8 +16,6 @@ ASTNode *ast_root = NULL;
 SymbolTable *sym_table = NULL;
 %}
 
-%define parse.error verbose
-
 %union {
     double numValue;
     int charValue;
@@ -59,8 +57,6 @@ SymbolTable *sym_table = NULL;
 %left PLUS MINUS
 %left STAR SLASH PERCENT
 %right NOT UMINUS PLUSPLUS MINUSMINUS
-
-%destructor { free($$); } ID STRING
 
 %%
 
@@ -115,9 +111,6 @@ comando:
 
 atribuicao:
     ID ASSIGN expressao SEMI {
-        if (!lookup_symbol(sym_table, $1)) {
-            fprintf(stderr, "[AVISO SEMÂNTICO] Variável '%s' usada sem declaração na linha %d\n", $1, yylineno);
-        }
         $$ = create_assign_node($1, $3);
         free($1);
     }
@@ -162,9 +155,6 @@ lista_comandos:
 
 expressao:
     ID {
-        if (!lookup_symbol(sym_table, $1)) {
-            fprintf(stderr, "[AVISO SEMÂNTICO] Variável '%s' usada sem declaração na linha %d\n", $1, yylineno);
-        }
         $$ = create_var_node($1);
         free($1);
     }
