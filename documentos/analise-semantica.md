@@ -1,120 +1,159 @@
-# Análise Semântica — Sprint 8
+# Análise Semântica
 
-**Estado verificado em 30/10/2026:** o projeto possui verificações iniciais de declaração e escopo durante o parsing. A análise semântica por travessia da AST, prevista na Sprint 8, ainda está pendente. Esta página descreve o comportamento existente, sem tratar funcionalidades planejadas como implementadas.
+**Estado verificado em 04/11/2026.** Esta página descreve o comportamento real do analisador (`src/semantic.c`), levantado a partir do código-fonte e de execuções de teste. Quando o comportamento atual diverge do esperado, ele aparece em [Limitações conhecidas](#limitacoes-conhecidas) e não é apresentado como regra da linguagem.
 
-## O que já está implementado
+## Visão geral
 
-| Verificação | Implementação atual | Limitação |
+A análise semântica roda **depois** do parsing, em uma passada própria sobre a AST. O fluxo do programa principal (`src/main.c`) é:
+
+1. `yyparse()` faz a análise sintática, monta a AST e insere as declarações na tabela de símbolos. A detecção de **redeclaração** acontece nesta etapa.
+2. Opcionalmente, `--optimize` aplica constant folding e `--print-ast` imprime a árvore.
+3. `analyze_semantics()` percorre a AST, infere o tipo das expressões e verifica declaração de variáveis e atribuições.
+4. Se houver erros contados, o programa imprime `[FALHA] Execução abortada devido a N erro(s) semântico(s).` e termina com código `1`. Caso contrário, executa o programa.
+
+Todos os diagnósticos semânticos são escritos em `stderr`.
+
+Cada bloco `{ ... }` abre um novo escopo. O mesmo nome pode ser declarado em escopos diferentes, mas não duas vezes no mesmo escopo.
+
+## Tipos da linguagem
+
+| Tipo | Como aparece | Observação |
 | --- | --- | --- |
-| Uso de variável não declarada | `lookup_symbol()` nas regras de referência a identificador e de atribuição em `src/interpretador_c.y`. | Emite aviso, mas não interrompe o parser. |
-| Redeclaração no mesmo escopo | `insert_symbol()` em `src/symbol_table.c` verifica nome e nível de escopo. | Recusa a inserção duplicada, mas o parser não usa esse retorno para sinalizar falha. |
-| Entrada e saída de blocos | O parser chama `enter_scope()` ao abrir `{` e `exit_scope()` ao fechar `}`. | É controle da tabela durante a análise, não um ambiente de execução. |
-| Visibilidade e sombreamento | A busca encontra o símbolo visível mais recente; nomes iguais são permitidos em escopos diferentes. | Não substitui a futura validação semântica da AST. |
-| Tipo declarado | A tabela guarda `data_type` como texto, por exemplo `int` ou `float`. | Esse registro ainda não é usado para validar operandos ou atribuições. |
+| `int` | declaração e literal inteiro | Tipo padrão de qualquer literal numérico (ver [limitações](#limitacoes-conhecidas)). |
+| `float` | declaração | Tipo resultante quando algum operando é `float`. |
+| `char` | declaração | Aceito pela gramática, sem regras próprias na análise. |
+| `void` | declaração | Aceito pela gramática, sem regras próprias na análise. |
+| `string` | literais de texto | Tipo interno dos literais de texto; não pode ser declarado. A gramática também cria o literal de caractere como nó de texto. |
+| `unknown` | variável não declarada | Tipo interno. Propaga-se: uma expressão com operando `unknown` também é `unknown`. |
 
-Esses recursos são a base já existente no front-end. Não representam a conclusão do módulo `semantic.c`, que ainda não existe no código verificado.
+O tipo de uma variável é o que foi registrado na tabela de símbolos na declaração.
 
-## Guia das mensagens existentes
+## Compatibilidade em atribuições
 
-### Variável usada sem declaração
+Matriz para `destino = origem;`. Os valores abaixo foram obtidos executando o interpretador.
 
-Formato emitido em `stderr`:
+| Destino \ Origem | `int` | `float` | `char` | `string` |
+| --- | --- | --- | --- | --- |
+| `int` | aceita | **aviso SEM-04** | sem checagem | sem checagem |
+| `float` | aceita (promoção implícita) | aceita | sem checagem | sem checagem* |
+| `char` | sem checagem | sem checagem | aceita | sem checagem |
 
-```text
-[AVISO SEMÂNTICO] Variável 'nome' usada sem declaração na linha N
-```
+**Legenda:** *aceita* = tipos iguais ou promoção prevista; *aviso* = a análise emite aviso e segue; *sem checagem* = nenhuma regra existe no código, então a atribuição passa sem diagnóstico. Isso não significa que a combinação tenha sido aprovada como regra da linguagem.
 
-O aviso aparece quando o identificador não é encontrado na tabela, tanto no lado esquerdo de uma atribuição quanto em uma expressão. Uma variável de bloco que já saiu de escopo também produz esse aviso.
+\* `float` recebendo `string` foi deduzido do código, não executado.
 
-Exemplo:
+A única regra de incompatibilidade implementada é `int` recebendo `float`, e ela gera **aviso**, não erro: o programa continua e retorna código `0`.
+
+**Declaração com valor inicial.** Em `int x = 2.5;` ou `int x = "texto";` a análise só procura variáveis não declaradas no inicializador. O tipo do inicializador **não é comparado** com o tipo declarado, então não há aviso nem erro.
+
+## Tipo do resultado de expressões
+
+### Operadores binários
+
+A regra é a mesma para **todos** os operadores binários: aritméticos (`+ - * / %`), de igualdade e relacionais (`== != < <= > >=`) e lógicos (`&&` e `||`).
+
+| Esquerdo \ Direito | `int` | `float` | `char` | `string` |
+| --- | --- | --- | --- | --- |
+| `int` | `int` | `float` | `int` | `int` |
+| `float` | `float` | `float` | `float` | `float` |
+| `char` | `int` | `float` | `int` | `int` |
+| `string` | `int` | `float` | `int` | `int` |
+
+Resumindo: se algum operando for `float`, o resultado é `float`; caso contrário, é `int`. Se algum operando for `unknown` (variável não declarada), o resultado é `unknown`.
+
+Consequências desta regra, conforme o código:
+
+- Comparações e operadores lógicos não produzem um tipo booleano. Comparar dois `float` resulta em `float`.
+- Não há verificação de operandos por operador. `char` e `string` participam de qualquer operação sem diagnóstico.
+
+### Operadores unários
+
+Os operadores unários `-` e `!` resultam em `float` se o operando for `float`; caso contrário, em `int`.
+
+### Condições de `if` e `while`
+
+A expressão da condição é analisada apenas para detectar variáveis não declaradas. Qualquer tipo é aceito como condição.
+
+## Conversões implícitas
+
+| Conversão | Onde ocorre | Comportamento |
+| --- | --- | --- |
+| `int` → `float` | expressão com operandos mistos; atribuição a variável `float` | Aceita em silêncio. O resultado da expressão é `float`. |
+| `float` → `int` | atribuição a variável `int` | Aviso SEM-04 na análise. Na execução, o valor é truncado: no teste `int a; float b = 2.5; a = b;` a variável `a` terminou com `2`. |
+| Demais combinações com `char` e `string` | atribuições e expressões | Sem regra e sem diagnóstico. |
+
+A análise semântica apenas **infere e avisa**. Ela não insere nós de conversão na AST.
+
+## Erros e avisos semânticos
+
+O programa não imprime códigos numéricos. Os identificadores `SEM-xx` abaixo existem só nesta documentação, para facilitar a referência.
+
+| ID | Tipo | Mensagem emitida | Quando é emitida | Interrompe a execução? | Teste |
+| --- | --- | --- | --- | --- | --- |
+| SEM-01 | Erro | `[ERRO SEMÂNTICO] Variável 'x' usada sem declaração na linha N.` | Um nome usado em expressão ou condição não está na tabela de símbolos visível. | Sim, código `1` | `testes/invalidos/08_var_nao_declarada.c`, `15_variavel_fora_de_escopo.c` |
+| SEM-02 | Erro | `[ERRO SEMÂNTICO] Atribuição a variável não declarada 'x' na linha N.` | O alvo de uma atribuição não está na tabela. | Sim, código `1` | `testes/invalidos/17_atribuicao_nao_declarada.c` |
+| SEM-03 | Erro | `[ERRO SEMÂNTICO] Variável 'x' já declarada no escopo N` | O mesmo nome é declarado duas vezes no mesmo escopo. | **Não** (ver limitações) | `testes/invalidos/09_redeclaracao.c` |
+| SEM-04 | Aviso | `[AVISO SEMÂNTICO] Atribuição de 'float' para variável 'int x' na linha N (pode haver perda de precisão).` | Atribuição de expressão `float` a variável `int`. | Não | `testes/invalidos/18_aviso_float_para_int.c` |
+
+Exemplos:
 
 ```c
+/* SEM-01 */
 int x = 2;
-x = x + z;
+x = x + z;      // 'z' não foi declarada
 ```
-
-`z` não foi declarada. Para corrigir a entrada, declare-a em um escopo visível antes de usá-la, ou corrija o nome caso tenha sido digitado errado.
-
-O número da linha vem de `yylineno` no momento da ação do parser. Não há coluna na mensagem, nem posição de origem armazenada no nó da AST; portanto, isso ainda não atende ao requisito completo de localização dos diagnósticos da Sprint 8.
-
-### Redeclaração no mesmo escopo
-
-Formato emitido em `stderr`:
-
-```text
-[ERRO SEMÂNTICO] Variável 'nome' já declarada no escopo N
-```
-
-Exemplo:
 
 ```c
+/* SEM-02 */
+int a = 1;
+q = a;          // 'q' não foi declarada
+```
+
+```c
+/* SEM-03 */
 int x = 9;
-int x = 8;
+int x = 8;      // mesmo nome, mesmo escopo
 ```
-
-As duas declarações estão no escopo global (`0`). Remova a declaração duplicada, use outro nome ou, se a intenção for atualizar a variável, escreva uma atribuição (`x = 8;`). A mensagem atual informa o nível do escopo, mas não linha ou coluna.
-
-### Uso após sair do escopo
 
 ```c
-int x = 1;
-{
-    int y = 2;
-}
-x = y;
+/* SEM-04 */
+int a = 1;
+float b = 2.5;
+a = b;          // float -> int
 ```
 
-Ao fechar o bloco, `exit_scope()` remove `y` da tabela. O uso seguinte gera o mesmo aviso de variável sem declaração; não existe uma mensagem específica para “fora de escopo”.
+Para corrigir SEM-01 e SEM-02, declare a variável em um escopo visível antes de usá-la ou corrija o nome digitado. Para SEM-03, remova a declaração duplicada, use outro nome ou, se a intenção é atualizar o valor, escreva uma atribuição (`x = 8;`). Para SEM-04, declare a variável como `float` ou aceite o truncamento.
 
-### Resultado da análise
+## Limitações conhecidas
 
-As mensagens acima não alteram o resultado de `yyparse()`. Uma entrada sintaticamente válida pode emitir um diagnóstico semântico e, mesmo assim, imprimir `[SUCESSO]` e terminar com código `0`. O driver atual retorna apenas o resultado da análise sintática.
+Os itens abaixo foram confirmados por execução. Descrevem o comportamento **atual**, não o desejado.
 
-Ainda estão pendentes a propagação de falha semântica para o driver, os diagnósticos com linha e coluna e a padronização de códigos de erro. Não há códigos numéricos ou catálogo de erros de tipagem implementado para documentar como comportamento atual.
+1. **Redeclaração não derruba o programa (SEM-03).** A mensagem é impressa durante o parsing, mas não entra na contagem de erros semânticos. O programa imprime `[SUCESSO] Análise semântica concluída sem erros!`, executa e retorna `0`.
+2. **Comandos logo após um `if` não são analisados.** Em `if (a > 0) { a = 2; }` seguido de `z = 5;`, nenhum erro é emitido para `z`, e o código de saída é `0`. A causa provável é a exceção `node->type != NODE_IF` ao percorrer `next` em `analyze_semantics`, herdada da época em que o `else` era guardado em `next`.
+3. **Variáveis declaradas dentro de blocos geram erro falso.** Em `testes/validos/03_declaracoes.c` e `12_escopo_blocos.c`, o uso de variáveis declaradas dentro de `{ }` produz `usada sem declaração` e o programa retorna `1`, embora o código seja válido. A causa provável é que as declarações entram na tabela durante o parsing e os escopos dos blocos já foram descartados quando a análise percorre a AST.
+4. **Número da linha incorreto.** A linha vem de `yylineno`, lido depois do parsing, e por isso aponta para o fim do arquivo, e não para o comando com problema. Exemplo: um erro na linha 4 de um arquivo de 5 linhas foi reportado na linha 6. As mensagens também não informam a coluna.
+5. **Literais decimais são tratados como `int`.** O tipo de um literal numérico é decidido por `node->name`, que o nó numérico não preenche. Em `int a = 1; a = 2.5;` não há aviso SEM-04, e expressões com literal decimal têm resultado `int`.
+6. **Sem checagem de tipos em declarações com valor inicial, condições, `char`, `string` e `void`**, conforme descrito nas seções anteriores.
+7. **Estado final da execução.** No teste `float b = 2.5; ... b = a;` com `a` inteiro, o estado final do runtime mostrou `b` como `int`. Isso ocorre na execução, fora da análise semântica, e foi registrado aqui só como observação.
 
-## Compatibilidade de tipos: estado atual
+## Como conferir
 
-A tabela abaixo registra o estado da implementação; não define uma nova política de tipos para a linguagem.
-
-| Operação ou regra | Estado no código | Pendência |
-| --- | --- | --- |
-| Atribuição entre valores do mesmo tipo | Não há comparação de tipos. | Implementar validação e documentar a regra aprovada. |
-| Conversão implícita `int` → `float` | Prevista no planejamento; não implementada. | Implementar coerção e seus testes. |
-| Atribuição `float` → `int` | Não há validação ou conversão específica. | Definir se será permitida e qual será seu comportamento. |
-| Operações aritméticas e operandos mistos | O parser constrói nós sem verificar tipos dos operandos. | Definir e implementar tipos permitidos e tipo resultante. |
-| Comparações e operadores lógicos | A sintaxe é reconhecida, sem validação de compatibilidade. | Definir e implementar regras dos operandos e resultados. |
-| Condições de `if` e `while` | Qualquer expressão aceita pela gramática pode ocupar a condição. | Validar os tipos permitidos nas condições. |
-| Uso de `char`, strings e declarações `void` | Há reconhecimento sintático, sem checagem semântica completa. | Definir e validar restrições desses usos. |
-
-Por exemplo, `int x = "texto";` atualmente constrói uma AST sem diagnóstico de incompatibilidade. Isso evidencia a ausência da checagem; não significa que essa atribuição tenha sido aprovada como regra da linguagem.
-
-Na AST atual, os literais numéricos usam `double`, declarações não guardam o tipo declarado e os nós não possuem linha/coluna. A futura implementação deve definir como preservar ou recuperar as informações necessárias para tipagem e diagnósticos. Armazenar números em `double` não equivale a implementar coerção `int` → `float`.
-
-## Pendências da Sprint 8
-
-- [ ] Implementar `semantic.c`/`semantic.h` e a travessia da AST, integrando a fase ao driver.
-- [ ] Validar declaração e escopo nessa fase, aproveitando as verificações existentes no parser.
-- [ ] Definir a matriz completa de compatibilidade de tipos com a equipe e documentá-la após aprovação.
-- [ ] Implementar checagem de tipos e coerção `int` → `float`.
-- [ ] Validar condições de `if`/`while` e os operandos de cada operador.
-- [ ] Emitir diagnósticos com linha e coluna e fazer falhas semânticas resultarem em falha do programa.
-- [ ] Adicionar testes específicos de tipagem, coerção, condições e retorno de falha semântica.
-- [ ] Revisar a documentação com Danielly e publicar esta revisão no GitHub Pages.
-
-O planejamento divide a documentação entre Danielly (compatibilidade e regras) e Rafael (guia de mensagens e publicação compartilhada). A issue #37 agrega tipos e erros sob responsabilidade de Danielly, com Rafael como revisor; a #38 atribui a publicação a Rafael, com revisão de Danielly. Esta página reúne o diagnóstico atual, sem declarar concluída a matriz de tipos ou a revisão pelo par.
-
-## Como conferir o comportamento existente
-
-Execute na raiz do projeto:
+Na raiz do projeto:
 
 ```bash
-make -C src
-./interpreter testes/invalidos/08_var_nao_declarada.c
-./interpreter testes/invalidos/09_redeclaracao.c
-./interpreter testes/invalidos/15_variavel_fora_de_escopo.c
-bash testes/executar_testes.sh
+make rebuild
+./interpreter testes/invalidos/08_var_nao_declarada.c; echo "código: $?"
+./interpreter testes/invalidos/09_redeclaracao.c; echo "código: $?"
 ```
 
-A suíte existente aceita um diagnóstico em `stderr` como evidência de erro nos casos inválidos, mesmo com código de saída `0`. Sua aprovação não comprova a existência da análise semântica completa.
+O primeiro comando deve mostrar SEM-01 e código `1`; o segundo, SEM-03 e código `0` (ver limitação 1).
 
-Para validar a documentação, execute `mkdocs serve` e abra **Análise Semântica** no menu. Consulte também a [tabela de símbolos](tabela-simbolos.md), o [guia de uso](guia-uso.md) e o [planejamento da Sprint 8](planejamento-sprints.md#sprint-8-analise-semantica-integrada-a-ast).
+Para ver a árvore que a análise percorre, use `./interpreter --print-ast arquivo.c`.
+
+Para validar a documentação, rode `mkdocs serve` e abra **Análise Semântica** no menu.
+
+## Veja também
+
+- [Tabela de símbolos](tabela-simbolos.md)
+- [Guia de uso](guia-uso.md)
+- [Planejamento da Sprint 8](planejamento-sprints.md#sprint-8-analise-semantica-integrada-a-ast)

@@ -204,7 +204,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Finalizar matriz de compatibilidade e regras semânticas; página atual registra o que existe e o que está pendente | Danielly Mendes |
+| [x] | Documentação | Finalizar matriz de compatibilidade e regras semânticas; página atual registra o que existe e o que está pendente | Danielly Mendes |
 | [x] | Documentação | Escrever guia das mensagens semânticas já implementadas, com exemplos e limitações | Rafael Laube |
 | [ ] | Documentação | Revisar com o par e publicar avanço da Sprint 8 no GitHub Pages | Danielly Mendes & Rafael Laube |
 | [ ] | Semântica | Implementar travessia na AST (`semantic.c`); atualmente a detecção de variáveis não declaradas ocorre apenas durante o parsing | Nicole Jovita |
