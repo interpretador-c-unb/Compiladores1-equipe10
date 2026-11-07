@@ -1,0 +1,946 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../decisoes-tecnicas/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Guia de uso - Interpretador C - Equipe 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#guia-de-uso" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-header__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Interpretador C - Equipe 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Guia de uso
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-nav__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Interpretador C - Equipe 10
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estrutura do Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guia de uso
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guia de uso
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compilacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compilação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execucao-e-argumentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execução e argumentos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fluxo-do-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo do driver
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mensagens-e-codigos-de-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mensagens e códigos de saída
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mensagens e códigos de saída">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#erros-durante-a-compilacao-do-interpretador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros durante a compilação do interpretador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testes-do-front-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testes do front-end
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validacao-da-documentacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validação da documentação
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisoes-tecnicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões Técnicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analisador-lexico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Léxico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gramatica-bnf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gramática & BNF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analisador-sintatico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Sintático
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabela-simbolos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela de Símbolos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analise-semantica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análise Semântica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpretador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interpretador e Runtime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../planejamento-sprints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../problemas-e-solucoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problemas e Soluções
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debitos-tecnicos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Débitos Técnicos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plano-pos-p1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plano Pós-P1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compilacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compilação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execucao-e-argumentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execução e argumentos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fluxo-do-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo do driver
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mensagens-e-codigos-de-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mensagens e códigos de saída
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mensagens e códigos de saída">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#erros-durante-a-compilacao-do-interpretador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros durante a compilação do interpretador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testes-do-front-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testes do front-end
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validacao-da-documentacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validação da documentação
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="guia-de-uso">Guia de Uso</h1>
+<p>O driver <code>src/main.c</code> recebe um arquivo-fonte, aciona a análise léxica e sintática e imprime a Árvore Sintática Abstrata (AST). Nesta versão, ele constrói e exibe a árvore; ainda não executa os comandos do programa C.</p>
+<h2 id="compilacao">Compilação</h2>
+<p>É necessário ter GCC, Flex, Bison e Make instalados. Execute os comandos abaixo na raiz do repositório:</p>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>-C<span class="w"> </span>src
+</code></pre></div>
+<p>O Bison gera o parser e seu cabeçalho, o Flex gera o scanner e o GCC compila esses arquivos junto com <code>main.c</code>, <code>ast.c</code> e <code>symbol_table.c</code>. O executável resultante é <code>./interpreter</code>, na raiz do projeto.</p>
+<p>Use <code>make -C src</code>: o <code>Makefile</code> da raiz atualmente procura os fontes no diretório errado. Para uma compilação limpa:</p>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>-C<span class="w"> </span>src<span class="w"> </span>clean
+make<span class="w"> </span>-C<span class="w"> </span>src
+</code></pre></div>
+<h2 id="execucao-e-argumentos">Execução e argumentos</h2>
+<div class="highlight"><pre><span></span><code>./interpreter<span class="w"> </span>caminho/para/arquivo.c
+</code></pre></div>
+<p>O primeiro argumento é o caminho do arquivo de entrada, relativo ao diretório atual ou absoluto. Por exemplo, a partir da raiz:</p>
+<div class="highlight"><pre><span></span><code>./interpreter<span class="w"> </span>testes/validos/02_declaracoes_e_expressoes.c
+</code></pre></div>
+<p>Não é necessário envolver as declarações e comandos em uma função <code>main()</code> no arquivo de entrada. O driver atual não implementa opções como <code>--tokens</code>.</p>
+<h2 id="fluxo-do-driver">Fluxo do driver</h2>
+<ol>
+<li>Verifica se foi informado um arquivo e o abre para leitura, atribuindo-o a <code>yyin</code>.</li>
+<li>Cria a tabela de símbolos com <code>create_symbol_table()</code>.</li>
+<li>Chama <code>yyparse()</code>. O parser solicita tokens ao scanner e constrói a AST, cuja raiz fica em <code>ast_root</code>.</li>
+<li>Fecha o arquivo e informa sucesso ou falha conforme o retorno de <code>yyparse()</code>.</li>
+<li>Chama <code>print_ast(ast_root)</code> para exibir a árvore.</li>
+<li>Libera a AST e a tabela de símbolos e retorna o resultado do parser ao sistema operacional.</li>
+</ol>
+<p>Quando a análise sintática termina com sucesso, a saída inclui:</p>
+<div class="highlight"><pre><span></span><code>[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
+</code></pre></div>
+<p>Também podem aparecer registros de inserção na tabela de símbolos e, em seguida, a árvore indentada.</p>
+<h2 id="mensagens-e-codigos-de-saida">Mensagens e códigos de saída</h2>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Mensagem ou comportamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nenhum argumento</td>
+<td><code>Uso: ./interpreter &lt;arquivo_fonte.c&gt;</code>; retorna <code>1</code>.</td>
+</tr>
+<tr>
+<td>Arquivo inexistente ou sem permissão de leitura</td>
+<td><code>Erro ao abrir arquivo de entrada: ...</code>; o detalhe vem do sistema operacional; retorna <code>1</code>.</td>
+</tr>
+<tr>
+<td>Erro sintático</td>
+<td><code>Erro sintático: ... na linha N, coluna C</code>, seguido de <code>[FALHA] Foram encontrados erros no código.</code>; retorna o código não zero de <code>yyparse()</code>.</td>
+</tr>
+<tr>
+<td>Variável não declarada</td>
+<td><code>[AVISO SEMÂNTICO] Variável 'nome' usada sem declaração na linha N</code>.</td>
+</tr>
+<tr>
+<td>Redeclaração no mesmo escopo</td>
+<td><code>[ERRO SEMÂNTICO] Variável 'nome' já declarada no escopo N</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Os diagnósticos de abertura de arquivo e de análise são enviados a <code>stderr</code>; as mensagens de uso, sucesso/falha e a AST são enviadas a <code>stdout</code>.</p>
+<p>O código de saída reflete o parser: avisos semânticos e alguns erros léxicos podem coexistir com retorno <code>0</code> e mensagem de sucesso. Portanto, nesta versão, também é necessário conferir os diagnósticos em <code>stderr</code>.</p>
+<p>Para experimentar um erro sintático:</p>
+<div class="highlight"><pre><span></span><code>./interpreter<span class="w"> </span>testes/invalidos/01_sem_ponto_virgula.c
+</code></pre></div>
+<h3 id="erros-durante-a-compilacao-do-interpretador">Erros durante a compilação do interpretador</h3>
+<p>Se <code>make -C src</code> indicar que <code>gcc</code>, <code>flex</code> ou <code>bison</code> não foi encontrado, instale a ferramenta indicada e confirme que está no <code>PATH</code>. Erros de geração do parser/scanner ou de compilação C aparecem na saída dessas ferramentas e impedem a conclusão do build. Eles são distintos dos erros encontrados ao analisar um arquivo com <code>./interpreter</code>.</p>
+<h2 id="testes-do-front-end">Testes do front-end</h2>
+<p>Após compilar, execute na raiz:</p>
+<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>testes/executar_testes.sh
+</code></pre></div>
+<p>A suíte compara as saídas dos programas válidos com os arquivos <code>.exp</code> e verifica os diagnósticos ou códigos de erro dos programas inválidos.</p>
+<h2 id="validacao-da-documentacao">Validação da documentação</h2>
+<p>Em um ambiente Python com as dependências do site instaladas:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs<span class="w"> </span>mkdocs-material
+mkdocs<span class="w"> </span>serve
+</code></pre></div>
+<p>Abra <code>http://127.0.0.1:8000</code> e confira as páginas <strong>Gramática &amp; BNF</strong> e <strong>Guia de uso</strong>, disponíveis no menu do MkDocs. Verifique a tabela de precedência e os blocos de código. Para gerar o site sem iniciar o servidor:</p>
+<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>build
+</code></pre></div>
+<p>Veja também a <a href="../gramatica-bnf/">gramática e a precedência dos operadores</a> e o <a href="../planejamento-sprints/#sprint-3-analise-sintatica-basica">status da Sprint 3</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

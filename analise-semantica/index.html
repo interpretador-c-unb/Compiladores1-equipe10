@@ -1,0 +1,1243 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../tabela-simbolos/">
+      
+      
+        <link rel="next" href="../interpretador/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Análise Semântica - Interpretador C - Equipe 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#analise-semantica" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-header__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Interpretador C - Equipe 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Análise Semântica
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-nav__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Interpretador C - Equipe 10
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estrutura do Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guia-uso/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guia de uso
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisoes-tecnicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões Técnicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analisador-lexico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Léxico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gramatica-bnf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gramática & BNF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analisador-sintatico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Sintático
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabela-simbolos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela de Símbolos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análise Semântica
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análise Semântica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visão geral
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipos-da-linguagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos da linguagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatibilidade-em-atribuicoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibilidade em atribuições
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipo-do-resultado-de-expressoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo do resultado de expressões
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipo do resultado de expressões">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operadores-binarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operadores binários
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operadores-unarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operadores unários
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condicoes-de-if-e-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Condições de if e while
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversoes-implicitas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversões implícitas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#erros-e-avisos-semanticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros e avisos semânticos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitacoes-conhecidas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitações conhecidas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-conferir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como conferir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#veja-tambem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Veja também
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpretador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interpretador e Runtime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../planejamento-sprints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../problemas-e-solucoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problemas e Soluções
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debitos-tecnicos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Débitos Técnicos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plano-pos-p1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plano Pós-P1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visão geral
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipos-da-linguagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos da linguagem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatibilidade-em-atribuicoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibilidade em atribuições
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipo-do-resultado-de-expressoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo do resultado de expressões
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipo do resultado de expressões">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operadores-binarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operadores binários
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operadores-unarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operadores unários
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#condicoes-de-if-e-while" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Condições de if e while
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversoes-implicitas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversões implícitas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#erros-e-avisos-semanticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros e avisos semânticos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitacoes-conhecidas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitações conhecidas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-conferir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como conferir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#veja-tambem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Veja também
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="analise-semantica">Análise Semântica</h1>
+<p><strong>Estado verificado em 04/11/2026.</strong> Esta página descreve o comportamento real do analisador (<code>src/semantic.c</code>), levantado a partir do código-fonte e de execuções de teste. Quando o comportamento atual diverge do esperado, ele aparece em <a href="#limitacoes-conhecidas">Limitações conhecidas</a> e não é apresentado como regra da linguagem.</p>
+<h2 id="visao-geral">Visão geral</h2>
+<p>A análise semântica roda <strong>depois</strong> do parsing, em uma passada própria sobre a AST. O fluxo do programa principal (<code>src/main.c</code>) é:</p>
+<ol>
+<li><code>yyparse()</code> faz a análise sintática, monta a AST e insere as declarações na tabela de símbolos. A detecção de <strong>redeclaração</strong> acontece nesta etapa.</li>
+<li>Opcionalmente, <code>--optimize</code> aplica constant folding e <code>--print-ast</code> imprime a árvore.</li>
+<li><code>analyze_semantics()</code> percorre a AST, infere o tipo das expressões e verifica declaração de variáveis e atribuições.</li>
+<li>Se houver erros contados, o programa imprime <code>[FALHA] Execução abortada devido a N erro(s) semântico(s).</code> e termina com código <code>1</code>. Caso contrário, executa o programa.</li>
+</ol>
+<p>Todos os diagnósticos semânticos são escritos em <code>stderr</code>.</p>
+<p>Cada bloco <code>{ ... }</code> abre um novo escopo. O mesmo nome pode ser declarado em escopos diferentes, mas não duas vezes no mesmo escopo.</p>
+<h2 id="tipos-da-linguagem">Tipos da linguagem</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Como aparece</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td>declaração e literal inteiro</td>
+<td>Tipo padrão de qualquer literal numérico (ver <a href="#limitacoes-conhecidas">limitações</a>).</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>declaração</td>
+<td>Tipo resultante quando algum operando é <code>float</code>.</td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td>declaração</td>
+<td>Aceito pela gramática, sem regras próprias na análise.</td>
+</tr>
+<tr>
+<td><code>void</code></td>
+<td>declaração</td>
+<td>Aceito pela gramática, sem regras próprias na análise.</td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td>literais de texto</td>
+<td>Tipo interno dos literais de texto; não pode ser declarado. A gramática também cria o literal de caractere como nó de texto.</td>
+</tr>
+<tr>
+<td><code>unknown</code></td>
+<td>variável não declarada</td>
+<td>Tipo interno. Propaga-se: uma expressão com operando <code>unknown</code> também é <code>unknown</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>O tipo de uma variável é o que foi registrado na tabela de símbolos na declaração.</p>
+<h2 id="compatibilidade-em-atribuicoes">Compatibilidade em atribuições</h2>
+<p>Matriz para <code>destino = origem;</code>. Os valores abaixo foram obtidos executando o interpretador.</p>
+<table>
+<thead>
+<tr>
+<th>Destino \ Origem</th>
+<th><code>int</code></th>
+<th><code>float</code></th>
+<th><code>char</code></th>
+<th><code>string</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td>aceita</td>
+<td><strong>aviso SEM-04</strong></td>
+<td>sem checagem</td>
+<td>sem checagem</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>aceita (promoção implícita)</td>
+<td>aceita</td>
+<td>sem checagem</td>
+<td>sem checagem*</td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td>sem checagem</td>
+<td>sem checagem</td>
+<td>aceita</td>
+<td>sem checagem</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Legenda:</strong> <em>aceita</em> = tipos iguais ou promoção prevista; <em>aviso</em> = a análise emite aviso e segue; <em>sem checagem</em> = nenhuma regra existe no código, então a atribuição passa sem diagnóstico. Isso não significa que a combinação tenha sido aprovada como regra da linguagem.</p>
+<p>* <code>float</code> recebendo <code>string</code> foi deduzido do código, não executado.</p>
+<p>A única regra de incompatibilidade implementada é <code>int</code> recebendo <code>float</code>, e ela gera <strong>aviso</strong>, não erro: o programa continua e retorna código <code>0</code>.</p>
+<p><strong>Declaração com valor inicial.</strong> Em <code>int x = 2.5;</code> ou <code>int x = "texto";</code> a análise só procura variáveis não declaradas no inicializador. O tipo do inicializador <strong>não é comparado</strong> com o tipo declarado, então não há aviso nem erro.</p>
+<h2 id="tipo-do-resultado-de-expressoes">Tipo do resultado de expressões</h2>
+<h3 id="operadores-binarios">Operadores binários</h3>
+<p>A regra é a mesma para <strong>todos</strong> os operadores binários: aritméticos (<code>+ - * / %</code>), de igualdade e relacionais (<code>== != &lt; &lt;= &gt; &gt;=</code>) e lógicos (<code>&amp;&amp;</code> e <code>||</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Esquerdo \ Direito</th>
+<th><code>int</code></th>
+<th><code>float</code></th>
+<th><code>char</code></th>
+<th><code>string</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td><code>int</code></td>
+<td><code>float</code></td>
+<td><code>int</code></td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><code>float</code></td>
+<td><code>float</code></td>
+<td><code>float</code></td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td><code>int</code></td>
+<td><code>float</code></td>
+<td><code>int</code></td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td><code>int</code></td>
+<td><code>float</code></td>
+<td><code>int</code></td>
+<td><code>int</code></td>
+</tr>
+</tbody>
+</table>
+<p>Resumindo: se algum operando for <code>float</code>, o resultado é <code>float</code>; caso contrário, é <code>int</code>. Se algum operando for <code>unknown</code> (variável não declarada), o resultado é <code>unknown</code>.</p>
+<p>Consequências desta regra, conforme o código:</p>
+<ul>
+<li>Comparações e operadores lógicos não produzem um tipo booleano. Comparar dois <code>float</code> resulta em <code>float</code>.</li>
+<li>Não há verificação de operandos por operador. <code>char</code> e <code>string</code> participam de qualquer operação sem diagnóstico.</li>
+</ul>
+<h3 id="operadores-unarios">Operadores unários</h3>
+<p>Os operadores unários <code>-</code> e <code>!</code> resultam em <code>float</code> se o operando for <code>float</code>; caso contrário, em <code>int</code>.</p>
+<h3 id="condicoes-de-if-e-while">Condições de <code>if</code> e <code>while</code></h3>
+<p>A expressão da condição é analisada apenas para detectar variáveis não declaradas. Qualquer tipo é aceito como condição.</p>
+<h2 id="conversoes-implicitas">Conversões implícitas</h2>
+<table>
+<thead>
+<tr>
+<th>Conversão</th>
+<th>Onde ocorre</th>
+<th>Comportamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code> → <code>float</code></td>
+<td>expressão com operandos mistos; atribuição a variável <code>float</code></td>
+<td>Aceita em silêncio. O resultado da expressão é <code>float</code>.</td>
+</tr>
+<tr>
+<td><code>float</code> → <code>int</code></td>
+<td>atribuição a variável <code>int</code></td>
+<td>Aviso SEM-04 na análise. Na execução, o valor é truncado: no teste <code>int a; float b = 2.5; a = b;</code> a variável <code>a</code> terminou com <code>2</code>.</td>
+</tr>
+<tr>
+<td>Demais combinações com <code>char</code> e <code>string</code></td>
+<td>atribuições e expressões</td>
+<td>Sem regra e sem diagnóstico.</td>
+</tr>
+</tbody>
+</table>
+<p>A análise semântica apenas <strong>infere e avisa</strong>. Ela não insere nós de conversão na AST.</p>
+<h2 id="erros-e-avisos-semanticos">Erros e avisos semânticos</h2>
+<p>O programa não imprime códigos numéricos. Os identificadores <code>SEM-xx</code> abaixo existem só nesta documentação, para facilitar a referência.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Tipo</th>
+<th>Mensagem emitida</th>
+<th>Quando é emitida</th>
+<th>Interrompe a execução?</th>
+<th>Teste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEM-01</td>
+<td>Erro</td>
+<td><code>[ERRO SEMÂNTICO] Variável 'x' usada sem declaração na linha N.</code></td>
+<td>Um nome usado em expressão ou condição não está na tabela de símbolos visível.</td>
+<td>Sim, código <code>1</code></td>
+<td><code>testes/invalidos/08_var_nao_declarada.c</code>, <code>15_variavel_fora_de_escopo.c</code></td>
+</tr>
+<tr>
+<td>SEM-02</td>
+<td>Erro</td>
+<td><code>[ERRO SEMÂNTICO] Atribuição a variável não declarada 'x' na linha N.</code></td>
+<td>O alvo de uma atribuição não está na tabela.</td>
+<td>Sim, código <code>1</code></td>
+<td><code>testes/invalidos/17_atribuicao_nao_declarada.c</code></td>
+</tr>
+<tr>
+<td>SEM-03</td>
+<td>Erro</td>
+<td><code>[ERRO SEMÂNTICO] Variável 'x' já declarada no escopo N</code></td>
+<td>O mesmo nome é declarado duas vezes no mesmo escopo.</td>
+<td><strong>Não</strong> (ver limitações)</td>
+<td><code>testes/invalidos/09_redeclaracao.c</code></td>
+</tr>
+<tr>
+<td>SEM-04</td>
+<td>Aviso</td>
+<td><code>[AVISO SEMÂNTICO] Atribuição de 'float' para variável 'int x' na linha N (pode haver perda de precisão).</code></td>
+<td>Atribuição de expressão <code>float</code> a variável <code>int</code>.</td>
+<td>Não</td>
+<td><code>testes/invalidos/18_aviso_float_para_int.c</code></td>
+</tr>
+</tbody>
+</table>
+<p>Exemplos:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/* SEM-01 */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">      </span><span class="c1">// 'z' não foi declarada</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cm">/* SEM-02 */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">          </span><span class="c1">// 'q' não foi declarada</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cm">/* SEM-03 */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w">      </span><span class="c1">// mesmo nome, mesmo escopo</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cm">/* SEM-04 */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.5</span><span class="p">;</span>
+<span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">          </span><span class="c1">// float -&gt; int</span>
+</code></pre></div>
+<p>Para corrigir SEM-01 e SEM-02, declare a variável em um escopo visível antes de usá-la ou corrija o nome digitado. Para SEM-03, remova a declaração duplicada, use outro nome ou, se a intenção é atualizar o valor, escreva uma atribuição (<code>x = 8;</code>). Para SEM-04, declare a variável como <code>float</code> ou aceite o truncamento.</p>
+<h2 id="limitacoes-conhecidas">Limitações conhecidas</h2>
+<p>Os itens abaixo foram confirmados por execução. Descrevem o comportamento <strong>atual</strong>, não o desejado.</p>
+<ol>
+<li><strong>Redeclaração não derruba o programa (SEM-03).</strong> A mensagem é impressa durante o parsing, mas não entra na contagem de erros semânticos. O programa imprime <code>[SUCESSO] Análise semântica concluída sem erros!</code>, executa e retorna <code>0</code>.</li>
+<li><strong>Comandos logo após um <code>if</code> não são analisados.</strong> Em <code>if (a &gt; 0) { a = 2; }</code> seguido de <code>z = 5;</code>, nenhum erro é emitido para <code>z</code>, e o código de saída é <code>0</code>. A causa provável é a exceção <code>node-&gt;type != NODE_IF</code> ao percorrer <code>next</code> em <code>analyze_semantics</code>, herdada da época em que o <code>else</code> era guardado em <code>next</code>.</li>
+<li><strong>Variáveis declaradas dentro de blocos geram erro falso.</strong> Em <code>testes/validos/03_declaracoes.c</code> e <code>12_escopo_blocos.c</code>, o uso de variáveis declaradas dentro de <code>{ }</code> produz <code>usada sem declaração</code> e o programa retorna <code>1</code>, embora o código seja válido. A causa provável é que as declarações entram na tabela durante o parsing e os escopos dos blocos já foram descartados quando a análise percorre a AST.</li>
+<li><strong>Número da linha incorreto.</strong> A linha vem de <code>yylineno</code>, lido depois do parsing, e por isso aponta para o fim do arquivo, e não para o comando com problema. Exemplo: um erro na linha 4 de um arquivo de 5 linhas foi reportado na linha 6. As mensagens também não informam a coluna.</li>
+<li><strong>Literais decimais são tratados como <code>int</code>.</strong> O tipo de um literal numérico é decidido por <code>node-&gt;name</code>, que o nó numérico não preenche. Em <code>int a = 1; a = 2.5;</code> não há aviso SEM-04, e expressões com literal decimal têm resultado <code>int</code>.</li>
+<li><strong>Sem checagem de tipos em declarações com valor inicial, condições, <code>char</code>, <code>string</code> e <code>void</code></strong>, conforme descrito nas seções anteriores.</li>
+<li><strong>Estado final da execução.</strong> No teste <code>float b = 2.5; ... b = a;</code> com <code>a</code> inteiro, o estado final do runtime mostrou <code>b</code> como <code>int</code>. Isso ocorre na execução, fora da análise semântica, e foi registrado aqui só como observação.</li>
+</ol>
+<h2 id="como-conferir">Como conferir</h2>
+<p>Na raiz do projeto:</p>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>rebuild
+./interpreter<span class="w"> </span>testes/invalidos/08_var_nao_declarada.c<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"código: </span><span class="nv">$?</span><span class="s2">"</span>
+./interpreter<span class="w"> </span>testes/invalidos/09_redeclaracao.c<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"código: </span><span class="nv">$?</span><span class="s2">"</span>
+</code></pre></div>
+<p>O primeiro comando deve mostrar SEM-01 e código <code>1</code>; o segundo, SEM-03 e código <code>0</code> (ver limitação 1).</p>
+<p>Para ver a árvore que a análise percorre, use <code>./interpreter --print-ast arquivo.c</code>.</p>
+<p>Para validar a documentação, rode <code>mkdocs serve</code> e abra <strong>Análise Semântica</strong> no menu.</p>
+<h2 id="veja-tambem">Veja também</h2>
+<ul>
+<li><a href="../tabela-simbolos/">Tabela de símbolos</a></li>
+<li><a href="../guia-uso/">Guia de uso</a></li>
+<li><a href="../planejamento-sprints/#sprint-8-analise-semantica-integrada-a-ast">Planejamento da Sprint 8</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

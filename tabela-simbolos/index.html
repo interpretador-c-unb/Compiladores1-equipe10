@@ -1,0 +1,1194 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../analisador-sintatico/">
+      
+      
+        <link rel="next" href="../analise-semantica/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Tabela de Símbolos - Interpretador C - Equipe 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#arquitetura-da-tabela-de-simbolos" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-header__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Interpretador C - Equipe 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tabela de Símbolos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-nav__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Interpretador C - Equipe 10
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estrutura do Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guia-uso/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guia de uso
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisoes-tecnicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões Técnicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analisador-lexico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Léxico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gramatica-bnf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gramática & BNF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analisador-sintatico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Sintático
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela de Símbolos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela de Símbolos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-responsabilidades-do-modulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Responsabilidades do módulo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-modelo-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modelo de dados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Modelo de dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-tipos-basicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Tipos básicos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-entrada-da-tabela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Entrada da tabela
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-escopo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Escopo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-interface-publica-em-symbol_tableh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Interface pública em symbol_table.h
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-operacoes-e-regras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Operações e regras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Operações e regras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-inicializacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Inicialização
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-insercao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Inserção
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-consulta-no-escopo-atual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Consulta no escopo atual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-consulta-lexical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Consulta lexical
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-entrada-e-saida-de-escopos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Entrada e saída de escopos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-politica-de-memoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Política de memória
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-integracao-com-o-parser-e-a-analise-semantica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Integração com o parser e a análise semântica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-diagnosticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Diagnósticos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-decisoes-pendentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Decisões pendentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-relacao-com-as-proximas-etapas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Relação com as próximas etapas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analise-semantica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análise Semântica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpretador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interpretador e Runtime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../planejamento-sprints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../problemas-e-solucoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problemas e Soluções
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debitos-tecnicos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Débitos Técnicos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plano-pos-p1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plano Pós-P1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-responsabilidades-do-modulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Responsabilidades do módulo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-modelo-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modelo de dados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Modelo de dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-tipos-basicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Tipos básicos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-entrada-da-tabela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Entrada da tabela
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-escopo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Escopo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-interface-publica-em-symbol_tableh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Interface pública em symbol_table.h
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-operacoes-e-regras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Operações e regras
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Operações e regras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-inicializacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Inicialização
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-insercao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Inserção
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-consulta-no-escopo-atual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Consulta no escopo atual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-consulta-lexical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Consulta lexical
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-entrada-e-saida-de-escopos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Entrada e saída de escopos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-politica-de-memoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Política de memória
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-integracao-com-o-parser-e-a-analise-semantica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Integração com o parser e a análise semântica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-diagnosticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Diagnósticos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-decisoes-pendentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Decisões pendentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-relacao-com-as-proximas-etapas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Relação com as próximas etapas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="arquitetura-da-tabela-de-simbolos">Arquitetura da Tabela de Símbolos</h1>
+<h2 id="1-objetivo">1. Objetivo</h2>
+<p>A tabela de símbolos registra os identificadores declarados e permite consultar o tipo e o escopo de cada declaração durante a análise. O módulo está em <code>src/symbol_table.h</code> e <code>src/symbol_table.c</code>.</p>
+<h2 id="2-responsabilidades-do-modulo">2. Responsabilidades do módulo</h2>
+<ul>
+<li>Inserir símbolos declarados no programa e localizá-los por nome.</li>
+<li>Armazenar o tipo declarado e o nível de escopo.</li>
+<li>Detectar redeclarações no mesmo escopo.</li>
+<li>Manter visíveis as declarações do bloco atual e dos blocos externos.</li>
+<li>Liberar a memória das entradas ao encerrar o escopo ou destruir a tabela.</li>
+</ul>
+<h2 id="3-modelo-de-dados">3. Modelo de dados</h2>
+<h3 id="31-tipos-basicos">3.1 Tipos básicos</h3>
+<p>O campo <code>data_type</code> guarda o tipo declarado como texto, por exemplo <code>int</code>, <code>float</code> ou <code>char</code>. Esse campo registra a declaração para uso na análise.</p>
+<h3 id="32-entrada-da-tabela">3.2 Entrada da tabela</h3>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Symbol</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">data_type</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">scope_level</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">Symbol</span><span class="w"> </span><span class="o">*</span><span class="n">next</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Symbol</span><span class="p">;</span>
+</code></pre></div>
+<p><code>name</code> identifica a variável, <code>scope_level</code> indica onde ela foi declarada e <code>next</code> aponta para a próxima entrada da lista encadeada.</p>
+<h3 id="33-escopo">3.3 Escopo</h3>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">SymbolTable</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Symbol</span><span class="w"> </span><span class="o">*</span><span class="n">head</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">current_scope</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">SymbolTable</span><span class="p">;</span>
+</code></pre></div>
+<p><code>head</code> aponta para a entrada mais recente. O nível global é 0 e cada bloco aberto incrementa <code>current_scope</code>. Todas as entradas visíveis ficam na mesma lista.</p>
+<h2 id="4-interface-publica-em-symbol_tableh">4. Interface pública em <code>symbol_table.h</code></h2>
+<div class="highlight"><pre><span></span><code><span class="n">SymbolTable</span><span class="w"> </span><span class="o">*</span><span class="nf">create_symbol_table</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">insert_symbol</span><span class="p">(</span><span class="n">SymbolTable</span><span class="w"> </span><span class="o">*</span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">data_type</span><span class="p">);</span>
+<span class="n">Symbol</span><span class="w"> </span><span class="o">*</span><span class="nf">lookup_symbol</span><span class="p">(</span><span class="n">SymbolTable</span><span class="w"> </span><span class="o">*</span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">enter_scope</span><span class="p">(</span><span class="n">SymbolTable</span><span class="w"> </span><span class="o">*</span><span class="n">table</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">exit_scope</span><span class="p">(</span><span class="n">SymbolTable</span><span class="w"> </span><span class="o">*</span><span class="n">table</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">free_symbol_table</span><span class="p">(</span><span class="n">SymbolTable</span><span class="w"> </span><span class="o">*</span><span class="n">table</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="5-operacoes-e-regras">5. Operações e regras</h2>
+<h3 id="51-inicializacao">5.1 Inicialização</h3>
+<p><code>create_symbol_table()</code> cria uma lista vazia com o nível de escopo em 0.</p>
+<h3 id="52-insercao">5.2 Inserção</h3>
+<p><code>insert_symbol()</code> insere a declaração no início da lista e retorna <code>1</code>. Retorna <code>0</code> se a tabela ou o nome forem nulos ou se o mesmo nome já existir no nível atual. O mesmo nome pode aparecer em níveis diferentes.</p>
+<h3 id="53-consulta-no-escopo-atual">5.3 Consulta no escopo atual</h3>
+<p>Durante a inserção, a verificação de redeclaração compara o nome e o nível de escopo da entrada com os da nova declaração.</p>
+<h3 id="54-consulta-lexical">5.4 Consulta lexical</h3>
+<p><code>lookup_symbol()</code> percorre a lista a partir de <code>head</code> e retorna a primeira entrada com o nome solicitado. Se o nome estiver ausente, retorna <code>NULL</code>. Como as declarações do bloco atual entram na frente da lista, elas podem sombrear declarações externas.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.5</span><span class="p">;</span>
+<span class="w">    </span><span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">valor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Antes do bloco     nível 0    head → valor (int, 0)
+Dentro do bloco    nível 1    head → valor (float, 1) → valor (int, 0)
+Depois do bloco    nível 0    head → valor (int, 0)
+</code></pre></div>
+<p>Dentro do bloco, a consulta encontra <code>float valor</code>. Fora dele, encontra <code>int valor</code>.</p>
+<h3 id="55-entrada-e-saida-de-escopos">5.5 Entrada e saída de escopos</h3>
+<p><code>enter_scope()</code> incrementa o nível atual. <code>exit_scope()</code> remove as entradas daquele nível, libera a memória delas e decrementa o nível. No nível global, a chamada de saída retorna imediatamente.</p>
+<h2 id="6-politica-de-memoria">6. Política de memória</h2>
+<p><code>insert_symbol()</code> copia o nome e o tipo. Assim, as entradas da tabela têm suas próprias strings. <code>exit_scope()</code> libera as entradas do bloco encerrado e <code>free_symbol_table()</code> libera as entradas restantes e a própria tabela.</p>
+<p>O ponteiro retornado por <code>lookup_symbol()</code> pertence à tabela e vale enquanto a entrada estiver presente.</p>
+<h2 id="7-integracao-com-o-parser-e-a-analise-semantica">7. Integração com o parser e a análise semântica</h2>
+<p>O lexer reconhece identificadores e produz o token <code>ID</code>. O driver cria a tabela antes de chamar <code>yyparse()</code> e a libera ao terminar.</p>
+<p>Ao reconhecer uma declaração como <code>int contador;</code>, a ação do Bison chama <code>insert_symbol()</code>. Nas referências e nos destinos de atribuição, o parser chama <code>lookup_symbol()</code> para verificar se o nome está visível. As regras de bloco chamam <code>enter_scope()</code> na abertura e <code>exit_scope()</code> no fechamento.</p>
+<h2 id="8-diagnosticos">8. Diagnósticos</h2>
+<p>Uma consulta sem resultado emite um aviso no parser. Uma redeclaração no mesmo nível emite um erro em <code>insert_symbol()</code>.</p>
+<div class="highlight"><pre><span></span><code>[AVISO SEMÂNTICO] Variável 'total' usada sem declaração na linha 4
+[ERRO SEMÂNTICO] Variável 'total' já declarada no escopo 0
+</code></pre></div>
+<p>O <a href="../analise-semantica/">guia de análise semântica</a> explica os diagnósticos e os códigos de saída atuais.</p>
+<h2 id="9-decisoes-pendentes">9. Decisões pendentes</h2>
+<p>A representação de parâmetros e assinaturas depende da expansão da gramática para funções. A validação de tipos e a localização mais precisa dos diagnósticos também dependem da evolução da análise semântica.</p>
+<h2 id="10-relacao-com-as-proximas-etapas">10. Relação com as próximas etapas</h2>
+<p>A análise semântica pode usar os metadados de tipo e escopo das declarações. Os valores durante a execução ficam a cargo do <a href="../interpretador/">ambiente de runtime planejado</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

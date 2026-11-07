@@ -1,0 +1,947 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../gramatica-bnf/">
+      
+      
+        <link rel="next" href="../tabela-simbolos/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Analisador Sintático - Interpretador C - Equipe 10</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#analisador-sintatico" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-header__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Interpretador C - Equipe 10
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Analisador Sintático
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Interpretador C - Equipe 10" class="md-nav__button md-logo" aria-label="Interpretador C - Equipe 10" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Interpretador C - Equipe 10
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estrutura do Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guia-uso/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guia de uso
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decisoes-tecnicas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões Técnicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analisador-lexico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Léxico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gramatica-bnf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gramática & BNF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Sintático
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analisador Sintático
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#o-problema-do-dangling-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O problema do Dangling Else
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-o-codigo-resolve-a-ambiguidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como o código resolve a ambiguidade
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emissao-de-erros-sintaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emissão de erros sintáticos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Emissão de erros sintáticos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-ponto-e-virgula-ausente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo: ponto e vírgula ausente
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recuperacao-comportamento-atual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recuperação: comportamento atual
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-validar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como validar
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabela-simbolos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabela de Símbolos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analise-semantica/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análise Semântica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interpretador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interpretador e Runtime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../planejamento-sprints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planejamento das Sprints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../problemas-e-solucoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problemas e Soluções
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debitos-tecnicos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Débitos Técnicos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plano-pos-p1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plano Pós-P1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#o-problema-do-dangling-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O problema do Dangling Else
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-o-codigo-resolve-a-ambiguidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como o código resolve a ambiguidade
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emissao-de-erros-sintaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emissão de erros sintáticos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Emissão de erros sintáticos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-ponto-e-virgula-ausente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemplo: ponto e vírgula ausente
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recuperacao-comportamento-atual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recuperação: comportamento atual
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-validar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como validar
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="analisador-sintatico">Analisador Sintático</h1>
+<p>Esta página documenta a implementação de <code>src/interpretador_c.y</code>: a resolução do <em>Dangling Else</em> e a emissão de erros sintáticos. O scanner está em <code>src/interpretador_c.l</code> e o driver em <code>src/main.c</code>.</p>
+<h2 id="o-problema-do-dangling-else">O problema do Dangling Else</h2>
+<p>Quando dois comandos <code>if</code> estão aninhados sem chaves, a gramática precisa definir a qual deles pertence o <code>else</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div>
+<p>A indentação ajuda a leitura, mas não determina a estrutura sintática. Sem uma regra de desambiguação, o <code>else</code> poderia pertencer ao <code>if (a)</code> ou ao <code>if (b)</code>. O projeto adota a convenção de associá-lo ao <code>if</code> mais próximo ainda sem <code>else</code>: neste exemplo, <code>if (b)</code>.</p>
+<p>No Bison, essa escolha aparece como uma decisão entre reduzir o <code>if</code> interno sem <code>else</code> ou consumir o token <code>ELSE</code> para completar esse mesmo <code>if</code> (conflito <em>shift/reduce</em>).</p>
+<h2 id="como-o-codigo-resolve-a-ambiguidade">Como o código resolve a ambiguidade</h2>
+<p>O parser declara dois níveis de precedência, nesta ordem:</p>
+<div class="highlight"><pre><span></span><code>%nonassoc LOWER_THAN_ELSE
+%nonassoc ELSE
+</code></pre></div>
+<p>As declarações posteriores têm prioridade maior. <code>LOWER_THAN_ELSE</code> é um marcador de precedência; ele não corresponde a texto reconhecido pelo scanner. A regra sem <code>else</code> recebe esse nível explicitamente com <code>%prec</code>:</p>
+<div class="highlight"><pre><span></span><code>comando_if:
+    IF LPAREN expressao RPAREN comando %prec LOWER_THAN_ELSE {
+        $$ = create_if_node($3, $5, NULL);
+    }
+    | IF LPAREN expressao RPAREN comando ELSE comando {
+        $$ = create_if_node($3, $5, $7);
+    }
+    ;
+</code></pre></div>
+<p>Quando o próximo token é <code>ELSE</code>, sua precedência é maior que a da regra sem <code>else</code>. O Bison prefere consumir o token (<em>shift</em>) a encerrar essa regra (<em>reduce</em>). Assim, o <code>else</code> completa o <code>if</code> interno.</p>
+<p><code>%nonassoc</code> declara níveis sem associatividade; neste caso, o que resolve o conflito é a diferença de precedência entre os dois níveis, junto com <code>%prec</code>. Não se trata de proibir comandos <code>if</code> aninhados.</p>
+<p>As ações semânticas constroem a AST com <code>create_if_node</code>: a primeira passa <code>NULL</code> como ramo alternativo; a segunda passa o comando após <code>ELSE</code>. Na AST atual, a condição fica em <code>left</code>, o ramo principal em <code>right</code> e o alternativo em <code>else_branch</code>. O campo <code>next</code> encadeia comandos seguintes.</p>
+<p>Para associar o <code>else</code> ao <code>if</code> externo, o programa pode delimitar o bloco interno com chaves:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="emissao-de-erros-sintaticos">Emissão de erros sintáticos</h2>
+<p>O parser habilita mensagens detalhadas do Bison:</p>
+<div class="highlight"><pre><span></span><code>%define parse.error verbose
+</code></pre></div>
+<p>Quando encontra um token incompatível com a regra em análise, o Bison chama <code>yyerror()</code> e fornece a descrição do erro. A mensagem pode indicar o token inesperado e, conforme o estado do parser, os tokens esperados. Nem todo diagnóstico contém uma lista de tokens esperados.</p>
+<p>A implementação acrescenta a posição informada pelo scanner e escreve em <code>stderr</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">yyerror</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Erro sintático: %s na linha %d, coluna %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+<span class="w">            </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">yylineno</span><span class="p">,</span><span class="w"> </span><span class="n">lex_column</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Origem e significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>s</code></td>
+<td>Descrição gerada pelo Bison, como <code>syntax error, unexpected IF</code>.</td>
+</tr>
+<tr>
+<td><code>yylineno</code></td>
+<td>Contador de linhas habilitado no Flex por <code>%option yylineno</code>.</td>
+</tr>
+<tr>
+<td><code>lex_column()</code></td>
+<td>Retorna <code>yystartcol</code>, a coluna inicial do último lexema reconhecido.</td>
+</tr>
+</tbody>
+</table>
+<p>O scanner chama <code>update_location()</code> por meio de <code>YY_USER_ACTION</code>. Essa função guarda a coluna inicial do lexema, avança a coluna pelos caracteres reconhecidos e a reinicia em <code>1</code> após uma quebra de linha.</p>
+<p>A posição é a observada pelo scanner quando o erro é detectado. Ela pode apontar para o token seguinte ao elemento que faltou. Em fim de arquivo, o código não calcula uma posição de EOF independente: usa os contadores e a coluna disponíveis no scanner.</p>
+<h3 id="exemplo-ponto-e-virgula-ausente">Exemplo: ponto e vírgula ausente</h3>
+<p>O arquivo <code>testes/invalidos/01_sem_ponto_virgula.c</code> começa com:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Falta <code>;</code> ao final da primeira linha. O erro é detectado quando o parser encontra <code>if</code> na linha seguinte. Ao executar na raiz do projeto:</p>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>-C<span class="w"> </span>src
+./interpreter<span class="w"> </span>testes/invalidos/01_sem_ponto_virgula.c
+</code></pre></div>
+<p>O diagnóstico observado é:</p>
+<div class="highlight"><pre><span></span><code>Erro sintático: syntax error, unexpected IF na linha 2, coluna 1
+</code></pre></div>
+<p>O driver também imprime em <code>stdout</code>:</p>
+<div class="highlight"><pre><span></span><code>[FALHA] Foram encontrados erros no código.
+</code></pre></div>
+<p>O texto interno do diagnóstico pode variar com a versão do Bison. Nesse caso, <code>yyparse()</code> retorna <code>1</code>, e <code>main()</code> repassa esse resultado ao sistema operacional.</p>
+<h2 id="recuperacao-comportamento-atual">Recuperação: comportamento atual</h2>
+<p>A gramática não possui produções com o token especial <code>error</code>, nem pontos de sincronização para retomar a análise em um <code>;</code> ou <code>}</code>. Portanto, o tratamento atual relata o erro e encerra a análise sintática com falha; ele não acumula vários erros sintáticos do mesmo programa nem corrige automaticamente a entrada.</p>
+<p><code>yyerror()</code> apenas emite o diagnóstico. Após o retorno de <code>yyparse()</code>, o driver fecha o arquivo, informa sucesso ou falha, chama <code>print_ast(ast_root)</code> e libera a raiz da AST e a tabela de símbolos disponíveis. Isso não constitui recuperação sintática.</p>
+<p>Os avisos de variável não declarada e os erros de redeclaração são verificações semânticas distintas. Eles não passam por <code>yyerror()</code> e, na implementação atual, podem ocorrer mesmo quando <code>yyparse()</code> retorna <code>0</code>. Consulte o <a href="../guia-uso/">guia de uso</a> para os códigos de saída e demais mensagens.</p>
+<h2 id="como-validar">Como validar</h2>
+<ol>
+<li>Compile com <code>make -C src</code> e execute o exemplo sem ponto e vírgula acima.</li>
+<li>Salve o exemplo de <code>if</code> aninhado sem chaves em um arquivo e execute <code>./interpreter caminho/do/arquivo.c</code>. Na AST impressa, confira que o ramo <code>else</code> pertence ao <code>if (b)</code>.</li>
+<li>Execute <code>bash testes/executar_testes.sh</code> para conferir os casos válidos e inválidos existentes.</li>
+<li>Execute <code>mkdocs serve</code> e abra <code>http://127.0.0.1:8000</code>. No menu <strong>Analisador Sintático</strong>, confira exemplos, tabela e links.</li>
+</ol>
+<p>Veja também a <a href="../gramatica-bnf/#precedencia-e-associatividade-de-operadores">tabela de precedência dos operadores</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
