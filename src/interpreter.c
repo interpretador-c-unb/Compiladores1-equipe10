@@ -104,6 +104,8 @@ static int is_truthy(Value v) {
     return 0;
 }
 
+static void execute_list(ASTNode *list, Environment *env);
+
 Value evaluate_ast(ASTNode *node, Environment *env) {
     Value result;
     result.type = VAL_VOID;
@@ -206,10 +208,7 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
         case NODE_BLOCK: {
             env_enter_scope(env);
             ASTNode *curr = node->left;
-            while (curr) {
-                evaluate_ast(curr, env);
-                curr = curr->next;
-            }
+            execute_list(node->left, env);
             env_exit_scope(env);
             return result;
         }
@@ -220,18 +219,23 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
             break;
     }
 
-    if (node->type != NODE_IF && node->type != NODE_BLOCK && node->next) {
+    /*if (node->type != NODE_IF && node->type != NODE_BLOCK && node->next) {
         evaluate_ast(node->next, env);
-    }
+    }*/
 
     return result;
 }
+
+static void execute_list(ASTNode *list, Environment *env) {
+       for (ASTNode *cur = list; cur; cur = cur->next)
+           evaluate_ast(cur, env);
+   }
 
 int execute_program(ASTNode *root) {
     if (!root) return 0;
 
     Environment *env = create_environment();
-    evaluate_ast(root, env);
+    execute_list(root, env);
 
     printf("\n--- Estado Final das Variáveis no Ambiente de Runtime ---\n");
     RuntimeVar *curr = env->head;
