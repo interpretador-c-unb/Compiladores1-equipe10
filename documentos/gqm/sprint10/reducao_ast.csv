@@ -1,0 +1,4 @@
+caso,arquivo,nos_antes,nos_depois,nos_removidos,reducao_percentual
+expressoes_constantes,testes/validos/expressoes_constantes.c,16,8,8,50.00
+declaracoes_e_expressoes,testes/validos/02_declaracoes_e_expressoes.c,15,11,4,26.67
+precedencia_com_variaveis,testes/validos/07_precedencia.c,28,28,0,0.00
