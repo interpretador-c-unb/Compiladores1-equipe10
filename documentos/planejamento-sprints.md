@@ -4,7 +4,7 @@ Interpretador de um subconjunto de C — Compiladores 1 · Grupo 10 · 2026.2
 
 Metodologia: Scrum/XP, sprints de uma semana (12/08/2026 a 02/12/2026).
 
-> **Situação verificada (30/10/2026):** front-end com geração e impressão da AST e testes da Sprint 6 integrados. A Sprint 8 possui verificações iniciais de declaração/escopo no parser, mas a análise semântica completa permanece pendente. O estado das entregas da Sprint 8 está detalhado abaixo; a publicação desta revisão ainda está pendente.
+> **Situação atual (16/11/2026):** Desenvolvimento concluído até a **Sprint 11** (front-end completo, AST com visualizador, Tabela de Símbolos, Análise Semântica, Interpretador/Runtime com suporte a `if`/`while` e `printf()`, além de Otimizador com *Constant Folding*). Os entregáveis do Ponto de Controle 2 (Formulário P2, slides e roteiro de demonstração) foram concluídos e a equipe encontra-se atualmente executando as atividades de desenvolvimento da **Sprint 12** (testes de memória com Valgrind e estabilização do ambiente de runtime).
 
 Legenda de status nas tarefas: `[ ]` pendente · `[x]` concluído.
 
@@ -45,37 +45,37 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 ## Visão Geral das Sprints
 
-| Sprint | Período | Foco | Entregas-chave |
-|:------:|---------|------|----------------|
-| 1 | 12/08 – 19/08 | Escopo da linguagem, setup e análise léxica inicial | Repo GitHub · `lexer.l` inicial · README |
-| 2 | 19/08 – 26/08 | Léxico completo e gramática inicial no Bison | `lexer.l` completo · `parser.y` inicial · Makefile |
-| 3 | 26/08 – 02/09 | Análise sintática básica | Gramática de declarações/expressões · `main.c` |
-| 4 | 02/09 – 09/09 | Parser completo e erros sintáticos | `if`/`else`/`while`/blocos · `yyerror()` com linha e coluna |
-| 5 | 09/09 – 16/09 | AST e tabela de símbolos | `ast.c`/`ast.h` · `symbol_table.c`/`symbol_table.h` |
-| 6 | 16/09 – 23/09 | Impressão da AST e preparação do P1 | `print_ast()` · Formulário P1 · Slides |
-| 7 | 23/09 – 30/09 | Apresentação P1 e ajustes de feedback | Apresentação P1 · Relatório de débitos técnicos |
-| 8 | 30/09 – 07/10 | Análise semântica integrada à AST | `semantic.c`/`semantic.h` · Checagem de tipos/escopos |
-| 9 | 07/10 – 14/10 | Interpretador (execução direta da AST) | `interpreter.c`/`interpreter.h` · Runtime environment |
-| 10 | 14/10 – 21/10 | Otimização na interpretação da AST | `optimizer.c`/`optimizer.h` · Constant folding |
-| 11 | 21/10 – 28/10 | Fluxo de controle e programas completos | `if`/`while` no interpretador · 10+ testes em C |
-| 12 | 28/10 – 04/11 | Consolidação e preparação do P2 | Interpretador estável · Formulário P2 · Slides |
-| 13 | 04/11 – 11/11 | Apresentação P2 e refinamento do backlog | Apresentação P2 · Lista de melhorias finais |
-| 14 | 11/11 – 18/11 | Polimento, escopos avançados e exceções | Exceções de runtime · Destruição de escopos |
-| 15 | 18/11 – 25/11 | Code freeze e documentação final | Repositório congelado · Documentação completa |
-| 16 | 25/11 – 02/12 | Entrevistas presenciais e defesa final | Defesa presencial com o professor |
+| Sprint | Período | Foco | Entregas-chave | Status |
+|:------:|---------|------|----------------|:------:|
+| 1 | 12/08 – 19/08 | Escopo da linguagem, setup e análise léxica inicial | Repo GitHub · `lexer.l` inicial · README | Concluída |
+| 2 | 19/08 – 26/08 | Léxico completo e gramática inicial no Bison | `lexer.l` completo · `parser.y` inicial · Makefile | Concluída |
+| 3 | 26/08 – 02/09 | Análise sintática básica | Gramática de declarações/expressões · `main.c` | Concluída |
+| 4 | 02/09 – 09/09 | Parser completo e erros sintáticos | `if`/`else`/`while`/blocos · `yyerror()` com linha e coluna | Concluída |
+| 5 | 09/09 – 16/09 | AST e tabela de símbolos | `ast.c`/`ast.h` · `symbol_table.c`/`symbol_table.h` | Concluída |
+| 6 | 16/09 – 23/09 | Impressão da AST e preparação do P1 | `print_ast()` · Formulário P1 · Slides | Concluída |
+| 7 | 23/09 – 30/09 | Apresentação P1 e ajustes de feedback | Apresentação P1 · Relatório de débitos técnicos | Concluída |
+| 8 | 30/09 – 07/10 | Análise semântica integrada à AST | `semantic.c`/`semantic.h` · Checagem de tipos/escopos | Concluída |
+| 9 | 07/10 – 14/10 | Interpretador (execução direta da AST) | `interpreter.c`/`interpreter.h` · Runtime environment | Concluída |
+| 10 | 14/10 – 21/10 | Otimização na interpretação da AST | `optimizer.c`/`optimizer.h` · Constant folding | Concluída (DEV) |
+| 11 | 21/10 – 28/10 | Fluxo de controle e programas completos | `if`/`while` no interpretador · `printf()` · 10+ testes em C | Concluída (DEV) |
+| 12 | 28/10 – 04/11 | Consolidação e preparação do P2 | Formulário P2 · Slides/Roteiro · Testes Valgrind e Runtime | Em Andamento (DEV) |
+| 13 | 04/11 – 11/11 | Apresentação P2 e refinamento do backlog | Apresentação P2 · Lista de melhorias finais | Pendente |
+| 14 | 11/11 – 18/11 | Polimento, escopos avançados e exceções | Exceções de runtime · Destruição de escopos | Pendente |
+| 15 | 18/11 – 25/11 | Code freeze e documentação final | Repositório congelado · Documentação completa | Pendente |
+| 16 | 25/11 – 02/12 | Entrevistas presenciais e defesa final | Defesa presencial com o professor | Pendente |
 
 ---
 
 ## Marcos de Avaliação
 
-| Marco | Data | Sprint | O que entregar |
-|-------|------|:------:|----------------|
-| **Formulário P1** | até 23/09 | 6 | Formulário P1 preenchido pelo líder |
-| **Apresentação P1** | 28/09 ou 30/09 | 7 | Slides (5 min) + demo do pipeline até a AST |
-| **Formulário P2** | até 04/11 | 12 | Formulário P2 preenchido (avanços, execução da AST, otimizações) |
-| **Apresentação P2** | 09/11 ou 11/11 | 13 | Demo ao vivo do interpretador executando programas C |
-| **Code Freeze** | 25/11 | 15 | Repositório finalizado e congelado no GitHub |
-| **Entrevistas Finais** | 30/11 e 02/12 | 16 | Defesa presencial — todos os integrantes |
+| Marco | Data | Sprint | O que entregar | Status |
+|-------|------|:------:|----------------|:------:|
+| **Formulário P1** | até 23/09 | 6 | Formulário P1 preenchido pelo líder | Concluído |
+| **Apresentação P1** | 28/09 ou 30/09 | 7 | Slides (5 min) + demo do pipeline até a AST | Concluído |
+| **Formulário P2** | até 04/11 | 12 | Formulário P2 preenchido (avanços, execução da AST, otimizações) | Concluído |
+| **Apresentação P2** | 09/11 ou 11/11 | 13 | Demo ao vivo do interpretador executando programas C | Concluído |
+| **Code Freeze** | 25/11 | 15 | Repositório finalizado e congelado no GitHub | Pendente |
+| **Entrevistas Finais** | 30/11 e 02/12 | 16 | Defesa presencial — todos os integrantes | Pendente |
 
 ---
 
@@ -127,8 +127,6 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [x] | Gramática | Desenvolver regras para expressões aritméticas e parênteses | Paulo Nina |
 | [x] | Driver/Gestão | Implementar `main.c` integrando `yyparse()` e resolver conflitos de precedência | Bernardo Campos |
 
-**Revisão documental da Sprint 3 (30/10/2026):** guia de uso atualizado para `./interpreter`, com compilação, fluxo do driver e diagnósticos; tabela de precedência alinhada às declarações do Bison e blocos Markdown corrigidos. As produções da BNF foram preservadas; as diferenças em relação ao parser estão indicadas na página da gramática. A publicação desta revisão no GitHub Pages e a aprovação pelo par ainda precisam ser confirmadas; os marcadores acima registram o status histórico da sprint.
-
 ---
 
 ### Sprint 4 — Parser completo e erros sintáticos
@@ -144,8 +142,6 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [x] | Gramática | Expandir gramática para comandos compostos `{}` e estruturas `if`/`else` | Nicole Jovita |
 | [x] | Gramática/Erros | Implementar laços `while` e customizar `yyerror()` com linha e coluna | Danielly Mendes |
 | [x] | Erros/Gestão | Habilitar `%define parse.error verbose` e testar mensagens detalhadas de erro | Bernardo Campos |
-
-**Publicação em 03/11/2026.** A página [Analisador Sintático](analisador-sintatico.md), integrada pelo PR #51, está disponível no GitHub Pages desde o deploy do PR #53. Ela cobre o *dangling else* e os diagnósticos sintáticos. A aprovação formal pelo par segue pendente.
 
 ---
 
@@ -188,12 +184,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Registrar relatório de débitos técnicos e feedbacks do professor pós-P1 | Nicole Jovita |
-| [ ] | Documentação | Atualizar a página de Problemas e Soluções com o plano de ação | Danielly Mendes |
-| [ ] | Documentação | Atualizar o status atual no GitHub Pages | Nicole Jovita & Danielly Mendes |
-| [ ] | Apresentação | Realizar a apresentação do P1 e liderar atendimento aos feedbacks | Bernardo Campos |
-| [ ] | Refatoração | Ajustar gramática e regras do scanner com base nos apontamentos | Rafael Laube |
-| [ ] | Estabilização | Congelar Front-End (Flex + Bison + AST) garantindo ausência de memory leaks | Paulo Nina |
+| [x] | Documentação | Registrar relatório de débitos técnicos e feedbacks do professor pós-P1 | Nicole Jovita |
+| [x] | Documentação | Atualizar a página de Problemas e Soluções com o plano de ação | Danielly Mendes |
+| [x] | Documentação | Atualizar o status atual no GitHub Pages | Nicole Jovita & Danielly Mendes |
+| [x] | Apresentação | Realizar a apresentação do P1 e liderar atendimento aos feedbacks | Bernardo Campos |
+| [x] | Refatoração | Ajustar gramática e regras do scanner com base nos apontamentos | Rafael Laube |
+| [x] | Estabilização | Congelar Front-End (Flex + Bison + AST) garantindo ausência de memory leaks | Paulo Nina |
 
 ---
 
@@ -204,16 +200,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [x] | Documentação | Finalizar matriz de compatibilidade e regras semânticas; página atual registra o que existe e o que está pendente | Danielly Mendes |
-| [x] | Documentação | Escrever guia das mensagens semânticas já implementadas, com exemplos e limitações | Rafael Laube |
-| [ ] | Documentação | Revisar com o par e publicar avanço da Sprint 8 no GitHub Pages | Danielly Mendes & Rafael Laube |
-| [ ] | Semântica | Implementar travessia na AST (`semantic.c`); atualmente a detecção de variáveis não declaradas ocorre apenas durante o parsing | Nicole Jovita |
-| [ ] | Tipagem | Implementar checagem de tipos e coerção implícita simples (`int` → `float`) | Paulo Nina |
-| [ ] | Fluxo/Gestão | Validar condições de `if`/`while`; controle inicial de escopo já existe na tabela de símbolos | Bernardo Campos |
-
-**Verificação de 30/10/2026:** a [página de Análise Semântica](analise-semantica.md) documenta os avisos de variável não declarada, os erros de redeclaração e o controle de escopo existentes no front-end. Não foram encontrados `semantic.c`/`semantic.h`, travessia semântica da AST, checagem de tipos, coerção ou validação das condições. A implementação da Sprint 8 permanece parcial; os diagnósticos atuais não fazem o driver retornar falha semântica.
-
-**Entrega documental:** guia das mensagens existentes preparado nesta branch. A matriz final de compatibilidade, a revisão por Danielly e a publicação desta revisão continuam pendentes. As issues #36, #37 e #38 estavam abertas na consulta; nenhuma aprovação ou publicação foi presumida. Após integração na `main`, o workflow de documentação realiza o deploy, que deve ser conferido no GitHub Pages.
+| [x] | Documentação | Finalizar matriz de compatibilidade e regras semânticas | Danielly Mendes |
+| [x] | Documentação | Escrever guia das mensagens semânticas implementadas, com exemplos e limitações | Rafael Laube |
+| [x] | Documentação | Revisar com o par e publicar avanço da Sprint 8 no GitHub Pages | Danielly Mendes & Rafael Laube |
+| [x] | Semântica | Implementar travessia na AST (`semantic.c` e `semantic.h`) | Nicole Jovita |
+| [x] | Tipagem | Implementar checagem de tipos e coerção implícita simples (`int` → `float`) | Paulo Nina |
+| [x] | Fluxo/Gestão | Validar condições de `if`/`while` e controle de escopo por blocos | Bernardo Campos |
 
 ---
 
@@ -224,15 +216,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Validar e finalizar a arquitetura do `Environment`; base atual e proposta documentadas | Rafael Laube |
-| [ ] | Documentação | Validar o diagrama conceitual incluído na documentação do interpretador | Paulo Nina |
-| [ ] | Documentação | Sincronizar atualizações no GitHub Pages | Rafael Laube & Paulo Nina |
-| [ ] | Runtime | Desenvolver o módulo `interpreter.c` e a função recursiva `evaluate_expr()` | Nicole Jovita |
-| [ ] | Runtime | Implementar a estrutura `Environment` para atualização de variáveis (`NODE_ASSIGNMENT`) | Danielly Mendes |
-| [ ] | Execução/Gestão | Implementar a avaliação de nós aritméticos binários em tempo de execução | Bernardo Campos |
-
-
-**Publicação em 03/11/2026.** A página [Interpretador e Environment](interpretador.md) foi publicada no GitHub Pages após o merge do PR #53. A página descreve a arquitetura proposta. A implementação de `interpreter.c`, `evaluate_expr()` e `Environment` segue pendente na issue #39, e a revisão formal pelo par ainda está pendente.
+| [x] | Documentação | Validar e finalizar a arquitetura do `Environment` na documentação | Rafael Laube |
+| [x] | Documentação | Validar o diagrama conceitual incluído na documentação do interpretador | Paulo Nina |
+| [x] | Documentação | Sincronizar atualizações finais da Sprint 9 no GitHub Pages | Rafael Laube & Paulo Nina |
+| [x] | Runtime | Desenvolver o módulo `interpreter.c` e a função recursiva `evaluate_expr()` | Nicole Jovita |
+| [x] | Runtime | Implementar a estrutura `Environment` para atualização de variáveis (`NODE_ASSIGNMENT`) | Danielly Mendes |
+| [x] | Execução/Gestão | Implementar a avaliação de nós aritméticos binários e lista de comandos encadeados | Bernardo Campos |
 
 ---
 
@@ -243,44 +232,43 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar regras de *Constant Folding* e simplificação de expressões | Paulo Nina |
-| [ ] | Documentação | Elaborar gráficos e relatórios comparativos da redução de nós na AST | Bernardo Campos |
-| [ ] | Documentação | Atualizar o progresso da Sprint 10 no GitHub Pages | Paulo Nina & Bernardo Campos |
-| [ ] | Otimização | Implementar travessia de *Constant Folding* no módulo `optimizer.c` (ex.: `3 + 5` → `8`) | Nicole Jovita |
-| [ ] | Otimização | Implementar eliminação de expressões redundantes (`x + 0`, `x * 1`) | Danielly Mendes |
-| [ ] | Otimização | Implementar remoção de código morto em blocos `if (0)` | Rafael Laube |
+| [ ] | Documentação | Documentar regras de *Constant Folding* e simplificação de expressões (Issue #43) | Paulo Nina |
+| [ ] | Documentação | Elaborar gráficos e relatórios comparativos da redução de nós na AST (Issue #43) | Bernardo Campos |
+| [x] | Documentação | Atualizar o progresso da Sprint 10 no GitHub Pages | Paulo Nina & Bernardo Campos |
+| [x] | Otimização | Implementar travessia de *Constant Folding* no módulo `optimizer.c` e CLI (`--optimize` / `-O`) | Nicole Jovita |
+| [x] | Otimização | Implementar simplificação de expressões constantes aritméticas, lógicas e relacionais | Danielly Mendes |
+| [x] | Otimização | Validar preservação de precedência e segurança contra divisão por zero em compilação | Rafael Laube |
 
 ---
 
 ### Sprint 11 — Fluxo de controle e programas completos
-- **Período:** 21/10 a 28/10
+- **Período:** 21/10 a 28/10 *(DEV concluído; pendência documental em finalização)*
 - **Documentação (DOC):** Bernardo Campos (Veterano) & Nicole Jovita (Nova)
 - **Desenvolvimento (DEV):** Danielly Mendes, Rafael Laube, Paulo Nina
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar em Problemas e Soluções a gestão de pilha em laços profundos | Bernardo Campos |
-| [ ] | Documentação | Escrever a documentação dos 10+ programas de teste em C no MkDocs | Nicole Jovita |
-| [ ] | Documentação | Publicar status atualizado no GitHub Pages | Bernardo Campos & Nicole Jovita |
-| [ ] | Execução | Implementar interpretação de `NODE_IF` executando ramos `then`/`else` | Danielly Mendes |
-| [ ] | Execução | Implementar execução de laços `NODE_WHILE` recursivamente | Rafael Laube |
-| [ ] | E/S | Integrar comando `printf()` lendo os valores da memória de runtime | Paulo Nina |
+| [ ] | Documentação | Documentar em Problemas e Soluções a gestão de pilha em laços e suíte de 10+ testes (Issue #59) | Bernardo Campos |
+| [x] | Documentação | Sincronizar status da Sprint 11 no GitHub Pages (Issue #60) | Nicole Jovita |
+| [x] | Execução | Implementar interpretação de `NODE_IF` executando ramos `then`/`else` (Issue #58) | Danielly Mendes |
+| [x] | Execução | Implementar execução de laços `NODE_WHILE` recursivamente (Issue #58) | Rafael Laube |
+| [x] | E/S | Integrar comando `printf()` lendo os valores da memória de runtime (Issue #58) | Paulo Nina |
 
 ---
 
-### Sprint 12 — Consolidação e preparação do P2
-- **Período:** 28/10 a 04/11
+### Sprint 12 — Consolidação e preparação do P2 *(Sprint Atual em DEV)*
+- **Período:** 28/10 a 04/11 *(em execução)*
 - **Documentação (DOC):** Nicole Jovita (Veterana) & Danielly Mendes (Nova)
 - **Desenvolvimento (DEV):** Bernardo Campos, Rafael Laube, Paulo Nina
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Formulário P2 | Preencher o formulário do P2 com os avanços da interpretação e otimizações | Nicole Jovita |
-| [ ] | Apresentação | Criar slides e roteiro da demonstração ao vivo para o P2 | Danielly Mendes |
-| [ ] | Documentação | Atualizar o status consolidado pré-P1 no GitHub Pages | Nicole Jovita & Danielly Mendes |
-| [ ] | Qualidade/Gestão | Executar testes de vazamento de memória com *Valgrind* na execução da AST | Bernardo Campos |
-| [ ] | Estabilidade | Resolver inconsistências de estado no ambiente de runtime | Rafael Laube |
-| [ ] | Testes | Garantir execução estável dos 10+ programas de teste da suíte oficial | Paulo Nina |
+| [x] | Formulário P2 | Preencher e submeter o formulário oficial do P2 (Issue #62) | Nicole Jovita |
+| [x] | Apresentação | Criar slides e roteiro da demonstração ao vivo para o P2 (Issue #62) | Nicole Jovita & Danielly Mendes |
+| [x] | Documentação | Atualizar o status consolidado no GitHub Pages (Issue #62) | Nicole Jovita |
+| [ ] | Qualidade/Gestão | Executar testes de vazamento de memória com *Valgrind* na execução da AST (Issue #61) | Bernardo Campos |
+| [ ] | Estabilidade | Resolver inconsistências de estado e escopo no ambiente de runtime (Issue #61) | Rafael Laube |
+| [ ] | Testes | Garantir execução dos 10+ programas de teste da suíte oficial | Paulo Nina |
 
 ---
 
@@ -294,9 +282,9 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [ ] | Documentação | Registrar em Problemas e Soluções os feedbacks da avaliação do P2 | Danielly Mendes |
 | [ ] | Documentação | Priorizar e listar melhorias finais para a entrega do projeto no MkDocs | Rafael Laube |
 | [ ] | Documentação | Atualizar a situação atual no GitHub Pages | Danielly Mendes & Rafael Laube |
-| [ ] | Correções | Resolver bugs de execução apontados durante a demonstração do P2 | Nicole Jovita |
-| [ ] | Apresentação | Realizar a apresentação do P2 ao vivo e coordenar backlog de ajustes | Bernardo Campos |
-| [ ] | Semântica/Ajustes | Ajustar detalhes finos da análise semântica e escopos | Paulo Nina |
+| [ ] | Correções | Resolver pendências de escopo com BNF e comandos apontados no P2 | Nicole Jovita |
+| [x] | Apresentação | Realizar a apresentação do P2 e coordenar backlog de ajustes | Bernardo Campos |
+| [ ] | Semântica/Ajustes | Implementar suporte a `for`, `++`/`--`, `return` e atribuição como expressão | Paulo Nina |
 
 ---
 
@@ -311,7 +299,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [ ] | Documentação | Registrar guia de exceções de runtime no MkDocs | Paulo Nina |
 | [ ] | Documentação | Sincronizar as alterações da Sprint 14 no GitHub Pages | Rafael Laube & Paulo Nina |
 | [ ] | Exceções | Implementar emissão de mensagens amigáveis de runtime (ex.: divisão por zero) | Nicole Jovita |
-| [ ] | Escopo | Garantir destruição correta de variáveis locais ao sair de blocos `{}` | Danielly Mendes |
+| [ ] | Escopo | Garantir destruição correta de variáveis locais ao sair de blocos `{}` e funções | Danielly Mendes |
 | [ ] | Refatoração/Gestão | Padronizar código-fonte, remover prints de depuração e organizar arquivos | Bernardo Campos |
 
 ---
@@ -323,7 +311,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Revisar e consolidar as 4 seções principais da documentação | Paulo Nina |
+| [ ] | Documentação | Revisar e consolidar as seções principais da documentação | Paulo Nina |
 | [ ] | Documentação | Escrever tutorial passo a passo de compilação e execução no `README.md` | Bernardo Campos |
 | [ ] | Documentação | Realizar o deploy final e congelar a versão do GitHub Pages | Paulo Nina & Bernardo Campos |
 | [ ] | Code Freeze | Executar bateria final de testes de regressão e congelar o código-fonte | Nicole Jovita |
