@@ -106,6 +106,56 @@ static int is_truthy(Value v) {
 
 static void execute_list(ASTNode *list, Environment *env);
 
+static void exec_printf(ASTNode *node, Environment *env) {
+    const char *fmt = node->string_value ? node->string_value : "";
+    ASTNode *arg = node->left;
+
+    for (const char *p = fmt; *p; p++) {
+        if (*p != '%') {
+            putchar(*p);
+            continue;
+        }
+        p++;
+        if (*p == '\0') break;
+        if (*p == '%') { putchar('%'); continue; }
+
+        if (!arg) {
+            fprintf(stderr, "[ERRO RUNTIME] printf: faltam argumentos para '%%%c'\n", *p);
+            continue;
+        }
+
+        Value v = evaluate_ast(arg, env);
+        arg = arg->next;
+
+        switch (*p) {
+            case 'd':
+                if (v.type == VAL_INT) printf("%d", v.data.int_val);
+                else if (v.type == VAL_FLOAT) printf("%d", (int)v.data.float_val);
+                else fprintf(stderr, "[ERRO RUNTIME] printf: '%%d' exige número\n");
+                break;
+            case 'f':
+                if (v.type == VAL_INT) printf("%f", (double)v.data.int_val);
+                else if (v.type == VAL_FLOAT) printf("%f", v.data.float_val);
+                else fprintf(stderr, "[ERRO RUNTIME] printf: '%%f' exige número\n");
+                break;
+            case 's':
+                if (v.type == VAL_STRING && v.data.str_val) printf("%s", v.data.str_val);
+                else fprintf(stderr, "[ERRO RUNTIME] printf: '%%s' exige texto\n");
+                break;
+            case 'c':
+                if (v.type == VAL_STRING && v.data.str_val && v.data.str_val[0])
+                    putchar(v.data.str_val[0]);
+                else if (v.type == VAL_INT) putchar(v.data.int_val);
+                else fprintf(stderr, "[ERRO RUNTIME] printf: '%%c' exige caractere\n");
+                break;
+            default:
+                fprintf(stderr, "[ERRO RUNTIME] printf: formato '%%%c' não suportado\n", *p);
+        }
+
+        if (v.type == VAL_STRING && v.data.str_val) free(v.data.str_val);
+    }
+}
+
 Value evaluate_ast(ASTNode *node, Environment *env) {
     Value result;
     result.type = VAL_VOID;
@@ -207,12 +257,15 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
 
         case NODE_BLOCK: {
             env_enter_scope(env);
-            ASTNode *curr = node->left;
             execute_list(node->left, env);
             env_exit_scope(env);
             return result;
         }
 
+        case NODE_PRINTF:
+            exec_printf(node, env);
+            break;
+        
         default:
             if (node->left) evaluate_ast(node->left, env);
             if (node->right) evaluate_ast(node->right, env);
