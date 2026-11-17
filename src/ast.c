@@ -68,6 +68,13 @@ ASTNode *create_while_node(ASTNode *cond, ASTNode *body) {
     return node;
 }
 
+ASTNode *create_printf_node(const char *format, ASTNode *args){
+    ASTNode *node = create_node(NODE_PRINTF);
+    if (format) node->string_value = strdup(format);
+    node->left = args;
+    return node;
+}
+
 ASTNode *append_node(ASTNode *list, ASTNode *node) {
     if (!list) return node;
     ASTNode *curr = list;
@@ -145,6 +152,10 @@ static void print_node(const ASTNode *n, int level) {
             if (n->left) print_node(n->left, level + 2);
             print_indent(level + 1); printf("Body:\n");
             print_list(n->right, level + 2);
+            break;
+        case NODE_PRINTF:
+            printf("Printf(\"%s\")\n", n->string_value ? n->string_value : "");
+            print_list(n->left, level + 1);
             break;
         default:
             printf("Unknown(%d)\n", n->type);

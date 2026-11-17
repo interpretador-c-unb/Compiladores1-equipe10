@@ -11,7 +11,8 @@ typedef enum {
     NODE_STRING_LITERAL,
     NODE_IF,
     NODE_WHILE,
-    NODE_BLOCK
+    NODE_BLOCK,
+    NODE_PRINTF
 } NodeType;
 
 typedef struct ASTNode {
@@ -34,6 +35,7 @@ ASTNode *create_decl_node(const char *name, ASTNode *init_expr);
 ASTNode *create_assign_node(const char *name, ASTNode *expr);
 ASTNode *create_if_node(ASTNode *cond, ASTNode *then_block, ASTNode *else_block);
 ASTNode *create_while_node(ASTNode *cond, ASTNode *body);
+ASTNode *create_printf_node(const char *format, ASTNode *args);
 ASTNode *append_node(ASTNode *list, ASTNode *node);
 void free_ast(ASTNode *node);
 void print_ast(const ASTNode *root);
