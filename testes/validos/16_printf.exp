@@ -1,0 +1,22 @@
+[TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'c' (char) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 's' (char) no Escopo 0
+
+[SUCESSO] Análise sintática concluída com sucesso!
+
+--- Iniciando Análise Semântica ---
+[SUCESSO] Análise semântica concluída sem erros!
+
+--- Executando o Programa (Runtime) ---
+inteiro: 42
+texto: ola
+char: a
+percent: 100%
+soma: 50
+dois: 42 e 7
+sem argumentos
+
+--- Estado Final das Variáveis no Ambiente de Runtime ---
+s (string) = "ola"
+c (string) = "a"
+x (int) = 42

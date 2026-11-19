@@ -64,6 +64,7 @@ LETTER  [A-Za-z_]
 "char"                          { return CHAR; }
 "float"                         { return FLOAT; }
 "void"                          { return VOID; }
+"printf"                        { return PRINTF; }
 
 {LETTER}({LETTER}|{DIGIT})*     {
                                     yylval.idValue = dup_text();

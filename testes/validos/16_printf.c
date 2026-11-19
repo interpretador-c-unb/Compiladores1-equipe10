@@ -1,0 +1,10 @@
+int x = 42;
+char c = 'a';
+char s = "ola";
+printf("inteiro: %d\n", x);
+printf("texto: %s\n", s);
+printf("char: %c\n", c);
+printf("percent: 100%%\n");
+printf("soma: %d\n", x + 8);
+printf("dois: %d e %d\n", x, 7);
+printf("sem argumentos\n");

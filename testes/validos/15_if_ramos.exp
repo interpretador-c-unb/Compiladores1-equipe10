@@ -1,0 +1,15 @@
+[TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'r' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'z' (int) no Escopo 0
+
+[SUCESSO] Análise sintática concluída com sucesso!
+
+--- Iniciando Análise Semântica ---
+[SUCESSO] Análise semântica concluída sem erros!
+
+--- Executando o Programa (Runtime) ---
+
+--- Estado Final das Variáveis no Ambiente de Runtime ---
+z (int) = 0
+r (int) = 102
+x (int) = 103

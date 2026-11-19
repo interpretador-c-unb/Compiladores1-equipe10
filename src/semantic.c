@@ -102,6 +102,11 @@ int analyze_semantics(ASTNode *node, SymbolTable *table) {
             }
             exit_scope(table);
             break;
+            
+        case NODE_PRINTF:
+            for (ASTNode *arg = node->left; arg; arg = arg->next)
+                check_node_type(arg, table, &errors);
+            break;
 
         default:
             if (node->left) errors += analyze_semantics(node->left, table);

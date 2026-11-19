@@ -29,7 +29,7 @@ SymbolTable *sym_table = NULL;
 %token <idValue> ID
 %token <charValue> CHARLIT
 
-%token IF ELSE WHILE FOR RETURN
+%token IF ELSE WHILE FOR PRINTF RETURN
 %token INT CHAR FLOAT VOID
 
 %token ASSIGN
@@ -43,7 +43,7 @@ SymbolTable *sym_table = NULL;
 %token LBRACK RBRACK
 %token SEMI COMMA
 
-%type <astNode> programa lista_declaracoes elemento declaracao_variavel comando atribuicao comando_if comando_while bloco lista_comandos expressao
+%type <astNode> programa lista_declaracoes elemento declaracao_variavel comando atribuicao comando_if comando_while bloco lista_comandos expressao comando_printf lista_argumentos
 %type <stringValue> tipo
 
 %nonassoc LOWER_THAN_ELSE
@@ -104,6 +104,7 @@ comando:
     atribuicao
     | comando_if
     | comando_while
+    | comando_printf
     | bloco
     | expressao SEMI { $$ = $1; }
     | SEMI { $$ = NULL; }
@@ -113,6 +114,24 @@ atribuicao:
     ID ASSIGN expressao SEMI {
         $$ = create_assign_node($1, $3);
         free($1);
+    }
+    ;
+
+comando_printf:
+    PRINTF LPAREN STRING RPAREN SEMI {
+        $$ = create_printf_node($3, NULL);
+        free($3);
+    }
+    | PRINTF LPAREN STRING COMMA lista_argumentos RPAREN SEMI {
+        $$ = create_printf_node($3, $5);
+        free($3);
+    }
+    ;
+    
+lista_argumentos:
+    expressao { $$ = $1; }
+    | lista_argumentos COMMA expressao {
+        $$ = append_node($1, $3);
     }
     ;
 
