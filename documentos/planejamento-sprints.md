@@ -248,7 +248,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar em Problemas e Soluções a gestão de pilha em laços e suíte de 10+ testes (Issue #59) | Bernardo Campos |
+| [X] | Documentação | Documentar em Problemas e Soluções a gestão de pilha em laços e suíte de 10+ testes (Issue #59) | Bernardo Campos |
 | [x] | Documentação | Sincronizar status da Sprint 11 no GitHub Pages (Issue #60) | Nicole Jovita |
 | [x] | Execução | Implementar interpretação de `NODE_IF` executando ramos `then`/`else` (Issue #58) | Danielly Mendes |
 | [x] | Execução | Implementar execução de laços `NODE_WHILE` recursivamente (Issue #58) | Rafael Laube |
