@@ -232,7 +232,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar regras de *Constant Folding* e simplificação de expressões (Issue #43) | Paulo Nina |
+| [x] | Documentação | Documentar regras de *Constant Folding* e simplificação de expressões (Issue #43) | Paulo Nina |
 | [ ] | Documentação | Elaborar gráficos e relatórios comparativos da redução de nós na AST (Issue #43) | Bernardo Campos |
 | [x] | Documentação | Atualizar o progresso da Sprint 10 no GitHub Pages | Paulo Nina & Bernardo Campos |
 | [x] | Otimização | Implementar travessia de *Constant Folding* no módulo `optimizer.c` e CLI (`--optimize` / `-O`) | Nicole Jovita |

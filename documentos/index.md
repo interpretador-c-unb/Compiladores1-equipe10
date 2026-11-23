@@ -21,6 +21,7 @@ COMPILADORES1-EQUIPE10/
 │   ├── guia-uso.md
 │   ├── index.md
 │   ├── interpretador.md
+│   ├── otimizacao.md
 │   ├── planejamento-sprints.md
 │   ├── plano-pos-p1.md
 │   ├── problemas-e-solucoes.md
