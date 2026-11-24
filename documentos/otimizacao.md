@@ -35,12 +35,14 @@ A função `optimize_ast(ASTNode *node)` em `src/optimizer.c` realiza um **percu
    - O nó precisa ser do tipo `NODE_BINARY_EXPR`.
    - Ambos os operandos (`node->left` e `node->right`) devem satisfazer `is_constant_node()`, ou seja, serem do tipo `NODE_NUM_LITERAL`.
 3. **Calcula o novo valor constante** conforme o operador em `node->name`.
-4. **Substitui a subárvore:** cria um novo nó `NODE_NUM_LITERAL` com `create_num_node(result_val)`, preserva o ponteiro `next` da lista de comandos, libera a subárvore antiga com `free_ast(node)` (isolando `node->next = NULL` antes de liberar) e retorna o novo nó.
-5. **Avança para o próximo comando** em `node->next`.
+4. **Substitui a subárvore:** cria um novo nó `NODE_NUM_LITERAL` com `create_num_node(result_val)`, preserva o ponteiro `next` (`folded->next = node->next`), libera a subárvore antiga com `free_ast(node)` (isolando `node->next = NULL` antes de liberar) e **retorna o novo nó imediatamente**.
+5. **Avança para o próximo comando (`node->next`):** quando o nó atual **não** foi dobrado (por exemplo, um nó `Declaration`, `Assignment`, `If` ou `While`), a função chama `optimize_ast(node->next)`. Caso o próprio nó da lista tenha sido dobrado no passo 4, o retorno antecipado faz com que os irmãos posteriores em `next` não sejam percorridos.
 
-### Preservação de tipo literal (`int` vs `float`)
+### Detecção de `float` nos literais
 
-O otimizador verifica se algum dos operandos possui ponto decimal no campo `name` (`strchr(node->left->name, '.')` ou `strchr(node->right->name, '.')`). Se pelo menos um operando for decimal, o nó resultante recebe uma string formatada com `snprintf(buf, sizeof(buf), "%g", result_val)` (acrescentando `".0"` caso o resultado seja exato, para manter a indicação de ponto flutuante na AST).
+O código em `src/optimizer.c` verifica se algum dos operandos possui ponto decimal no campo `name` (`strchr(node->left->name, '.')` ou `strchr(node->right->name, '.')`) para preencher `folded->name` com `snprintf(buf, sizeof(buf), "%g", result_val)` (acrescentando `".0"` quando necessário).
+
+Na prática, porém, os literais criados pelo parser via `create_num_node($1)` em `src/ast.c` preenchem apenas `num_value` e deixam `name` como `NULL`. Por isso, `is_float` não é ativado para literais vindos do código-fonte, e expressões com ponto flutuante dobradas pelo otimizador perdem a marcação de `float` na AST atual.
 
 ---
 
@@ -143,3 +145,5 @@ Em ambos os casos, a execução final no runtime produz exatamente o mesmo estad
 
 - **Sem propagação de constantes (*Constant Propagation*):** variáveis já conhecidas (como `a` em `int c = a + 5;`) permanecem como `NODE_VAR` na AST, pois o otimizador avalia apenas nós `NODE_NUM_LITERAL`.
 - **Apenas expressões binárias:** operadores unários ou instruções de controle de fluxo com condição constante (ex.: `if (1)`) não são simplificados pelo otimizador atual.
+- **Perda da marcação `float` após o dobramento:** como `create_num_node()` deixa `name` nulo, a verificação de ponto decimal em `optimizer.c` não detecta literais `float` vindos do parser, tratando o resultado dobrado sem a marcação decimal.
+- **Retorno antecipado em listas encadeadas:** se uma `NODE_BINARY_EXPR` estiver diretamente na lista encadeada por `next` (ex.: `2 + 3; 4 + 5;`) e for dobrada, `optimize_ast()` retorna antes de processar `node->next`, deixando os irmãos seguintes sem otimização.
