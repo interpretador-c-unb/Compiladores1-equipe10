@@ -166,6 +166,54 @@ Registro contínuo dos desafios técnicos enfrentados pela equipe e das soluçõ
 
 | Problema | Solução |
 |---|---|
-| <!-- TODO: bugs resolvidos nas Sprints 8 a 12 --> | |
+| Comandos encadeados não eram executados corretamente | Adição de uma função auxiliar que percorre a lista de comandos, executando-os em sequência |
+| Incompatibilidade do tratamento de escopo com a gramática BNF | 🔄 Em alinhamento pela equipe (ver seção 7) |
 
 Problemas ainda **em aberto** estão na seção 7.
+
+---
+ 
+## 11. Feedbacks do P2 e priorização do backlog
+ 
+Consolidação dos feedbacks recebidos na apresentação do P2 e priorização das melhorias finais do interpretador, considerando impacto, urgência, esforço e relevância para a entrega final (*Code Freeze* na Sprint 15).
+ 
+### 11.1 Feedbacks recebidos
+ 
+| # | Feedback | Tipo | Área afetada | Impacto |
+|---|---|---|---|---|
+| F1 | Cobrir funções (definição e chamada) seria muito complexo para o tempo restante do projeto; sugerida a redução do escopo | Risco de escopo e cronograma | Gramática, parser, análise semântica e runtime | Alto |
+ 
+<!-- TODO: acrescentar aqui os demais feedbacks do P2 (F2, F3, ...), um por linha -->
+ 
+### 11.2 Backlog priorizado
+ 
+Esforço e urgência são estimativas da equipe e podem ser ajustados.
+ 
+| Prioridade | Item | Origem | Impacto | Urgência | Esforço |
+|---|---|---|---|---|---|
+| Alta | Validação completa com Valgrind (zero *memory leaks*) | Issue #61 | Alto | Alta | Médio |
+| Alta | Abortar a execução em redeclaração e comentário não terminado | Testes inválidos 09 e 11 | Alto | Alta | Baixo |
+| Alta | Alinhar escopo com a BNF e reclassificar os testes `03`, `12` e `18` | Seção 10 e seção 5 | Alto | Alta | Baixo a médio |
+| Alta | Fechar a documentação técnica pendente | Issues #43 e #59 | Médio | Alta | Baixo |
+| Média | Laço `for` e incremento/decremento (`++`/`--`) | Sprint 13 original | Médio | Média | Médio |
+| Média | Tratamento de exceções de runtime | Sprint 14 original | Médio | Média | Médio |
+| Baixa | Suporte real a `float` e `char` no runtime (ou documentar como limitação) | Limitações do runtime | Médio | Baixa | Médio |
+| Baixa | Atribuição como expressão | Sprint 13 original | Baixo | Baixa | Médio |
+| Fora do escopo | Funções, chamadas e `return` | Feedback F1 | Alto | — | Alto |
+ 
+### 11.3 Decisões e justificativas
+ 
+| # | Decisão | Justificativa | Status |
+|---|---|---|---|
+| D1 | Retirar funções, chamadas e `return` do escopo da entrega final e registrá-los como trabalho futuro | Atende ao feedback F1. Funções exigem escopo por função, pilha de chamadas e mudanças simultâneas na gramática, no parser, na análise semântica e no runtime. O risco de desestabilizar o que já funciona é incompatível com o prazo até o *Code Freeze* | Proposta |
+| D2 | Priorizar a estabilização (Valgrind, rejeição correta de erros, escopo e BNF) antes de qualquer novo recurso | A defesa final avalia o que existe e funciona. Corrigir bugs conhecidos tem mais retorno que ampliar a linguagem | Proposta |
+| D3 | Manter `for` e `++`/`--` como melhorias opcionais, condicionadas à conclusão dos itens de prioridade alta | Reaproveitam estruturas já existentes (`while`, atribuição), com esforço e risco menores que funções | Proposta |
+| D4 | Decidir, até a Sprint 14, entre implementar `float`/`char` no runtime ou documentá-los como limitação conhecida | Evita investir esforço sem impacto claro na demonstração final | Pendente |
+ 
+### 11.4 Impacto no cronograma
+ 
+Com o escopo reduzido, as Sprints 13 a 15 ficam assim:
+ 
+- **Sprint 13:** estabilização (itens de prioridade alta) e, se houver folga, `for` e `++`/`--`.
+- **Sprint 14:** tratamento de exceções de runtime, decisão sobre `float`/`char` e fechamento da documentação.
+- **Sprint 15:** *Code Freeze*.
