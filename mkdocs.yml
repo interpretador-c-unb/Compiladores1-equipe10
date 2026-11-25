@@ -22,6 +22,7 @@ markdown_extensions:
 nav:
   - Estrutura do Projeto: index.md
   - Guia de uso: guia-uso.md
+  - Status Projeto: status-projeto.md
   - Decisões Técnicas: decisoes-tecnicas.md
   - Analisador Léxico: analisador-lexico.md
   - Gramática & BNF: gramatica-bnf.md
@@ -30,6 +31,3 @@ nav:
   - Análise Semântica: analise-semantica.md
   - Interpretador e Runtime: interpretador.md
   - Planejamento das Sprints: planejamento-sprints.md
-  - Problemas e Soluções: problemas-e-solucoes.md
-  - Débitos Técnicos: debitos-tecnicos.md
-  - Plano Pós-P1: plano-pos-p1.md
