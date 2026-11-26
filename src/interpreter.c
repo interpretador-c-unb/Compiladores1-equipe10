@@ -104,6 +104,15 @@ static int is_truthy(Value v) {
     return 0;
 }
 
+static void free_value(Value *value) {
+    if (!value) return;
+    if (value->type == VAL_STRING && value->data.str_val) {
+        free(value->data.str_val);
+        value->data.str_val = NULL;
+    }
+    value->type = VAL_VOID;
+}
+
 static void execute_list(ASTNode *list, Environment *env);
 
 static void exec_printf(ASTNode *node, Environment *env) {
@@ -188,18 +197,39 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
                 init_val = evaluate_ast(node->left, env);
             }
             set_variable(env, node->name, init_val);
+            free_value(&init_val);
             break;
         }
 
         case NODE_ASSIGNMENT: {
             Value val = evaluate_ast(node->left, env);
             set_variable(env, node->name, val);
-            return val;
+            free_value(&val);
+            break;
         }
 
         case NODE_BINARY_EXPR: {
             Value left = evaluate_ast(node->left, env);
             Value right = evaluate_ast(node->right, env);
+
+            if (node->right == NULL && strcmp(node->name, "!") == 0) {
+                result.type = VAL_INT;
+                result.data.int_val = !is_truthy(left);
+                free_value(&left);
+                break;
+            }
+
+            if (node->right == NULL && strcmp(node->name, "-") == 0) {
+                if (left.type == VAL_FLOAT) {
+                    result.type = VAL_FLOAT;
+                    result.data.float_val = -left.data.float_val;
+                } else {
+                    result.type = VAL_INT;
+                    result.data.int_val = -left.data.int_val;
+                }
+                free_value(&left);
+                break;
+            }
 
             if (left.type == VAL_FLOAT || right.type == VAL_FLOAT) {
                 double l = (left.type == VAL_FLOAT) ? left.data.float_val : left.data.int_val;
@@ -235,6 +265,8 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
                 else if (strcmp(node->name, "&&") == 0) result.data.int_val = l && r;
                 else if (strcmp(node->name, "||") == 0) result.data.int_val = l || r;
             }
+            free_value(&left);
+            free_value(&right);
             break;
         }
 
@@ -245,11 +277,16 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
             } else if (node->else_branch) {
                 evaluate_ast(node->else_branch, env);
             }
+            free_value(&cond);
             break;
         }
 
         case NODE_WHILE: {
-            while (is_truthy(evaluate_ast(node->left, env))) {
+            for (;;) {
+                Value cond = evaluate_ast(node->left, env);
+                int condition_true = is_truthy(cond);
+                free_value(&cond);
+                if (!condition_true) break;
                 evaluate_ast(node->right, env);
             }
             break;
