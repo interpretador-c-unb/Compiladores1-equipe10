@@ -311,8 +311,8 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Revisar e consolidar as seções principais da documentação | Paulo Nina |
-| [ ] | Documentação | Escrever tutorial passo a passo de compilação e execução no `README.md` | Bernardo Campos |
+| [ ] | Documentação | Consolidar a documentação técnica e validar exemplos na versão do Code Freeze (Issue #74) | Paulo Nina |
+| [ ] | Documentação | Finalizar o tutorial de instalação, compilação e uso no `README.md` (Issue #74) | Paulo Nina (responsável), Bernardo Campos (revisor) |
 | [ ] | Documentação | Realizar o deploy final e congelar a versão do GitHub Pages | Paulo Nina & Bernardo Campos |
 | [ ] | Code Freeze | Executar bateria final de testes de regressão e congelar o código-fonte | Nicole Jovita |
 | [ ] | Entrega | Verificar permissões do repositório e gerar arquivo `.zip` se necessário | Danielly Mendes |

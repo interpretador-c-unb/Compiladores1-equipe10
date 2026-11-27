@@ -33,22 +33,18 @@ Os artefatos gerados (`lex.yy.c`, `interpretador_c.tab.c`, `interpretador_c.tab.
 | Tipo | Campos usados |
 | --- | --- |
 | `NODE_PROGRAM` | Reservado no enum. O parser entrega a lista de comandos diretamente em `ast_root`. |
-| `NODE_DECLARATION` | Nome em `name` e inicializador opcional em `left`. |
+| `NODE_DECLARATION` | Nome em `name`, tipo em `string_value` e inicializador opcional em `left`. |
 | `NODE_ASSIGNMENT` | Nome do destino em `name` e expressão em `left`. |
 | `NODE_BINARY_EXPR` | Operador em `name` e operandos em `left` e `right`. Para `!` e menos unário, `right` fica vazio. |
 | `NODE_VAR_REF` | Nome da variável em `name`. |
-| `NODE_NUM_LITERAL` | Valor numérico em `num_value` (`double`). |
+| `NODE_NUM_LITERAL` | Valor numérico em `num_value` (`double`) e texto original em `name`. |
 | `NODE_STRING_LITERAL` | Texto em `string_value`. O parser usa este nó também para literais de caractere. |
 | `NODE_IF` | Condição em `left`, ramo principal em `right` e ramo alternativo opcional em `else_branch`. |
 | `NODE_WHILE` | Condição em `left` e corpo em `right`. |
 | `NODE_BLOCK` | Primeiro comando em `left`, que fica vazio em um bloco sem comandos. |
 
-A [tabela de símbolos](tabela-simbolos.md) guarda os tipos declarados e os escopos durante a análise.
+A [tabela de símbolos](tabela-simbolos.md) guarda os tipos declarados e os escopos durante a análise semântica.
 
-## 4. Execução da AST e ambiente de runtime — Sprint 9
+## 4. Análise semântica e execução
 
-A execução direta da AST é uma entrega planejada. O código atual constrói e imprime a árvore, mas ainda não contém `interpreter.c`, `evaluate_expr()` ou `Environment`.
-
-A tabela de símbolos existente registra nome, tipo declarado e escopo durante o parsing; ela não armazena valores de execução. O futuro ambiente de runtime precisa manter esses valores e permitir sua atualização durante as atribuições. A representação de valores, a organização dos ambientes e a propriedade da memória ainda precisam ser definidas com a equipe.
-
-A página [Interpretador e Environment](interpretador.md) descreve a estrutura atual dos nós, o ciclo de execução proposto, os diagramas de arquitetura e escopos e as decisões pendentes. O modelo conceitual apresentado nessa página está sujeito à revisão de Paulo Nina e à validação com a implementação; não é uma arquitetura já implementada.
+A análise semântica percorre a AST e popula a tabela de símbolos conforme entra e sai dos blocos. O runtime usa um ambiente próprio para declarar, consultar e atualizar valores. Veja como esses módulos se conectam no [guia do interpretador](interpretador.md).
