@@ -1,102 +1,116 @@
 # Guia de Uso
 
-O driver `src/main.c` recebe um arquivo-fonte, aciona a análise léxica e sintática e imprime a Árvore Sintática Abstrata (AST). Nesta versão, ele constrói e exibe a árvore; ainda não executa os comandos do programa C.
+Este guia descreve como preparar o ambiente, compilar o interpretador, executar um programa do subconjunto de C e validar a documentação.
 
-## Compilação
+## Pré-requisitos
 
-É necessário ter GCC, Flex, Bison e Make instalados. Execute os comandos abaixo na raiz do repositório:
+São necessários GCC, Make, Flex e Bison. Para gerar o site, também são necessários Python 3, MkDocs e MkDocs Material. Para a validação de memória, instale Valgrind.
+
+Em Ubuntu ou WSL:
 
 ```bash
-make -C src
+sudo apt update
+sudo apt install build-essential flex bison make python3 python3-pip valgrind
+python3 -m pip install mkdocs mkdocs-material
 ```
 
-O Bison gera o parser e seu cabeçalho, o Flex gera o scanner e o GCC compila esses arquivos junto com `main.c`, `ast.c` e `symbol_table.c`. O executável resultante é `./interpreter`, na raiz do projeto.
+## Build
 
-Use `make -C src`: o `Makefile` da raiz atualmente procura os fontes no diretório errado. Para uma compilação limpa:
+Execute a partir da raiz:
+
+```bash
+make -C src rebuild
+```
+
+O Makefile remove os artefatos anteriores, executa Bison e Flex e compila todos os módulos do interpretador. O executável é criado na raiz como `./interpreter`.
+
+Para remover os artefatos:
 
 ```bash
 make -C src clean
-make -C src
 ```
 
-## Execução e argumentos
+## Execução
 
 ```bash
-./interpreter caminho/para/arquivo.c
+./interpreter testes/validos/17_if_while_printf.c
 ```
 
-O primeiro argumento é o caminho do arquivo de entrada, relativo ao diretório atual ou absoluto. Por exemplo, a partir da raiz:
+As opções de diagnóstico são:
 
 ```bash
-./interpreter testes/validos/02_declaracoes_e_expressoes.c
+./interpreter --print-ast testes/validos/expressoes_constantes.c
+./interpreter --optimize --print-ast testes/validos/expressoes_constantes.c
 ```
 
-Não é necessário envolver as declarações e comandos em uma função `main()` no arquivo de entrada. O driver atual não implementa opções como `--tokens`.
+O programa de entrada não precisa conter `main()`. Ele é escrito conforme a gramática do subconjunto implementado.
 
-## Fluxo do driver
+## Fluxo de execução
 
-1. Verifica se foi informado um arquivo e o abre para leitura, atribuindo-o a `yyin`.
-2. Cria a tabela de símbolos com `create_symbol_table()`.
-3. Chama `yyparse()`. O parser solicita tokens ao scanner e constrói a AST, cuja raiz fica em `ast_root`.
-4. Fecha o arquivo e informa sucesso ou falha conforme o retorno de `yyparse()`.
-5. Chama `print_ast(ast_root)` para exibir a árvore.
-6. Libera a AST e a tabela de símbolos e retorna o resultado do parser ao sistema operacional.
+1. `main.c` interpreta as opções e abre o arquivo de entrada.
+2. Bison e Flex realizam as análises léxica e sintática.
+3. O parser constrói a AST e a tabela de símbolos.
+4. A análise semântica verifica declarações, escopos e tipos aceitos.
+5. O otimizador pode aplicar constant folding com `--optimize`.
+6. `interpreter.c` avalia a AST no ambiente de runtime.
+7. A AST, a tabela de símbolos e o ambiente são liberados ao final.
 
-Quando a análise sintática termina com sucesso, a saída inclui:
+## Casos de execução
 
-```text
-[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
+```bash
+./interpreter testes/validos/14_while_execucao.c
+./interpreter testes/validos/15_if_ramos.c
+./interpreter testes/validos/16_printf.c
+./interpreter testes/validos/17_if_while_printf.c
 ```
 
-Também podem aparecer registros de inserção na tabela de símbolos e, em seguida, a árvore indentada.
+Esses casos cobrem laços, ramos condicionais, `printf()` e integração entre controle de fluxo e execução.
+
+## Testes
+
+Para executar a suíte de casos válidos:
+
+```bash
+printf 'testes/validos\n' | bash testes/rodar_testes.sh
+```
+
+Para executar os testes léxicos:
+
+```bash
+bash testes/1_lexico/run.sh
+```
+
+A validação de memória usa o script da Sprint 12, quando ele estiver integrado:
+
+```bash
+./testes/valgrind/run_valgrind.sh
+```
+
+O script deve terminar sem vazamentos `definitely lost` ou `indirectly lost`, acessos inválidos e uso de valores não inicializados.
 
 ## Mensagens e códigos de saída
 
-| Situação | Mensagem ou comportamento |
-| --- | --- |
-| Nenhum argumento | `Uso: ./interpreter <arquivo_fonte.c>`; retorna `1`. |
-| Arquivo inexistente ou sem permissão de leitura | `Erro ao abrir arquivo de entrada: ...`; o detalhe vem do sistema operacional; retorna `1`. |
-| Erro sintático | `Erro sintático: ... na linha N, coluna C`, seguido de `[FALHA] Foram encontrados erros no código.`; retorna o código não zero de `yyparse()`. |
-| Variável não declarada | `[AVISO SEMÂNTICO] Variável 'nome' usada sem declaração na linha N`. |
-| Redeclaração no mesmo escopo | `[ERRO SEMÂNTICO] Variável 'nome' já declarada no escopo N`. |
+A ausência de argumento gera uma mensagem de uso e código diferente de zero. Arquivo inexistente também interrompe a execução. Erros sintáticos e semânticos são informados pelo interpretador e impedem a execução quando detectados pela versão integrada.
 
-Os diagnósticos de abertura de arquivo e de análise são enviados a `stderr`; as mensagens de uso, sucesso/falha e a AST são enviadas a `stdout`.
+A saída final do runtime apresenta os valores mantidos no ambiente, por exemplo:
 
-O código de saída reflete o parser: avisos semânticos e alguns erros léxicos podem coexistir com retorno `0` e mensagem de sucesso. Portanto, nesta versão, também é necessário conferir os diagnósticos em `stderr`.
-
-Para experimentar um erro sintático:
-
-```bash
-./interpreter testes/invalidos/01_sem_ponto_virgula.c
+```text
+--- Estado Final das Variáveis no Ambiente de Runtime ---
+x (int) = 5
 ```
 
-### Erros durante a compilação do interpretador
+## MkDocs
 
-Se `make -C src` indicar que `gcc`, `flex` ou `bison` não foi encontrado, instale a ferramenta indicada e confirme que está no `PATH`. Erros de geração do parser/scanner ou de compilação C aparecem na saída dessas ferramentas e impedem a conclusão do build. Eles são distintos dos erros encontrados ao analisar um arquivo com `./interpreter`.
-
-## Testes do front-end
-
-Após compilar, execute na raiz:
+Para revisar o site localmente:
 
 ```bash
-bash testes/executar_testes.sh
-```
-
-A suíte compara as saídas dos programas válidos com os arquivos `.exp` e verifica os diagnósticos ou códigos de erro dos programas inválidos.
-
-## Validação da documentação
-
-Em um ambiente Python com as dependências do site instaladas:
-
-```bash
-python -m pip install mkdocs mkdocs-material
 mkdocs serve
 ```
 
-Abra `http://127.0.0.1:8000` e confira as páginas **Gramática & BNF** e **Guia de uso**, disponíveis no menu do MkDocs. Verifique a tabela de precedência e os blocos de código. Para gerar o site sem iniciar o servidor:
+Para validar links, navegação e geração sem avisos:
 
 ```bash
-mkdocs build
+mkdocs build --strict
 ```
 
-Veja também a [gramática e a precedência dos operadores](gramatica-bnf.md) e o [status da Sprint 3](planejamento-sprints.md#sprint-3-analise-sintatica-basica).
+Depois da integração na `main`, o workflow de publicação executa `mkdocs gh-deploy --force` e atualiza a branch `gh-pages`.
