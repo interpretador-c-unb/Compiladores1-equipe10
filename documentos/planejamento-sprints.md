@@ -60,7 +60,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | 11 | 21/10 – 28/10 | Fluxo de controle e programas completos | `if`/`while` no interpretador · `printf()` · 10+ testes em C | Concluída (DEV) |
 | 12 | 28/10 – 04/11 | Consolidação e preparação do P2 | Formulário P2 · Slides/Roteiro · Testes Valgrind e Runtime | Em Andamento (DEV) |
 | 13 | 04/11 – 11/11 | Apresentação P2 e refinamento do backlog | Apresentação P2 · Lista de melhorias finais | Pendente |
-| 14 | 11/11 – 18/11 | Polimento, escopos avançados e exceções | Exceções de runtime · Destruição de escopos | Pendente |
+| 14 | 11/11 – 18/11 | Polimento, escopos avançados e exceções | Exceções de runtime · Destruição de escopos | Código integrado (PR #80) |
 | 15 | 18/11 – 25/11 | Code freeze e documentação final | Repositório congelado · Documentação completa | Pendente |
 | 16 | 25/11 – 02/12 | Entrevistas presenciais e defesa final | Defesa presencial com o professor | Pendente |
 
@@ -297,9 +297,9 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 |:------:|--------|-----------|-------------|
 | [ ] | Documentação | Documentar o funcionamento de escopos locais e destruição de variáveis | Rafael Laube |
 | [ ] | Documentação | Registrar guia de exceções de runtime no MkDocs | Paulo Nina |
-| [ ] | Documentação | Sincronizar as alterações da Sprint 14 no GitHub Pages | Rafael Laube & Paulo Nina |
-| [ ] | Exceções | Implementar emissão de mensagens amigáveis de runtime (ex.: divisão por zero) | Nicole Jovita |
-| [ ] | Escopo | Garantir destruição correta de variáveis locais ao sair de blocos `{}` e funções | Danielly Mendes |
+| [ ] | Documentação | Sincronizar o status da Sprint 14 no GitHub Pages e conferir o deploy (Issue #69) | Paulo Nina |
+| [x] | Exceções | Emitir diagnóstico de divisão ou resto por zero e retornar código 1 (PR #80) | Danielly Mendes |
+| [x] | Escopo | Remover variáveis locais ao sair de blocos `{}` e preservar variáveis externas (PR #80) | Danielly Mendes |
 | [ ] | Refatoração/Gestão | Padronizar código-fonte, remover prints de depuração e organizar arquivos | Bernardo Campos |
 
 ---
