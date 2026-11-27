@@ -59,7 +59,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | 10 | 14/10 – 21/10 | Otimização na interpretação da AST | `optimizer.c`/`optimizer.h` · Constant folding | Concluída (DEV) |
 | 11 | 21/10 – 28/10 | Fluxo de controle e programas completos | `if`/`while` no interpretador · `printf()` · 10+ testes em C | Concluída (DEV) |
 | 12 | 28/10 – 04/11 | Consolidação e preparação do P2 | Formulário P2 · Slides/Roteiro · Testes Valgrind e Runtime | Em Andamento (DEV) |
-| 13 | 04/11 – 11/11 | Apresentação P2 e refinamento do backlog | Apresentação P2 · Lista de melhorias finais | Pendente |
+| 13 | 04/11 – 11/11 | Apresentação P2 e refinamento do backlog | Apresentação P2 · Lista de melhorias finais | Em andamento (priorização documentada) |
 | 14 | 11/11 – 18/11 | Polimento, escopos avançados e exceções | Exceções de runtime · Destruição de escopos | Pendente |
 | 15 | 18/11 – 25/11 | Code freeze e documentação final | Repositório congelado · Documentação completa | Pendente |
 | 16 | 25/11 – 02/12 | Entrevistas presenciais e defesa final | Defesa presencial com o professor | Pendente |
@@ -277,14 +277,16 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 - **Documentação (DOC):** Danielly Mendes (Veterana) & Rafael Laube (Novo)
 - **Desenvolvimento (DEV):** Nicole Jovita, Bernardo Campos, Paulo Nina
 
+**Reconciliação em 27/11/2026:** a priorização documental está concluída. A equipe decidiu não implementar funções, chamadas e `return` nesta entrega. `for`, `++` e `--` permanecem pendências do projeto; as limitações de tipos serão documentadas. Consulte as [decisões da equipe](status-projeto.md#113-decisoes-da-equipe). Os demais status serão revisados posteriormente.
+
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
 | [ ] | Documentação | Registrar em Problemas e Soluções os feedbacks da avaliação do P2 | Danielly Mendes |
-| [ ] | Documentação | Priorizar e listar melhorias finais para a entrega do projeto no MkDocs | Rafael Laube |
+| [x] | Documentação | [Priorizar e listar melhorias finais para a entrega do projeto no MkDocs](status-projeto.md#112-backlog-priorizado-e-criterios-de-conclusao) | Rafael Laube |
 | [ ] | Documentação | Atualizar a situação atual no GitHub Pages | Danielly Mendes & Rafael Laube |
 | [ ] | Correções | Resolver pendências de escopo com BNF e comandos apontados no P2 | Nicole Jovita |
 | [x] | Apresentação | Realizar a apresentação do P2 e coordenar backlog de ajustes | Bernardo Campos |
-| [ ] | Semântica/Ajustes | Implementar suporte a `for`, `++`/`--`, `return` e atribuição como expressão | Paulo Nina |
+| [ ] | Semântica/Ajustes | Implementar suporte a `for` e `++`/`--` (pendência confirmada do projeto); atribuição como expressão permanece melhoria posterior | Paulo Nina |
 
 ---
 

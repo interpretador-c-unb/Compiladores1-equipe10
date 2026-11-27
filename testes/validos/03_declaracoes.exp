@@ -1,33 +1,14 @@
+
+[SUCESSO] Análise sintática concluída com sucesso!
+
+--- Iniciando Análise Semântica ---
 [TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
 [TABELA DE SÍMBOLOS] Inserida variável 'y' (float) no Escopo 0
 [TABELA DE SÍMBOLOS] Inserida variável 'z' (int) no Escopo 1
+[SUCESSO] Análise semântica concluída sem erros!
 
-[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
-Declaration(x)
-  Num(10)
-Declaration(y)
-  Num(20.5)
-If
-  Cond:
-    BinaryExpr(<)
-      Var(x)
-      Var(y)
-  Then:
-    Block
-      Declaration(z)
-        Num(30)
-      Assignment(x)
-        BinaryExpr(+)
-          Var(x)
-          Var(z)
-While
-  Cond:
-    BinaryExpr(>)
-      Var(x)
-      Num(0)
-  Body:
-    Block
-      Assignment(x)
-        BinaryExpr(-)
-          Var(x)
-          Num(1)
+--- Executando o Programa (Runtime) ---
+
+--- Estado Final das Variáveis no Ambiente de Runtime ---
+y (int) = 20
+x (int) = 0

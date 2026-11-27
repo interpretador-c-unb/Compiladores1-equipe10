@@ -2,7 +2,9 @@
 
 Visão consolidada do interpretador da linguagem C: entregas por Sprint, resultados dos testes, estado do runtime, débitos técnicos, plano de quitação e registro de problemas.
 
-**Posição atual:** Sprint 12 · **Última atualização:** 25/11/2026 · **Próximo marco:** Code Freeze (Sprint 15)
+**Posição atual:** estabilização e integração das entregas finais · **Backlog revisado:** 27/11/2026 · **Marco pendente:** Code Freeze (previsto para 25/11)
+
+Esta revisão consolida a priorização da Sprint 13. Os resultados numéricos da seção 5 são o registro de 25/11, não uma nova execução da suíte. As entregas disponíveis em branches separadas estão identificadas na seção 11; sua existência não significa integração à `main` nem publicação no Pages.
 
 ---
 
@@ -37,7 +39,7 @@ Visão consolidada do interpretador da linguagem C: entregas por Sprint, resulta
 | 10 | Otimização por *Constant Folding* (`optimizer.c`) | ✅ Concluída |
 | 11 | Execução de `if`/`else` e `while`, comando `printf()` | ✅ Concluída |
 | 12 | Status consolidado, Valgrind e estabilização do runtime | 🔄 Em andamento |
-| 13 | Funções e chamadas, `for`, `++`/`--`, `return`, atribuição como expressão | ⏳ Planejada |
+| 13 | Apresentação P2 e priorização do backlog final | 🔄 Priorização documentada; publicação e ajustes pendentes |
 | 14 | Finalização do escopo e tratamento de exceções de runtime | ⏳ Planejada |
 | 15 | *Code Freeze* | ⏳ Planejada |
 
@@ -70,10 +72,10 @@ Abortaram com erro semântico:
 
 | Arquivo | Erro | Observação |
 |---|---|---|
-| `03_declaracoes.c` | Variável `z` usada sem declaração (linha 11) | `z` é declarada em bloco interno (escopo 1) e usada fora dele |
-| `12_escopo_blocos.c` | Variável `y` usada sem declaração (linha 8) | Mesmo padrão: uso fora do escopo em que foi declarada |
+| `03_declaracoes.c` | Variável `z` usada sem declaração (linha 11) | `z` é declarada e usada dentro do mesmo bloco; falso erro semântico na versão avaliada |
+| `12_escopo_blocos.c` | Variável `y` usada sem declaração (linha 8) | `y` é declarada e usada dentro do mesmo bloco; falso erro semântico na versão avaliada |
 
-Os dois casos indicam que a análise de escopo rejeita corretamente o uso fora do bloco. Os arquivos precisam ser revisados: ou o programa de teste é corrigido, ou o teste passa a ser tratado como inválido (como já ocorre em `15_variavel_fora_de_escopo.c`).
+Os arquivos `03` e `12` são válidos e devem permanecer nessa categoria. O problema é a perda dos símbolos locais antes da análise semântica. A correção está no commit `ab5ee01`, na branch `fix/sprint12-escopos`; após sua integração, repetir a suíte e atualizar os totais. O teste `15_variavel_fora_de_escopo.c` continua sendo o caso negativo de uso fora do bloco.
 
 ### 5.2 Testes inválidos (`testes/invalidos`)
 
@@ -110,6 +112,7 @@ Os dois casos indicam que a análise de escopo rejeita corretamente o uso fora d
 
 - Variáveis `float` são armazenadas e exibidas como `int` (ex.: `pi (float)` aparece como `pi (int) = 3`).
 - Variáveis `char` são tratadas como `string` (ex.: `c (string) = "a"`).
+- O tipo declarado não força conversão do valor armazenado no runtime; `float`/`char` não têm suporte completo equivalente ao de C. Literais decimais podem ser classificados como inteiros porque o avaliador consulta `name`, que o construtor do literal numérico não preenche. A decisão da equipe é documentar essas limitações nesta entrega.
 - Redeclaração e comentário não terminado não interrompem a execução (ver seção 5.2).
 - Validação de vazamentos de memória ainda não concluída (Issue #61).
 
@@ -128,12 +131,12 @@ Todo o desenvolvimento técnico previsto até a **Sprint 11** (`semantic.c`, `in
 | Execução completa da suíte sob o **Valgrind** (zero *memory leaks*) e estabilização do runtime | Issue #61 (Sprint 12) | 🔄 Em aberto |
 | Sincronização do status no GitHub Pages | Issues #60 e #62 | 🔄 Em andamento (esta página) |
 | Redeclaração e comentário não terminado devem abortar a execução | Testes inválidos 09 e 11 | 🔄 A tratar |
-| Reclassificar `03` e `12` (válidos) e `18` (inválido) | Resultados dos testes | 🔄 A decidir |
+| Manter `03` e `12` válidos; separar teste de aviso `18` dos erros obrigatórios | Resultados dos testes | 🔄 Ajustar suíte e expectativas |
 | Suporte real a `float` e `char` no runtime | Limitações do runtime | ⏳ Avaliar prioridade |
 
 ### Expansão de recursos (Sprint 13)
 
-Funções e chamadas, laço `for`, incremento e decremento (`++`/`--`), instrução `return` e atribuição como expressão.
+O planejamento original incluía funções, chamadas, `for`, `++`/`--`, `return` e atribuição como expressão. A equipe decidiu deixar funções, chamadas e `return` para implementação futura. `for`, `++` e `--` são pendências do projeto; as limitações de tipos devem ser documentadas, conforme a seção 11.
 
 ---
 
@@ -141,7 +144,7 @@ Funções e chamadas, laço `for`, incremento e decremento (`++`/`--`), instruç
 
 1. **Quitação documental (Sprints 11/12):** sincronização do status no GitHub Pages (Issues #60 e #62) e fechamento dos documentos técnicos de otimização e testes.
 2. **Estabilização de memória (Sprint 12):** testes sistemáticos com Valgrind e ajustes de gerenciamento de escopos locais.
-3. **Finalização do escopo (Sprints 13 e 14):** implementação de funções, `for`, `return` e tratamento de exceções de runtime antes do *Code Freeze* na Sprint 15.
+3. **Fechamento para entrega (Sprints 13 a 15):** integrar correções, validar memória e erros, consolidar documentação e repetir a regressão. Recursos novos ficam subordinados aos critérios da seção 11; não há nova data de congelamento aprovada nesta revisão.
 
 ---
 
@@ -183,37 +186,47 @@ Consolidação dos feedbacks recebidos na apresentação do P2 e priorização d
 |---|---|---|---|---|
 | F1 | Cobrir funções (definição e chamada) seria muito complexo para o tempo restante do projeto; sugerida a redução do escopo | Risco de escopo e cronograma | Gramática, parser, análise semântica e runtime | Alto |
  
-<!-- TODO: acrescentar aqui os demais feedbacks do P2 (F2, F3, ...), um por linha -->
- 
-### 11.2 Backlog priorizado
- 
-Esforço e urgência são estimativas da equipe e podem ser ajustados.
- 
-| Prioridade | Item | Origem | Impacto | Urgência | Esforço |
-|---|---|---|---|---|---|
-| Alta | Validação completa com Valgrind (zero *memory leaks*) | Issue #61 | Alto | Alta | Médio |
-| Alta | Abortar a execução em redeclaração e comentário não terminado | Testes inválidos 09 e 11 | Alto | Alta | Baixo |
-| Alta | Alinhar escopo com a BNF e reclassificar os testes `03`, `12` e `18` | Seção 10 e seção 5 | Alto | Alta | Baixo a médio |
-| Alta | Fechar a documentação técnica pendente | Issues #43 e #59 | Médio | Alta | Baixo |
-| Média | Laço `for` e incremento/decremento (`++`/`--`) | Sprint 13 original | Médio | Média | Médio |
-| Média | Tratamento de exceções de runtime | Sprint 14 original | Médio | Média | Médio |
-| Baixa | Suporte real a `float` e `char` no runtime (ou documentar como limitação) | Limitações do runtime | Médio | Baixa | Médio |
-| Baixa | Atribuição como expressão | Sprint 13 original | Baixo | Baixa | Médio |
-| Fora do escopo | Funções, chamadas e `return` | Feedback F1 | Alto | — | Alto |
- 
-### 11.3 Decisões e justificativas
- 
-| # | Decisão | Justificativa | Status |
+Somente F1 possui registro nesta página. Outros feedbacks devem ser acrescentados pela responsável pelo registro do P2 quando houver evidência; não foram presumidos nesta revisão.
+
+### 11.2 Backlog priorizado e critérios de conclusão
+
+Ordem de trabalho proposta para o fechamento: **validar as correções existentes → implementar as pendências do projeto → validar memória e regressão → fechar documentação**. Os responsáveis abaixo seguem as atribuições do planejamento; são responsáveis pelas frentes, não uma nova atribuição de autoria dos commits.
+
+| Prioridade | Item e responsável | Situação / dependência | Critério de conclusão |
 |---|---|---|---|
-| D1 | Retirar funções, chamadas e `return` do escopo da entrega final e registrá-los como trabalho futuro | Atende ao feedback F1. Funções exigem escopo por função, pilha de chamadas e mudanças simultâneas na gramática, no parser, na análise semântica e no runtime. O risco de desestabilizar o que já funciona é incompatível com o prazo até o *Code Freeze* | Proposta |
-| D2 | Priorizar a estabilização (Valgrind, rejeição correta de erros, escopo e BNF) antes de qualquer novo recurso | A defesa final avalia o que existe e funciona. Corrigir bugs conhecidos tem mais retorno que ampliar a linguagem | Proposta |
-| D3 | Manter `for` e `++`/`--` como melhorias opcionais, condicionadas à conclusão dos itens de prioridade alta | Reaproveitam estruturas já existentes (`while`, atribuição), com esforço e risco menores que funções | Proposta |
-| D4 | Decidir, até a Sprint 14, entre implementar `float`/`char` no runtime ou documentá-los como limitação conhecida | Evita investir esforço sem impacto claro na demonstração final | Pendente |
- 
-### 11.4 Impacto no cronograma
- 
-Com o escopo reduzido, as Sprints 13 a 15 ficam assim:
- 
-- **Sprint 13:** estabilização (itens de prioridade alta) e, se houver folga, `for` e `++`/`--`.
-- **Sprint 14:** tratamento de exceções de runtime, decisão sobre `float`/`char` e fechamento da documentação.
-- **Sprint 15:** *Code Freeze*.
+| Correção implementada | Escopos e redeclaração — Rafael | Corrigidos em `ab5ee01`, na branch `fix/sprint12-escopos`, com 34 verificações aprovadas | Preservar as regressões. A revisão do status de integração será feita posteriormente pelo responsável. |
+| P0 | Rejeição de erros léxicos — frente de correções de Nicole | Comentário não terminado ainda permite prosseguir na versão descrita na seção 5 | O teste `11_comentario_aberto.c` retorna falha e não alcança o runtime. |
+| P0 | Memória — Bernardo (Valgrind), Rafael (estado/escopos), Danielly (destruição local) | Issue #61; depende da integração das correções de runtime | Relatório reproduzível de Valgrind cobrindo blocos, laços e textos, sem acessos inválidos nem vazamentos atribuíveis ao interpretador. |
+| P0 | Suíte e regressão — Paulo; regressão final — Nicole | Saídas esperadas antigas e teste de aviso misturado a erros | Manter `03`/`12` válidos, classificar `18` como aviso e conferir código de saída, diagnóstico e resultado; não aceitar apenas mensagem de erro como prova de rejeição. |
+| P1 | Build limpo — Rafael | `c755e1d` disponível em `fix/sprint15-compilacao`; validado nesta branch | Integrar e repetir build sem artefatos anteriores, inclusive `make -j2 rebuild`, com GNU Make 4.3+. |
+| P1 | Documentação técnica — Paulo/Bernardo (#43), Bernardo (#59), Rafael (escopos) | Documentação de escopos em `1ecc018`, branch `docs/sprint14-escopos-destruicao`; conferir demais entregas antes de baixar pendências | Documentos coerentes com a versão integrada, exemplos verificáveis e limitações explícitas. |
+| P1 | Diagnósticos de runtime — Nicole; guia — Paulo | Validar implementação na versão final; não assumir que branches separadas já foram incorporadas | Divisão por zero e demais falhas cobertas produzem diagnóstico e resultado de execução definido, com testes. |
+| P1 | Publicação — Danielly/Rafael (Sprint 13), Paulo/Bernardo (final) | Depende do conteúdo integrado | Build do MkDocs aprovado e publicação da revisão confirmada no Pages. |
+| P1 | `for`, `++` e `--` — Paulo | Pendência do projeto; implementação confirmada pela equipe | Implementar parser, semântica e runtime; testar inicialização, condição, atualização, limites e interação com escopos. |
+| P1 | Documentar limitações de `float`/`char` | Decisão: documentar as limitações existentes, sem incluir ampliação de tipos nesta tarefa | Explicar representação, conversões ausentes e comportamento dos literais, conforme a seção 6. |
+| P3 | Atribuição como expressão — Paulo | Melhoria posterior, sem bloquear a estabilização | Avaliar somente após o fechamento das prioridades anteriores. |
+| Trabalho futuro | Funções, chamadas e `return` | Decisão da equipe: não implementar nesta entrega | Manter como evolução futura; não exigir esses recursos para concluir o projeto atual. |
+
+P0 reúne falhas que comprometem a confiabilidade. P1 reúne as pendências da entrega, incluindo `for`, `++` e `--`. P3 reúne melhorias posteriores. Essa classificação organiza o backlog; não atesta conclusão de tarefas de outros integrantes.
+
+### 11.3 Decisões da equipe
+
+Decisões confirmadas por Rafael nesta revisão:
+
+| ID | Decisão | Consequência |
+|---|---|---|
+| D1 | Não implementar funções nesta entrega; deixar funções, chamadas e `return` como implementação futura | Retirar esses recursos das pendências obrigatórias do projeto atual. |
+| D2 | Reconhecer a correção de escopo já implementada na Sprint 12 | Não listar novamente a implementação como trabalho por fazer; manter os testes de regressão. |
+| D3 | Implementar `for`, `++` e `--` | Registrar como pendência do projeto, não como melhoria opcional condicionada a nova aprovação. |
+| D4 | Documentar as limitações de `float` e `char` | Descrever o comportamento real sem prometer suporte completo aos tipos de C. |
+| D5 | Corrigir os testes `03_declaracoes` e `12_escopo_blocos` | Preservar os programas válidos e atualizar suas saídas esperadas para o pipeline com a correção da Sprint 12. |
+
+### 11.4 Checklist desta revisão
+
+- [x] Registrar funções como implementação futura por decisão da equipe.
+- [x] Reconhecer a correção de escopo da Sprint 12.
+- [x] Listar `for`, `++` e `--` como pendências do projeto.
+- [x] Documentar as limitações atuais dos tipos.
+- [x] Corrigir as saídas esperadas dos testes `03` e `12` e validá-las com a correção de escopo.
+
+A revisão dos status das demais entregas, da integração e da publicação será feita posteriormente pelo responsável, conforme solicitado. Esta atualização não encerra issues, não publica o Pages e não altera o estado das tarefas dos demais integrantes.
