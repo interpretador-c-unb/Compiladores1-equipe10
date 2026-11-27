@@ -29,6 +29,7 @@ typedef struct RuntimeVar {
 typedef struct {
     RuntimeVar *head;
     int current_scope;
+    int had_error;
 } Environment;
 
 Environment* create_environment(void);

@@ -77,10 +77,10 @@ int main(int argc, char **argv) {
     printf("[SUCESSO] Análise semântica concluída sem erros!\n");
 
     printf("\n--- Executando o Programa (Runtime) ---\n");
-    execute_program(ast_root);
+    int exec_status = execute_program(ast_root);
 
     free_ast(ast_root);
     free_symbol_table(sym_table);
 
-    return 0;
+    return exec_status;
 }
