@@ -29,6 +29,7 @@ typedef struct RuntimeVar {
 typedef struct {
     RuntimeVar *head;
     int current_scope;
+    int had_error;
 } Environment;
 
 Environment* create_environment(void);
@@ -37,6 +38,7 @@ void env_enter_scope(Environment *env);
 void env_exit_scope(Environment *env);
 
 void set_variable(Environment *env, const char *name, Value val);
+void declare_variable(Environment *env, const char *name, Value val);
 Value get_variable(Environment *env, const char *name);
 
 Value evaluate_ast(ASTNode *node, Environment *env);

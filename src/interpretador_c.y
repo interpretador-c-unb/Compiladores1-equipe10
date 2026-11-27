@@ -3,6 +3,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ast.h"
 #include "symbol_table.h"
 
@@ -24,7 +25,7 @@ SymbolTable *sym_table = NULL;
     ASTNode *astNode;
 }
 
-%token <numValue> NUM
+%token <idValue> NUM
 %token <stringValue> STRING
 %token <idValue> ID
 %token <charValue> CHARLIT
@@ -89,13 +90,13 @@ tipo:
 
 declaracao_variavel:
     tipo ID SEMI {
-        insert_symbol(sym_table, $2, $1);
         $$ = create_decl_node($2, NULL);
+        $$->string_value = strdup($1);
         free($2);
     }
     | tipo ID ASSIGN expressao SEMI {
-        insert_symbol(sym_table, $2, $1);
         $$ = create_decl_node($2, $4);
+        $$->string_value = strdup($1);
         free($2);
     }
     ;
@@ -151,14 +152,12 @@ comando_while:
     ;
 
 bloco:
-    LBRACE { enter_scope(sym_table); } RBRACE {
-        exit_scope(sym_table);
+    LBRACE RBRACE {
         $$ = create_node(NODE_BLOCK);
     }
-    | LBRACE { enter_scope(sym_table); } lista_comandos RBRACE {
-        exit_scope(sym_table);
+    | LBRACE lista_comandos RBRACE {
         ASTNode *block = create_node(NODE_BLOCK);
-        block->left = $3;
+        block->left = $2;
         $$ = block;
     }
     ;
@@ -177,7 +176,7 @@ expressao:
         $$ = create_var_node($1);
         free($1);
     }
-    | NUM { $$ = create_num_node($1); }
+    | NUM { $$ = create_num_node(strtod($1, NULL)); $$->name = $1; }
     | STRING {
         $$ = create_string_node($1);
         free($1);
