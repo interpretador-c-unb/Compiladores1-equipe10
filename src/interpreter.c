@@ -50,6 +50,29 @@ void free_environment(Environment *env) {
     free(env);
 }
 
+void declare_variable(Environment *env, const char *name, Value val) {
+    if (!env || !name) return;
+
+    // já existe no escopo atual -> apenas atualiza
+    for (RuntimeVar *v = env->head; v; v = v->next) {
+        if (v->scope_level == env->current_scope && strcmp(v->name, name) == 0) {
+            set_variable(env, name, val);
+            return;
+        }
+    }
+
+    // senão, cria sempre uma variável nova no escopo atual
+    RuntimeVar *new_var = (RuntimeVar *) malloc(sizeof(RuntimeVar));
+    new_var->name = strdup(name);
+    new_var->scope_level = env->current_scope;
+    new_var->value = val;
+    if (val.type == VAL_STRING && val.data.str_val) {
+        new_var->value.data.str_val = strdup(val.data.str_val);
+    }
+    new_var->next = env->head;
+    env->head = new_var;
+}
+
 void set_variable(Environment *env, const char *name, Value val) {
     if (!env || !name) return;
     
@@ -191,7 +214,9 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
                 init_val = evaluate_ast(node->left, env);
             }
             if (env->had_error) break;
-            set_variable(env, node->name, init_val);
+            declare_variable(env, node->name, init_val);
+            if (init_val.type == VAL_STRING && init_val.data.str_val)
+                free(init_val.data.str_val);
             break;
         }
 

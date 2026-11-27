@@ -62,6 +62,7 @@ int analyze_semantics(ASTNode *node, SymbolTable *table) {
             if (node->left) {
                 check_node_type(node->left, table, &errors);
             }
+            if (!insert_symbol(table, node->name, node->string_value)) errors++;
             break;
         }
 
@@ -114,7 +115,7 @@ int analyze_semantics(ASTNode *node, SymbolTable *table) {
             break;
     }
 
-    if (node->type != NODE_IF && node->next) {
+    if (node->type) {
         errors += analyze_semantics(node->next, table);
     }
 

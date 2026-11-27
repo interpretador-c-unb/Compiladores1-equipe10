@@ -1,10 +1,10 @@
-[TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
-[TABELA DE SÍMBOLOS] Inserida variável 'r' (int) no Escopo 0
-[TABELA DE SÍMBOLOS] Inserida variável 'z' (int) no Escopo 0
 
 [SUCESSO] Análise sintática concluída com sucesso!
 
 --- Iniciando Análise Semântica ---
+[TABELA DE SÍMBOLOS] Inserida variável 'x' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'r' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'z' (int) no Escopo 0
 [SUCESSO] Análise semântica concluída sem erros!
 
 --- Executando o Programa (Runtime) ---
