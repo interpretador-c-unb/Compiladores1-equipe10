@@ -47,8 +47,6 @@ A [tabela de símbolos](tabela-simbolos.md) guarda os tipos declarados e os esco
 
 ## 4. Execução da AST e ambiente de runtime — Sprint 9
 
-A execução direta da AST é uma entrega planejada. O código atual constrói e imprime a árvore, mas ainda não contém `interpreter.c`, `evaluate_expr()` ou `Environment`.
+A execução direta da AST está implementada em `interpreter.c`, com `evaluate_ast()` e `Environment`. A tabela de símbolos registra nome, tipo declarado e escopo durante a análise semântica; os valores de execução ficam em uma lista independente de variáveis de runtime.
 
-A tabela de símbolos existente registra nome, tipo declarado e escopo durante o parsing; ela não armazena valores de execução. O futuro ambiente de runtime precisa manter esses valores e permitir sua atualização durante as atribuições. A representação de valores, a organização dos ambientes e a propriedade da memória ainda precisam ser definidas com a equipe.
-
-A página [Interpretador e Environment](interpretador.md) descreve a estrutura atual dos nós, o ciclo de execução proposto, os diagramas de arquitetura e escopos e as decisões pendentes. O modelo conceitual apresentado nessa página está sujeito à revisão de Paulo Nina e à validação com a implementação; não é uma arquitetura já implementada.
+Declarações locais criam novas entradas; atribuições atualizam a entrada visível. A saída de um bloco libera suas variáveis e torna as externas novamente visíveis. A página [Interpretador, escopos e destruição](interpretador.md) documenta a implementação, a propriedade da memória e as limitações da Sprint 14, incluindo funções ainda não suportadas e temporários textuais que exigem validação de memória.

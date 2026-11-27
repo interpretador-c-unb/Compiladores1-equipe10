@@ -295,7 +295,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar o funcionamento de escopos locais e destruição de variáveis | Rafael Laube |
+| [x] | Documentação | [Documentar o funcionamento de escopos locais e destruição de variáveis](interpretador.md), incluindo limitações atuais | Rafael Laube |
 | [ ] | Documentação | Registrar guia de exceções de runtime no MkDocs | Paulo Nina |
 | [ ] | Documentação | Sincronizar as alterações da Sprint 14 no GitHub Pages | Rafael Laube & Paulo Nina |
 | [ ] | Exceções | Implementar emissão de mensagens amigáveis de runtime (ex.: divisão por zero) | Nicole Jovita |

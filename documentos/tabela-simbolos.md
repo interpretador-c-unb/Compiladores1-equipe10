@@ -102,14 +102,14 @@ O ponteiro retornado por `lookup_symbol()` pertence à tabela e vale enquanto a 
 
 O lexer reconhece identificadores e produz o token `ID`. O driver cria a tabela antes de chamar `yyparse()` e a libera ao terminar.
 
-Ao reconhecer uma declaração como `int contador;`, a ação do Bison chama `insert_symbol()`. Nas referências e nos destinos de atribuição, o parser chama `lookup_symbol()` para verificar se o nome está visível. As regras de bloco chamam `enter_scope()` na abertura e `exit_scope()` no fechamento.
+Ao reconhecer uma declaração, o parser guarda nome, `declared_type` e inicializador na AST. Ele não insere nem remove símbolos. Depois do parsing, `analyze_semantics()` insere as declarações na ordem dos comandos, consulta nomes em referências e atribuições e abre/fecha os escopos ao visitar `NODE_BLOCK`. Assim, os símbolos locais permanecem disponíveis até o fim da análise de seu bloco.
 
 ## 8. Diagnósticos
 
-Uma consulta sem resultado emite um aviso no parser. Uma redeclaração no mesmo nível emite um erro em `insert_symbol()`.
+Uma consulta sem resultado gera erro na análise semântica. Uma redeclaração no mesmo nível emite erro em `insert_symbol()` e seu retorno é contado por `analyze_semantics()`. Ambos impedem a execução, com código de saída `1`.
 
 ```text
-[AVISO SEMÂNTICO] Variável 'total' usada sem declaração na linha 4
+[ERRO SEMÂNTICO] Variável 'total' usada sem declaração na linha 4
 [ERRO SEMÂNTICO] Variável 'total' já declarada no escopo 0
 ```
 
@@ -121,4 +121,4 @@ A representação de parâmetros e assinaturas depende da expansão da gramátic
 
 ## 10. Relação com as próximas etapas
 
-A análise semântica pode usar os metadados de tipo e escopo das declarações. Os valores durante a execução ficam a cargo do [ambiente de runtime planejado](interpretador.md).
+A análise semântica usa os metadados de tipo e escopo das declarações. Os valores durante a execução ficam no [ambiente de runtime](interpretador.md), que mantém seu próprio controle de escopos e destruição.
