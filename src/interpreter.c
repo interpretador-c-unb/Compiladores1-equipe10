@@ -229,9 +229,28 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
 
         case NODE_BINARY_EXPR: {
             Value left = evaluate_ast(node->left, env);
+            if (env->had_error) break;
+
+            if (strcmp(node->name, "&&") == 0 || strcmp(node->name, "||") == 0) {
+                int is_and = (node->name[0] == '&');
+                int l_true = is_truthy(left);
+                if (left.type == VAL_STRING && left.data.str_val) free(left.data.str_val);
+
+                result.type = VAL_INT;
+                if (is_and && !l_true) { result.data.int_val = 0; break; }
+                if (!is_and && l_true) { result.data.int_val = 1; break; }
+
+                Value right = evaluate_ast(node->right, env);
+                if (env->had_error) { result.type = VAL_VOID; break; }
+                result.data.int_val = is_truthy(right) ? 1 : 0;
+                if (right.type == VAL_STRING && right.data.str_val) free(right.data.str_val);
+                break;
+            }
+
             Value right = evaluate_ast(node->right, env);
 
             if (env->had_error) break;
+            
             if (strcmp(node->name, "/") == 0 || strcmp(node->name, "%") == 0) {
                 int divisor_zero = 0;
                 if (right.type == VAL_FLOAT) divisor_zero = (right.data.float_val == 0.0);
@@ -240,7 +259,7 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
                 if (divisor_zero) {
                     fprintf(stderr, "[ERRO RUNTIME] Divisão por zero (operador '%s')\n", node->name);
                     env->had_error = 1;
-                    break;  /* sai do case com result.type = VAL_VOID */
+                    break;  // sai do case com result.type = VAL_VOID
                 }
             }
             if (left.type == VAL_FLOAT || right.type == VAL_FLOAT) {
