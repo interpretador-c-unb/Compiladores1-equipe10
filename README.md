@@ -45,18 +45,19 @@ A documentação detalhada exigida para o projeto encontra-se organizada na past
 ## Como Compilar e Executar
 
 !!! note "Pré-requisitos"
-    Certifique-se de ter os utilitários `gcc`, `flex`, `bison` e `make` instalados no seu ambiente.
+    Certifique-se de ter os utilitários `gcc`, `flex`, `bison` e GNU Make 4.3 ou superior instalados no seu ambiente.
 
 ```bash
 # 1. Clonar o repositório
-git clone [https://github.com/Danielly-Mendes/Compiladores1-equipe10.git](https://github.com/Danielly-Mendes/Compiladores1-equipe10.git)
+git clone https://github.com/Danielly-Mendes/Compiladores1-equipe10.git
 cd Compiladores1-equipe10
 
 # 2. Compilar o projeto
 make
 
 # 3. Executar um programa de teste
-./interpreter testes/exemplo.c
+./interpreter testes/validos/exemplo.c
 
 # 4. Limpar arquivos de compilação
 make clean
+```

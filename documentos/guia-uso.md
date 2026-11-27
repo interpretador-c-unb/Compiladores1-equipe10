@@ -4,19 +4,19 @@ O driver `src/main.c` recebe um arquivo-fonte, aciona a análise léxica e sint�
 
 ## Compilação
 
-É necessário ter GCC, Flex, Bison e Make instalados. Execute os comandos abaixo na raiz do repositório:
+É necessário ter GCC, Flex, Bison e GNU Make 4.3 ou superior instalados. Execute os comandos abaixo na raiz do repositório:
 
 ```bash
-make -C src
+make
 ```
 
-O Bison gera o parser e seu cabeçalho, o Flex gera o scanner e o GCC compila esses arquivos junto com `main.c`, `ast.c` e `symbol_table.c`. O executável resultante é `./interpreter`, na raiz do projeto.
+O Makefile da raiz delega a compilação ao de `src/`. O Bison gera o parser e seu cabeçalho, o Flex gera o scanner e o GCC compila esses arquivos junto com o driver, a AST, a tabela de símbolos, a análise semântica, o interpretador e o otimizador. O executável resultante é `./interpreter`, na raiz do projeto.
 
-Use `make -C src`: o `Makefile` da raiz atualmente procura os fontes no diretório errado. Para uma compilação limpa:
+Os comandos `make` e `make -C src` produzem o mesmo executável. Para uma compilação limpa pela raiz:
 
 ```bash
-make -C src clean
-make -C src
+make clean
+make
 ```
 
 ## Execução e argumentos

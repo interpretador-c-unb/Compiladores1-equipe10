@@ -316,7 +316,7 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 | [ ] | Documentação | Realizar o deploy final e congelar a versão do GitHub Pages | Paulo Nina & Bernardo Campos |
 | [ ] | Code Freeze | Executar bateria final de testes de regressão e congelar o código-fonte | Nicole Jovita |
 | [ ] | Entrega | Verificar permissões do repositório e gerar arquivo `.zip` se necessário | Danielly Mendes |
-| [ ] | Build | Validar compilação limpa do `Makefile` em ambiente zerado | Rafael Laube |
+| [x] | Build | Validar compilação limpa do `Makefile` em ambiente zerado (cópia sem artefatos gerados, ferramentas já instaladas) | Rafael Laube |
 
 ---
 
