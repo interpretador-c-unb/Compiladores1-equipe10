@@ -15,16 +15,14 @@ COMPILADORES1-EQUIPE10/
 │   ├── analisador-lexico.md
 │   ├── analisador-sintatico.md
 │   ├── analise-semantica.md
-│   ├── debitos-tecnicos.md
 │   ├── decisoes-tecnicas.md
 │   ├── gramatica-bnf.md
 │   ├── guia-uso.md
 │   ├── index.md
 │   ├── interpretador.md
 │   ├── planejamento-sprints.md
-│   ├── plano-pos-p1.md
-│   ├── problemas-e-solucoes.md
 │   ├── tabela-simbolos.md
+|   ├── status-projeto.md
 │   └── scripts/
 │       ├── header.tex
 │       └── mdtopdf.sh
