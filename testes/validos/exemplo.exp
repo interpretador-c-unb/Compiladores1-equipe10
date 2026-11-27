@@ -1,14 +1,17 @@
+
+[SUCESSO] Análise sintática concluída com sucesso!
+
+--- Iniciando Análise Semântica ---
 [TABELA DE SÍMBOLOS] Inserida variável 'carro' (char) no Escopo 0
 [TABELA DE SÍMBOLOS] Inserida variável 'moto' (char) no Escopo 0
 [TABELA DE SÍMBOLOS] Inserida variável 'salario' (int) no Escopo 0
 [TABELA DE SÍMBOLOS] Inserida variável 'pi' (float) no Escopo 0
+[SUCESSO] Análise semântica concluída sem erros!
 
-[SUCESSO] Análise sintática e construção da AST/Tabela concluídas com sucesso!
-Declaration(carro)
-  String("maclarem")
-Declaration(moto)
-  String("BMW")
-Declaration(salario)
-  Num(100000)
-Declaration(pi)
-  Num(3.14)
+--- Executando o Programa (Runtime) ---
+
+--- Estado Final das Variáveis no Ambiente de Runtime ---
+pi (float) = 3.14
+salario (int) = 100000
+moto (string) = "BMW"
+carro (string) = "maclarem"
