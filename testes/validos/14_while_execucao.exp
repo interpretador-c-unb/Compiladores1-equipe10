@@ -1,11 +1,11 @@
-[TABELA DE SÍMBOLOS] Inserida variável 'n' (int) no Escopo 0
-[TABELA DE SÍMBOLOS] Inserida variável 'cont' (int) no Escopo 0
-[TABELA DE SÍMBOLOS] Inserida variável 'i' (int) no Escopo 0
-[TABELA DE SÍMBOLOS] Inserida variável 'j' (int) no Escopo 0
 
 [SUCESSO] Análise sintática concluída com sucesso!
 
 --- Iniciando Análise Semântica ---
+[TABELA DE SÍMBOLOS] Inserida variável 'n' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'cont' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'i' (int) no Escopo 0
+[TABELA DE SÍMBOLOS] Inserida variável 'j' (int) no Escopo 0
 [SUCESSO] Análise semântica concluída sem erros!
 
 --- Executando o Programa (Runtime) ---

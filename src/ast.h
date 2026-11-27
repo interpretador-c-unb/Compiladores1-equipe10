@@ -18,6 +18,7 @@ typedef enum {
 typedef struct ASTNode {
     NodeType type;
     char *name;               /* Nome de variável ou operador */
+    char *declared_type;      /* Tipo preservado para reconstruir os escopos */
     double num_value;         /* Valor para literais numéricos */
     char *string_value;       /* Valor para literais de texto */
     struct ASTNode *left;     /* Filho esquerdo / Condição */
@@ -31,7 +32,7 @@ ASTNode *create_num_node(double value);
 ASTNode *create_string_node(const char *value);
 ASTNode *create_var_node(const char *name);
 ASTNode *create_binary_node(const char *op, ASTNode *left, ASTNode *right);
-ASTNode *create_decl_node(const char *name, ASTNode *init_expr);
+ASTNode *create_decl_node(const char *name, const char *declared_type, ASTNode *init_expr);
 ASTNode *create_assign_node(const char *name, ASTNode *expr);
 ASTNode *create_if_node(ASTNode *cond, ASTNode *then_block, ASTNode *else_block);
 ASTNode *create_while_node(ASTNode *cond, ASTNode *body);

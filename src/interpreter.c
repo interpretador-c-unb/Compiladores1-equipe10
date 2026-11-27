@@ -66,7 +66,10 @@ void set_variable(Environment *env, const char *name, Value val) {
         }
         var = var->next;
     }
+}
 
+/* Declarações sempre criam uma entrada no escopo atual. */
+static void declare_variable(Environment *env, const char *name, Value val) {
     RuntimeVar *new_var = (RuntimeVar *) malloc(sizeof(RuntimeVar));
     new_var->name = strdup(name);
     new_var->scope_level = env->current_scope;
@@ -187,7 +190,8 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
             if (node->left) {
                 init_val = evaluate_ast(node->left, env);
             }
-            set_variable(env, node->name, init_val);
+            declare_variable(env, node->name, init_val);
+            if (init_val.type == VAL_STRING) free(init_val.data.str_val);
             break;
         }
 

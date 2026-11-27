@@ -89,13 +89,11 @@ tipo:
 
 declaracao_variavel:
     tipo ID SEMI {
-        insert_symbol(sym_table, $2, $1);
-        $$ = create_decl_node($2, NULL);
+        $$ = create_decl_node($2, $1, NULL);
         free($2);
     }
     | tipo ID ASSIGN expressao SEMI {
-        insert_symbol(sym_table, $2, $1);
-        $$ = create_decl_node($2, $4);
+        $$ = create_decl_node($2, $1, $4);
         free($2);
     }
     ;
@@ -151,14 +149,12 @@ comando_while:
     ;
 
 bloco:
-    LBRACE { enter_scope(sym_table); } RBRACE {
-        exit_scope(sym_table);
+    LBRACE RBRACE {
         $$ = create_node(NODE_BLOCK);
     }
-    | LBRACE { enter_scope(sym_table); } lista_comandos RBRACE {
-        exit_scope(sym_table);
+    | LBRACE lista_comandos RBRACE {
         ASTNode *block = create_node(NODE_BLOCK);
-        block->left = $3;
+        block->left = $2;
         $$ = block;
     }
     ;

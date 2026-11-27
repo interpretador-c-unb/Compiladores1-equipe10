@@ -39,8 +39,9 @@ ASTNode *create_binary_node(const char *op, ASTNode *left, ASTNode *right) {
     return node;
 }
 
-ASTNode *create_decl_node(const char *name, ASTNode *init_expr) {
+ASTNode *create_decl_node(const char *name, const char *declared_type, ASTNode *init_expr) {
     ASTNode *node = create_node(NODE_DECLARATION);
+    node->declared_type = strdup(declared_type);
     if (name) node->name = strdup(name);
     node->left = init_expr;
     return node;
@@ -88,6 +89,7 @@ ASTNode *append_node(ASTNode *list, ASTNode *node) {
 void free_ast(ASTNode *node) {
     if (!node) return;
     if (node->name) free(node->name);
+    free(node->declared_type);
     if (node->string_value) free(node->string_value);
     if (node->left) free_ast(node->left);
     if (node->right) free_ast(node->right);

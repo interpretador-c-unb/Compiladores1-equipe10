@@ -59,6 +59,7 @@ int analyze_semantics(ASTNode *node, SymbolTable *table) {
 
     switch (node->type) {
         case NODE_DECLARATION: {
+            if (!insert_symbol(table, node->name, node->declared_type)) errors++;
             if (node->left) {
                 check_node_type(node->left, table, &errors);
             }
@@ -108,13 +109,18 @@ int analyze_semantics(ASTNode *node, SymbolTable *table) {
                 check_node_type(arg, table, &errors);
             break;
 
+        case NODE_VAR_REF:
+        case NODE_BINARY_EXPR:
+            check_node_type(node, table, &errors);
+            break;
+
         default:
             if (node->left) errors += analyze_semantics(node->left, table);
             if (node->right) errors += analyze_semantics(node->right, table);
             break;
     }
 
-    if (node->type != NODE_IF && node->next) {
+    if (node->next) {
         errors += analyze_semantics(node->next, table);
     }
 
