@@ -22,8 +22,9 @@ Durante a apresentação do Ponto de Controle 2 (P2), foi apontado o risco de pr
 
 Os comportamentos abaixo permanecem na versão congelada do interpretador e foram documentados para transparência técnica:
 
-### 2.1 Tipos no runtime e análise semântica
-- **Tipo dinâmico no ambiente de execução:** o valor armazenado em `Environment` acompanha o resultado da última atribuição ou literal avaliado, podendo divergir do tipo declarado originalmente na tabela de símbolos (registrado em `string_value`).
+### 2.1 Tipos no runtime, otimizador e análise semântica
+- **Tipo dinâmico no ambiente de execução:** o valor armazenado em `Environment` acompanha o resultado da última atribuição ou literal avaliado, podendo divergir do tipo declarado originalmente na tabela de símbolos (`data_type`, preservado na AST em `string_value`).
+- **Divisão inteira no otimizador (`--optimize`):** `optimize_ast()` em `src/optimizer.c` avalia `/` em ponto flutuante (`double`) mesmo quando ambos os operandos são inteiros, enquanto o runtime sem `--optimize` executa divisão inteira. Por isso, uma expressão como `3 / 2 * 2` resulta em `2` sem `--optimize` e `3` com `--optimize`.
 - **Tratamento de `char`:** literais de caractere (`CHARLIT`) são convertidos em `NODE_STRING_LITERAL` pelo parser e armazenados como `VAL_STRING` no runtime (exibidos como `string` no estado final).
 - **Cobertura parcial de checagem semântica:** a análise verifica uso de variável não declarada, atribuição a não declarada, redeclaração no mesmo escopo e perda de precisão `float` → `int` em atribuições (`SEM-04`), mas não valida tipos em inicializadores de declaração, condições de `if`/`while` nem regras específicas para `char` e `void`.
 
