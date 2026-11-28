@@ -29,8 +29,8 @@ all: $(TARGET)
 $(TARGET): $(PARSER_C) $(LEXER_C) $(MAIN_C) $(AST_C) $(SYMBOL_C) $(SEMANTIC_C) $(INTERPRETER_C) $(OPTIMIZER_C)
 	$(CC) $(CFLAGS) -o $@ $(MAIN_C) $(AST_C) $(SYMBOL_C) $(SEMANTIC_C) $(INTERPRETER_C) $(OPTIMIZER_C) $(PARSER_C) $(LEXER_C) $(LDLIBS)
 
-# -d gera o cabeçalho compartilhado pelo lexer e pelo parser
-$(PARSER_C) $(PARSER_H): $(PARSER)
+# Alvos agrupados (GNU Make 4.3+): uma chamada gera parser e cabeçalho.
+$(PARSER_C) $(PARSER_H) &: $(PARSER)
 	$(BISON) -d -o $(PARSER_C) $(PARSER)
 
 # O lexer inclui o cabeçalho gerado pelo Bison
