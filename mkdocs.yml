@@ -30,6 +30,7 @@ nav:
   - Tabela de Símbolos: tabela-simbolos.md
   - Análise Semântica: analise-semantica.md
   - Interpretador e Runtime: interpretador.md
+  - Escopo e Limitações: escopo-e-limitacoes.md
   - Validação da Sprint 13: validacao-p2-sprint13.md
   - Relatório Valgrind: relatorio-valgrind.md
   - Problemas e Soluções: problemas-e-solucoes.md
