@@ -1,14 +1,14 @@
 # Análise Semântica
 
-**Estado verificado em 04/11/2026.** Esta página descreve o comportamento real do analisador (`src/semantic.c`), levantado a partir do código-fonte e de execuções de teste. Quando o comportamento atual diverge do esperado, ele aparece em [Limitações conhecidas](#limitacoes-conhecidas) e não é apresentado como regra da linguagem.
+**Escopos e diagnósticos atualizados em 27/11/2026; demais observações de tipos registradas em 04/11/2026.** Esta página descreve o comportamento real do analisador (`src/semantic.c`), levantado a partir do código-fonte e de execuções de teste. Quando o comportamento atual diverge do esperado, ele aparece em [Limitações conhecidas](#limitacoes-conhecidas) e não é apresentado como regra da linguagem.
 
 ## Visão geral
 
 A análise semântica roda **depois** do parsing, em uma passada própria sobre a AST. O fluxo do programa principal (`src/main.c`) é:
 
-1. `yyparse()` faz a análise sintática, monta a AST e insere as declarações na tabela de símbolos. A detecção de **redeclaração** acontece nesta etapa.
+1. `yyparse()` faz a análise sintática e monta a AST, preservando o tipo declarado em `string_value`.
 2. Opcionalmente, `--optimize` aplica constant folding e `--print-ast` imprime a árvore.
-3. `analyze_semantics()` percorre a AST, infere o tipo das expressões e verifica declaração de variáveis e atribuições.
+3. `analyze_semantics()` percorre a AST, insere declarações na tabela, controla escopos por bloco, detecta redeclarações e verifica referências e atribuições.
 4. Se houver erros contados, o programa imprime `[FALHA] Execução abortada devido a N erro(s) semântico(s).` e termina com código `1`. Caso contrário, executa o programa.
 
 Todos os diagnósticos semânticos são escritos em `stderr`.
@@ -92,7 +92,7 @@ O programa não imprime códigos numéricos. Os identificadores `SEM-xx` abaixo 
 | --- | --- | --- | --- | --- | --- |
 | SEM-01 | Erro | `[ERRO SEMÂNTICO] Variável 'x' usada sem declaração na linha N.` | Um nome usado em expressão ou condição não está na tabela de símbolos visível. | Sim, código `1` | `testes/invalidos/08_var_nao_declarada.c`, `15_variavel_fora_de_escopo.c` |
 | SEM-02 | Erro | `[ERRO SEMÂNTICO] Atribuição a variável não declarada 'x' na linha N.` | O alvo de uma atribuição não está na tabela. | Sim, código `1` | `testes/invalidos/17_atribuicao_nao_declarada.c` |
-| SEM-03 | Erro | `[ERRO SEMÂNTICO] Variável 'x' já declarada no escopo N` | O mesmo nome é declarado duas vezes no mesmo escopo. | **Não** (ver limitações) | `testes/invalidos/09_redeclaracao.c` |
+| SEM-03 | Erro | `[ERRO SEMÂNTICO] Variável 'x' já declarada no escopo N` | O mesmo nome é declarado duas vezes no mesmo escopo. | Sim, código `1` | `testes/invalidos/09_redeclaracao.c` |
 | SEM-04 | Aviso | `[AVISO SEMÂNTICO] Atribuição de 'float' para variável 'int x' na linha N (pode haver perda de precisão).` | Atribuição de expressão `float` a variável `int`. | Não | `testes/invalidos/18_aviso_float_para_int.c` |
 
 Exemplos:
@@ -128,25 +128,24 @@ Para corrigir SEM-01 e SEM-02, declare a variável em um escopo visível antes d
 
 Os itens abaixo foram confirmados por execução. Descrevem o comportamento **atual**, não o desejado.
 
-1. **Redeclaração não derruba o programa (SEM-03).** A mensagem é impressa durante o parsing, mas não entra na contagem de erros semânticos. O programa imprime `[SUCESSO] Análise semântica concluída sem erros!`, executa e retorna `0`.
-2. **Comandos logo após um `if` não são analisados.** Em `if (a > 0) { a = 2; }` seguido de `z = 5;`, nenhum erro é emitido para `z`, e o código de saída é `0`. A causa provável é a exceção `node->type != NODE_IF` ao percorrer `next` em `analyze_semantics`, herdada da época em que o `else` era guardado em `next`.
-3. **Variáveis declaradas dentro de blocos geram erro falso.** Em `testes/validos/03_declaracoes.c` e `12_escopo_blocos.c`, o uso de variáveis declaradas dentro de `{ }` produz `usada sem declaração` e o programa retorna `1`, embora o código seja válido. A causa provável é que as declarações entram na tabela durante o parsing e os escopos dos blocos já foram descartados quando a análise percorre a AST.
-4. **Número da linha incorreto.** A linha vem de `yylineno`, lido depois do parsing, e por isso aponta para o fim do arquivo, e não para o comando com problema. Exemplo: um erro na linha 4 de um arquivo de 5 linhas foi reportado na linha 6. As mensagens também não informam a coluna.
-5. **Literais decimais são tratados como `int`.** O tipo de um literal numérico é decidido por `node->name`, que o nó numérico não preenche. Em `int a = 1; a = 2.5;` não há aviso SEM-04, e expressões com literal decimal têm resultado `int`.
-6. **Sem checagem de tipos em declarações com valor inicial, condições, `char`, `string` e `void`**, conforme descrito nas seções anteriores.
-7. **Estado final da execução.** No teste `float b = 2.5; ... b = a;` com `a` inteiro, o estado final do runtime mostrou `b` como `int`. Isso ocorre na execução, fora da análise semântica, e foi registrado aqui só como observação.
+1. **Número da linha incorreto.** A linha vem de `yylineno`, lido depois do parsing, e por isso aponta para o fim do arquivo, e não para o comando com problema. Exemplo: um erro na linha 4 de um arquivo de 5 linhas foi reportado na linha 6. As mensagens também não informam a coluna.
+2. **Literais decimais são tratados como `int`.** O tipo de um literal numérico é decidido por `node->name`, que o nó numérico não preenche. Em `int a = 1; a = 2.5;` não há aviso SEM-04, e expressões com literal decimal têm resultado `int`.
+3. **Sem checagem de tipos em declarações com valor inicial, condições, `char`, `string` e `void`**, conforme descrito nas seções anteriores.
+4. **Estado final da execução.** No teste `float b = 2.5; ... b = a;` com `a` inteiro, o estado final do runtime mostrou `b` como `int`. Isso ocorre na execução, fora da análise semântica, e foi registrado aqui só como observação.
 
 ## Como conferir
 
 Na raiz do projeto:
 
 ```bash
-make rebuild
+make -C src rebuild
 ./interpreter testes/invalidos/08_var_nao_declarada.c; echo "código: $?"
 ./interpreter testes/invalidos/09_redeclaracao.c; echo "código: $?"
 ```
 
-O primeiro comando deve mostrar SEM-01 e código `1`; o segundo, SEM-03 e código `0` (ver limitação 1).
+O primeiro teste deve mostrar SEM-01 e código `1`; o segundo, SEM-03 e código `1`.
+
+As verificações de escopos locais e redeclaração também são cobertas pela suíte `bash testes/executar_testes.sh`. O ciclo de vida das variáveis e suas limitações estão em [Interpretador e ambiente de execução](interpretador.md).
 
 Para ver a árvore que a análise percorre, use `./interpreter --print-ast arquivo.c`.
 

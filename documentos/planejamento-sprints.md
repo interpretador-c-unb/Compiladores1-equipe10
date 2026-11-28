@@ -295,9 +295,9 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Documentar o funcionamento de escopos locais e destruição de variáveis | Rafael Laube |
-| [ ] | Documentação | Registrar guia de exceções de runtime no MkDocs | Paulo Nina |
-| [ ] | Documentação | Sincronizar o status da Sprint 14 no GitHub Pages e conferir o deploy (Issue #69) | Paulo Nina |
+| [x] | Documentação | [Documentar o funcionamento de escopos locais e destruição de variáveis](interpretador.md) | Rafael Laube |
+| [x] | Documentação | Registrar guia de exceções de runtime no MkDocs ([interpretador.md](interpretador.md)) | Paulo Nina |
+| [x] | Documentação | Sincronizar o status da Sprint 14 no GitHub Pages e conferir o deploy (Issue #69) | Paulo Nina |
 | [x] | Exceções | Emitir diagnóstico de divisão ou resto por zero e retornar código 1 (PR #80) | Danielly Mendes |
 | [x] | Escopo | Remover variáveis locais ao sair de blocos `{}` e preservar variáveis externas (PR #80) | Danielly Mendes |
 | [ ] | Refatoração/Gestão | Padronizar código-fonte, remover prints de depuração e organizar arquivos | Bernardo Campos |
@@ -311,12 +311,12 @@ Para garantir rastreabilidade, aprendizado contínuo e transferência de conheci
 
 | Status | Frente | Atividade | Responsável |
 |:------:|--------|-----------|-------------|
-| [ ] | Documentação | Consolidar a documentação técnica e validar exemplos na versão do Code Freeze (Issue #74) | Paulo Nina |
-| [ ] | Documentação | Finalizar o tutorial de instalação, compilação e uso no `README.md` (Issue #74) | Paulo Nina (responsável), Bernardo Campos (revisor) |
+| [x] | Documentação | Consolidar a documentação técnica e validar exemplos na versão do Code Freeze (Issue #74) | Paulo Nina |
+| [x] | Documentação | Finalizar o tutorial de instalação, compilação e uso no `README.md` (Issue #74) | Paulo Nina (responsável), Bernardo Campos (revisor) |
 | [ ] | Documentação | Realizar o deploy final e congelar a versão do GitHub Pages | Paulo Nina & Bernardo Campos |
 | [ ] | Code Freeze | Executar bateria final de testes de regressão e congelar o código-fonte | Nicole Jovita |
 | [ ] | Entrega | Verificar permissões do repositório e gerar arquivo `.zip` se necessário | Danielly Mendes |
-| [ ] | Build | Validar compilação limpa do `Makefile` em ambiente zerado | Rafael Laube |
+| [x] | Build | Validar compilação limpa do `Makefile` em ambiente zerado (cópia sem artefatos gerados, ferramentas já instaladas) | Rafael Laube |
 
 ---
 
