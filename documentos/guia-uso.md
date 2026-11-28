@@ -10,8 +10,12 @@ Em Ubuntu ou WSL:
 
 ```bash
 sudo apt update
-sudo apt install build-essential flex bison make python3 python3-pip valgrind
-python3 -m pip install mkdocs mkdocs-material
+sudo apt install build-essential flex bison make
+# Para gerar a documentação, instale também:
+sudo apt install python3 python3-venv
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install mkdocs mkdocs-material
 ```
 
 ## Build
@@ -19,7 +23,7 @@ python3 -m pip install mkdocs mkdocs-material
 Execute a partir da raiz:
 
 ```bash
-make -C src rebuild
+make -C src clean && make -C src
 ```
 
 O Makefile remove os artefatos anteriores, executa Bison e Flex e compila todos os módulos do interpretador. O executável é criado na raiz como `./interpreter`.

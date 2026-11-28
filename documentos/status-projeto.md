@@ -2,7 +2,7 @@
 
 Visão consolidada do interpretador da linguagem C: entregas por Sprint, resultados dos testes, estado do runtime, débitos técnicos, plano de quitação e registro de problemas.
 
-**Posição atual:** Sprint 12 · **Última atualização:** 25/11/2026 · **Próximo marco:** Code Freeze (Sprint 15)
+**Posição atual:** Sprint 14 integrada · **Última atualização:** 27/11/2026 · **Próximo marco:** validação do Code Freeze (Sprint 15)
 
 ---
 
@@ -13,8 +13,8 @@ Visão consolidada do interpretador da linguagem C: entregas por Sprint, resulta
 | Pipeline (léxico → sintático → semântico → runtime) | ✅ Completo e integrado |
 | Otimizador (*Constant Folding*) | ✅ Implementado (Sprint 10) |
 | Fluxo de controle (`if`/`else`, `while`) e `printf()` | ✅ Implementado (Sprint 11) |
-| Suíte de testes válidos | ⚠️ 19 de 21 executam até o fim |
-| Suíte de testes inválidos | ⚠️ 17 de 20 são rejeitados como esperado |
+| Suíte de testes válidos | ✅ 25 de 25 passam pelos critérios da suíte |
+| Suíte de testes inválidos | ⚠️ 26 de 26 passam pelos critérios da suíte, mas 2 retornam 0 |
 | Documentação técnica | 🔄 Em fechamento (Issues #43 e #59) |
 | Validação de memória (Valgrind) | 🔄 Pendente (Issue #61) |
 
@@ -31,14 +31,14 @@ Visão consolidada do interpretador da linguagem C: entregas por Sprint, resulta
 
 | Sprint | Entrega principal | Situação |
 |---|---|---|
-| 1 a 7 | <!-- TODO: preencher a partir de planejamento-sprints.md --> | |
+| 1 a 7 | Ambiente, léxico, parser, AST, tabela de símbolos e entrega do P1 | ✅ Concluídas |
 | 8 | Análise semântica (`semantic.c`): tipos, variáveis não declaradas e redeclaradas | ✅ Concluída |
 | 9 | Interpretador e ambiente de runtime (`interpreter.c`, `Environment`) | ✅ Concluída |
 | 10 | Otimização por *Constant Folding* (`optimizer.c`) | ✅ Concluída |
 | 11 | Execução de `if`/`else` e `while`, comando `printf()` | ✅ Concluída |
 | 12 | Status consolidado, Valgrind e estabilização do runtime | 🔄 Em andamento |
 | 13 | Funções e chamadas, `for`, `++`/`--`, `return`, atribuição como expressão | ⏳ Planejada |
-| 14 | Finalização do escopo e tratamento de exceções de runtime | ⏳ Planejada |
+| 14 | Escopos locais, curto-circuito e divisão por zero | ✅ Código integrado pelo PR #80 |
 | 15 | *Code Freeze* | ⏳ Planejada |
 
 Detalhamento por Sprint: [Planejamento das Sprints](planejamento-sprints.md).
@@ -60,39 +60,15 @@ Detalhamento por Sprint: [Planejamento das Sprints](planejamento-sprints.md).
 
 ## 5. Resultados dos testes
 
-### 5.1 Testes válidos (`testes/validos`)
+Validação na `main` após o PR #80 (`f18edb5`), com compilação limpa e comparação das saídas `.exp` quando presentes.
 
-| Total | Executaram até o fim | Abortaram |
-|---|---|---|
-| 21 | 19 | 2 |
+| Grupo | Resultado |
+|---|---|
+| Válidos | 25 de 25 sem erro |
+| Inválidos | 26 de 26 pelos critérios da suíte. 24 retornaram código 1 e 2 retornaram 0 com diagnóstico |
+| Léxicos | 0 de 30 na suíte de tokens. O driver não oferece `--tokens` |
 
-Abortaram com erro semântico:
-
-| Arquivo | Erro | Observação |
-|---|---|---|
-| `03_declaracoes.c` | Variável `z` usada sem declaração (linha 11) | `z` é declarada em bloco interno (escopo 1) e usada fora dele |
-| `12_escopo_blocos.c` | Variável `y` usada sem declaração (linha 8) | Mesmo padrão: uso fora do escopo em que foi declarada |
-
-Os dois casos indicam que a análise de escopo rejeita corretamente o uso fora do bloco. Os arquivos precisam ser revisados: ou o programa de teste é corrigido, ou o teste passa a ser tratado como inválido (como já ocorre em `15_variavel_fora_de_escopo.c`).
-
-### 5.2 Testes inválidos (`testes/invalidos`)
-
-| Total | Rejeitados como esperado | Não rejeitados |
-|---|---|---|
-| 20 | 17 | 3 |
-
-**Rejeitados corretamente (17):**
-
-- Erros léxicos ou sintáticos (13): `01` a `07`, `10`, `12`, `13`, `14`, `16`, `19`.
-- Erros semânticos (4): `08_var_nao_declarada`, `15_variavel_fora_de_escopo`, `17_atribuicao_nao_declarada`, `erro_semantico_tipo`.
-
-**Não rejeitados (3):**
-
-| Arquivo | Comportamento atual | Esperado |
-|---|---|---|
-| `09_redeclaracao.c` | Emite "variável já declarada", mas a análise semântica conclui sem erros e o programa executa | Abortar com erro semântico |
-| `11_comentario_aberto.c` | Emite erro léxico de comentário não terminado, mas segue para análise e execução | Abortar com erro léxico |
-| `18_aviso_float_para_int.c` | Emite aviso de perda de precisão e executa | Coerente com um **aviso**, não um erro; o arquivo deveria ser reclassificado |
+O teste `11_comentario_aberto.c` ainda emite erro léxico e termina com código 0. O teste `18_aviso_float_para_int.c` emite um aviso, por isso o código 0 é esperado e o caso deve ser reclassificado. A suíte aceita diagnósticos em ambos os casos.
 
 ---
 
@@ -104,20 +80,22 @@ Os dois casos indicam que a análise de escopo rejeita corretamente o uso fora d
 - Avaliação de expressões, precedência e operadores.
 - `if`/`else`, `else if`, `while` e laços com `if` interno.
 - `printf()` com formatação e múltiplos argumentos.
-- Escopos locais por bloco.
+- Escopos locais por bloco, com sombreamento e remoção das variáveis locais ao sair.
+- Curto-circuito de `&&` e `||`. Divisão inteira, divisão de ponto flutuante e resto por zero geram erro de runtime e código de saída 1.
+- Redeclaração no mesmo escopo é rejeitada na análise semântica.
 
 **Limitações conhecidas:**
 
-- Variáveis `float` são armazenadas e exibidas como `int` (ex.: `pi (float)` aparece como `pi (int) = 3`).
+- Literais decimais são reconhecidos como `float`. O tipo exibido no runtime acompanha o valor armazenado e pode divergir do tipo declarado.
 - Variáveis `char` são tratadas como `string` (ex.: `c (string) = "a"`).
-- Redeclaração e comentário não terminado não interrompem a execução (ver seção 5.2).
+- Comentário não terminado ainda pode retornar sucesso (ver seção 5).
 - Validação de vazamentos de memória ainda não concluída (Issue #61).
 
 ---
 
 ## 7. Débitos técnicos e pendências
 
-Todo o desenvolvimento técnico previsto até a **Sprint 11** (`semantic.c`, `interpreter.c`, `optimizer.c`, execução de `if`/`while` e `printf()`) foi concluído e integrado ao repositório. Os entregáveis documentais do P2 (Formulário P2, slides e roteiro) também foram finalizados.
+A `main` inclui o pipeline apresentado no P2 e as correções da Sprint 14 para escopos locais, curto-circuito e operações com divisor zero. A validação de memória e a consolidação da documentação seguem pendentes.
 
 ### Pendências ativas
 
@@ -127,8 +105,8 @@ Todo o desenvolvimento técnico previsto até a **Sprint 11** (`semantic.c`, `in
 | Documentação da gestão de pilha e suíte de 10+ testes | Issue #59 (Sprint 11) | 🔄 Em aberto |
 | Execução completa da suíte sob o **Valgrind** (zero *memory leaks*) e estabilização do runtime | Issue #61 (Sprint 12) | 🔄 Em aberto |
 | Sincronização do status no GitHub Pages | Issues #60 e #62 | 🔄 Em andamento (esta página) |
-| Redeclaração e comentário não terminado devem abortar a execução | Testes inválidos 09 e 11 | 🔄 A tratar |
-| Reclassificar `03` e `12` (válidos) e `18` (inválido) | Resultados dos testes | 🔄 A decidir |
+| Propagar erro de comentário não terminado para o código de saída | Teste inválido 11 | 🔄 A tratar |
+| Reclassificar `18_aviso_float_para_int.c` | Resultados dos testes | 🔄 A decidir |
 | Suporte real a `float` e `char` no runtime | Limitações do runtime | ⏳ Avaliar prioridade |
 
 ### Expansão de recursos (Sprint 13)
@@ -141,7 +119,7 @@ Funções e chamadas, laço `for`, incremento e decremento (`++`/`--`), instruç
 
 1. **Quitação documental (Sprints 11/12):** sincronização do status no GitHub Pages (Issues #60 e #62) e fechamento dos documentos técnicos de otimização e testes.
 2. **Estabilização de memória (Sprint 12):** testes sistemáticos com Valgrind e ajustes de gerenciamento de escopos locais.
-3. **Finalização do escopo (Sprints 13 e 14):** implementação de funções, `for`, `return` e tratamento de exceções de runtime antes do *Code Freeze* na Sprint 15.
+3. **Fechamento (Sprints 14 e 15):** escopos locais e tratamento de divisão e resto por zero já estão integrados. Para o *Code Freeze*, restam a validação de memória, a revisão dos diagnósticos restantes e a documentação. Funções, chamadas e `return` ficam como trabalho futuro.
 
 ---
 
@@ -183,7 +161,6 @@ Consolidação dos feedbacks recebidos na apresentação do P2 e priorização d
 |---|---|---|---|---|
 | F1 | Cobrir funções (definição e chamada) seria muito complexo para o tempo restante do projeto; sugerida a redução do escopo | Risco de escopo e cronograma | Gramática, parser, análise semântica e runtime | Alto |
  
-<!-- TODO: acrescentar aqui os demais feedbacks do P2 (F2, F3, ...), um por linha -->
  
 ### 11.2 Backlog priorizado
  
@@ -192,11 +169,10 @@ Esforço e urgência são estimativas da equipe e podem ser ajustados.
 | Prioridade | Item | Origem | Impacto | Urgência | Esforço |
 |---|---|---|---|---|---|
 | Alta | Validação completa com Valgrind (zero *memory leaks*) | Issue #61 | Alto | Alta | Médio |
-| Alta | Abortar a execução em redeclaração e comentário não terminado | Testes inválidos 09 e 11 | Alto | Alta | Baixo |
-| Alta | Alinhar escopo com a BNF e reclassificar os testes `03`, `12` e `18` | Seção 10 e seção 5 | Alto | Alta | Baixo a médio |
+| Alta | Retornar falha após erro de comentário não terminado | Teste inválido 11 | Alto | Alta | Baixo |
+| Alta | Alinhar o escopo com a BNF e reclassificar `18_aviso_float_para_int.c` | Seções 5 e 10 | Alto | Alta | Baixo a médio |
 | Alta | Fechar a documentação técnica pendente | Issues #43 e #59 | Médio | Alta | Baixo |
 | Média | Laço `for` e incremento/decremento (`++`/`--`) | Sprint 13 original | Médio | Média | Médio |
-| Média | Tratamento de exceções de runtime | Sprint 14 original | Médio | Média | Médio |
 | Baixa | Suporte real a `float` e `char` no runtime (ou documentar como limitação) | Limitações do runtime | Médio | Baixa | Médio |
 | Baixa | Atribuição como expressão | Sprint 13 original | Baixo | Baixa | Médio |
 | Fora do escopo | Funções, chamadas e `return` | Feedback F1 | Alto | — | Alto |
@@ -215,5 +191,5 @@ Esforço e urgência são estimativas da equipe e podem ser ajustados.
 Com o escopo reduzido, as Sprints 13 a 15 ficam assim:
  
 - **Sprint 13:** estabilização (itens de prioridade alta) e, se houver folga, `for` e `++`/`--`.
-- **Sprint 14:** tratamento de exceções de runtime, decisão sobre `float`/`char` e fechamento da documentação.
+- **Sprint 14:** escopos locais e tratamento de divisão e resto por zero integrados. O status da sprint ainda precisa ser publicado no GitHub Pages.
 - **Sprint 15:** *Code Freeze*.

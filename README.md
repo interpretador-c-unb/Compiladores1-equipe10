@@ -31,7 +31,7 @@ cd Compiladores1-equipe10
 O build oficial é executado pelo Makefile de `src/`:
 
 ```bash
-make -C src rebuild
+make -C src clean && make -C src
 ```
 
 O comando gera o parser com Bison, o lexer com Flex e o executável:
@@ -48,7 +48,30 @@ make -C src clean
 
 ## Executar um programa
 
-O interpretador recebe um arquivo `.c` como argumento:
+Salve o exemplo abaixo em `soma.c`:
+
+```c
+int soma = 2 + 3;
+printf("%d\n", soma);
+```
+
+Execute o programa:
+
+```bash
+./interpreter soma.c
+```
+
+Na saída, confira o `5` impresso antes do estado final:
+
+```text
+--- Executando o Programa (Runtime) ---
+5
+
+--- Estado Final das Variáveis no Ambiente de Runtime ---
+soma (int) = 5
+```
+
+Para testar `if`, `while` e `printf()` juntos, rode o exemplo do repositório. Ele imprime `soma: 15`:
 
 ```bash
 ./interpreter testes/validos/17_if_while_printf.c
@@ -75,7 +98,7 @@ Funções, chamadas de função e `return` não fazem parte do escopo final docu
 Recompile antes da execução:
 
 ```bash
-make -C src rebuild
+make -C src clean && make -C src
 ```
 
 Para executar um caso individual:
@@ -84,16 +107,10 @@ Para executar um caso individual:
 ./interpreter testes/validos/14_while_execucao.c
 ```
 
-Para executar a suíte de casos válidos:
+Para executar a suíte de casos válidos e inválidos:
 
 ```bash
-printf 'testes/validos\n' | bash testes/rodar_testes.sh
-```
-
-A suíte de testes léxicos possui um script próprio:
-
-```bash
-bash testes/1_lexico/run.sh
+bash testes/executar_testes.sh
 ```
 
 Quando o script da Sprint 12 estiver integrado, a validação de memória será executada por:
@@ -105,10 +122,13 @@ chmod +x testes/valgrind/run_valgrind.sh
 
 ## Documentação técnica
 
-A documentação está em `documentos/` e pode ser gerada localmente com MkDocs Material:
+Consulte o [guia de uso](documentos/guia-uso.md), a [arquitetura](documentos/decisoes-tecnicas.md) e o [status do projeto](documentos/status-projeto.md). Para gerar a documentação com MkDocs Material:
 
 ```bash
-python3 -m pip install mkdocs mkdocs-material
+sudo apt install python3 python3-venv
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install mkdocs mkdocs-material
 mkdocs serve
 ```
 
@@ -128,10 +148,23 @@ A publicação está disponível em:
 
 <https://interpretador-c-unb.github.io/Compiladores1-equipe10/>
 
+**Universidade de Brasília | FCTE**
+
+| Informações | Detalhes |
+| :--- | :--- |
+| **Disciplina** | Compiladores 1 |
+| **Professor** | Dr. Sergio Antônio Andrade de Freitas |
+| **Semestre** | 2º / 2026 |
+| **Grupo** | 10 |
+
+---
+
 ## Equipe
 
-- Bernardo Campos Caxito Silveira
-- Danielly Mendes do Espírito Santo
-- Nicole Jovita Fernandes
-- Paulo Nina Denczuk de Alencar
-- Rafael Souto Lopes Laube
+| Nome | Matrícula |
+| :--- | :--- |
+| Bernardo Campos Caxito Silveira | 232024966 |
+| Danielly Mendes do Espírito Santo | 242015817 |
+| Nicole Jovita Fernandes | 241012347 |
+| Paulo Nina Denczuk de Alencar | 242004920 |
+| Rafael Souto Lopes Laube | 211062428 |
