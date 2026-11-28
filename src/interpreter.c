@@ -222,12 +222,12 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
             if (node->left) {
                 init_val = evaluate_ast(node->left, env);
             }
-            set_variable(env, node->name, init_val);
-            free_value(&init_val);
-            if (env->had_error) break;
+            if (env->had_error) {
+                free_value(&init_val);
+                break;
+            }
             declare_variable(env, node->name, init_val);
-            if (init_val.type == VAL_STRING && init_val.data.str_val)
-                free(init_val.data.str_val);
+            free_value(&init_val);
             break;
         }
 
@@ -347,12 +347,11 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
         }
 
         case NODE_WHILE: {
-            for (;;) {
+            while (!env->had_error) {
                 Value cond = evaluate_ast(node->left, env);
                 int condition_true = is_truthy(cond);
                 free_value(&cond);
-                if (!condition_true) break;
-            while (!env->had_error && is_truthy(evaluate_ast(node->left, env))) {
+                if (env->had_error || !condition_true) break;
                 evaluate_ast(node->right, env);
             }
             break;
