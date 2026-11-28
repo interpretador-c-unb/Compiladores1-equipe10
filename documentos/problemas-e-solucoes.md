@@ -191,7 +191,7 @@ Para comparar automaticamente os casos que possuem arquivo esperado, use o scrip
 Bash
 
 
-bash testes/rodar_testes.sh
+bash testes/executar_testes.sh
 
 
 
