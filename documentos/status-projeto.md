@@ -91,6 +91,8 @@ O teste `11_comentario_aberto.c` ainda emite erro léxico e termina com código 
 - Comentário não terminado ainda pode retornar sucesso (ver seção 5).
 - Validação de vazamentos de memória ainda não concluída (Issue #61).
 
+Para o detalhamento completo do que foi retirado do escopo ou mantido como limitação conhecida, consulte [Escopo e Limitações](escopo-e-limitacoes.md).
+
 ---
 
 ## 7. Débitos técnicos e pendências
