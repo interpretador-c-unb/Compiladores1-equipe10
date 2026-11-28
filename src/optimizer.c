@@ -51,7 +51,10 @@ ASTNode* optimize_ast(ASTNode *node) {
 
             if (foldable) {
                 ASTNode *folded = create_num_node(result_val);
-                if (is_float) {
+                
+                int result_is_arith = strchr("+-*/", node->name[0]) != NULL && node->name[1] == '\0';
+
+                if (is_float && result_is_arith) {
                     char buf[32];
                     snprintf(buf, sizeof(buf), "%g", result_val);
                     if (!strchr(buf, '.')) strcat(buf, ".0");

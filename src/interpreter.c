@@ -8,6 +8,7 @@ Environment* create_environment(void) {
     Environment *env = (Environment *) malloc(sizeof(Environment));
     env->head = NULL;
     env->current_scope = 0;
+    env->had_error = 0;
     return env;
 }
 
@@ -47,6 +48,29 @@ void free_environment(Environment *env) {
         free(temp);
     }
     free(env);
+}
+
+void declare_variable(Environment *env, const char *name, Value val) {
+    if (!env || !name) return;
+
+    // já existe no escopo atual -> apenas atualiza
+    for (RuntimeVar *v = env->head; v; v = v->next) {
+        if (v->scope_level == env->current_scope && strcmp(v->name, name) == 0) {
+            set_variable(env, name, val);
+            return;
+        }
+    }
+
+    // senão, cria sempre uma variável nova no escopo atual
+    RuntimeVar *new_var = (RuntimeVar *) malloc(sizeof(RuntimeVar));
+    new_var->name = strdup(name);
+    new_var->scope_level = env->current_scope;
+    new_var->value = val;
+    if (val.type == VAL_STRING && val.data.str_val) {
+        new_var->value.data.str_val = strdup(val.data.str_val);
+    }
+    new_var->next = env->head;
+    env->head = new_var;
 }
 
 void set_variable(Environment *env, const char *name, Value val) {
@@ -136,6 +160,8 @@ static void exec_printf(ASTNode *node, Environment *env) {
         Value v = evaluate_ast(arg, env);
         arg = arg->next;
 
+        if (env->had_error) return;
+
         switch (*p) {
             case 'd':
                 if (v.type == VAL_INT) printf("%d", v.data.int_val);
@@ -198,11 +224,16 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
             }
             set_variable(env, node->name, init_val);
             free_value(&init_val);
+            if (env->had_error) break;
+            declare_variable(env, node->name, init_val);
+            if (init_val.type == VAL_STRING && init_val.data.str_val)
+                free(init_val.data.str_val);
             break;
         }
 
         case NODE_ASSIGNMENT: {
             Value val = evaluate_ast(node->left, env);
+            if (env->had_error) return val;
             set_variable(env, node->name, val);
             free_value(&val);
             break;
@@ -210,6 +241,24 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
 
         case NODE_BINARY_EXPR: {
             Value left = evaluate_ast(node->left, env);
+            if (env->had_error) break;
+
+            if (strcmp(node->name, "&&") == 0 || strcmp(node->name, "||") == 0) {
+                int is_and = (node->name[0] == '&');
+                int l_true = is_truthy(left);
+                if (left.type == VAL_STRING && left.data.str_val) free(left.data.str_val);
+
+                result.type = VAL_INT;
+                if (is_and && !l_true) { result.data.int_val = 0; break; }
+                if (!is_and && l_true) { result.data.int_val = 1; break; }
+
+                Value right = evaluate_ast(node->right, env);
+                if (env->had_error) { result.type = VAL_VOID; break; }
+                result.data.int_val = is_truthy(right) ? 1 : 0;
+                if (right.type == VAL_STRING && right.data.str_val) free(right.data.str_val);
+                break;
+            }
+
             Value right = evaluate_ast(node->right, env);
 
             if (node->right == NULL && strcmp(node->name, "!") == 0) {
@@ -231,6 +280,19 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
                 break;
             }
 
+            if (env->had_error) break;
+            
+            if (strcmp(node->name, "/") == 0 || strcmp(node->name, "%") == 0) {
+                int divisor_zero = 0;
+                if (right.type == VAL_FLOAT) divisor_zero = (right.data.float_val == 0.0);
+                else if (right.type == VAL_INT) divisor_zero = (right.data.int_val == 0);
+
+                if (divisor_zero) {
+                    fprintf(stderr, "[ERRO RUNTIME] Divisão por zero (operador '%s')\n", node->name);
+                    env->had_error = 1;
+                    break;  // sai do case com result.type = VAL_VOID
+                }
+            }
             if (left.type == VAL_FLOAT || right.type == VAL_FLOAT) {
                 double l = (left.type == VAL_FLOAT) ? left.data.float_val : left.data.int_val;
                 double r = (right.type == VAL_FLOAT) ? right.data.float_val : right.data.int_val;
@@ -272,6 +334,9 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
 
         case NODE_IF: {
             Value cond = evaluate_ast(node->left, env);
+
+            if (env->had_error) break;
+
             if (is_truthy(cond)) {
                 evaluate_ast(node->right, env);
             } else if (node->else_branch) {
@@ -287,6 +352,7 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
                 int condition_true = is_truthy(cond);
                 free_value(&cond);
                 if (!condition_true) break;
+            while (!env->had_error && is_truthy(evaluate_ast(node->left, env))) {
                 evaluate_ast(node->right, env);
             }
             break;
@@ -317,7 +383,7 @@ Value evaluate_ast(ASTNode *node, Environment *env) {
 }
 
 static void execute_list(ASTNode *list, Environment *env) {
-       for (ASTNode *cur = list; cur; cur = cur->next)
+       for (ASTNode *cur = list; cur && !env->had_error; cur = cur->next)
            evaluate_ast(cur, env);
    }
 
@@ -326,6 +392,9 @@ int execute_program(ASTNode *root) {
 
     Environment *env = create_environment();
     execute_list(root, env);
+
+    int status = env->had_error ? 1 : 0;
+    if (status) fprintf(stderr, "[ERRO RUNTIME] Execução abortada.\n");
 
     printf("\n--- Estado Final das Variáveis no Ambiente de Runtime ---\n");
     RuntimeVar *curr = env->head;
@@ -341,5 +410,5 @@ int execute_program(ASTNode *root) {
     }
 
     free_environment(env);
-    return 0;
+    return status;
 }

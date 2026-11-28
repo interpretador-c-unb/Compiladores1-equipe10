@@ -2,7 +2,7 @@
 
 Nesta seção é apresentada a organização de diretórios e arquivos do repositório, destacando as responsabilidades de cada módulo no desenvolvimento do interpretador de C (**Nosso C**).
 
-> **Status Atual (Sprint 12):** Desenvolvimento concluído até a Sprint 11 (`semantic.c`, `interpreter.c`, `optimizer.c`, estruturas `if`/`while` e comando `printf()` funcionais). Entregáveis do Ponto de Controle 2 concluídos e equipe atualmente focada nos testes de memória com Valgrind e estabilização de runtime (Sprint 12).
+> **Sprint 14 integrada.** Escopos locais, curto-circuito e tratamento de divisão por zero estão na `main`. Veja os [resultados dos testes e pendências](status-projeto.md).
 
 ```text
 COMPILADORES1-EQUIPE10/
@@ -15,16 +15,14 @@ COMPILADORES1-EQUIPE10/
 │   ├── analisador-lexico.md
 │   ├── analisador-sintatico.md
 │   ├── analise-semantica.md
-│   ├── debitos-tecnicos.md
 │   ├── decisoes-tecnicas.md
 │   ├── gramatica-bnf.md
 │   ├── guia-uso.md
 │   ├── index.md
 │   ├── interpretador.md
 │   ├── planejamento-sprints.md
-│   ├── plano-pos-p1.md
-│   ├── problemas-e-solucoes.md
 │   ├── tabela-simbolos.md
+|   ├── status-projeto.md
 │   └── scripts/
 │       ├── header.tex
 │       └── mdtopdf.sh

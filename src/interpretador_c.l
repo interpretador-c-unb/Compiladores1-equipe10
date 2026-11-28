@@ -73,7 +73,7 @@ LETTER  [A-Za-z_]
 
 {DIGIT}+(\.{DIGIT}+)?           {
                                     /* O sinal de -3 fica no token MINUS, para a-3 ser subtração. */
-                                    yylval.numValue = strtod(yytext, NULL);
+                                    yylval.idValue = dup_text();
                                     return NUM;
                                 }
 
